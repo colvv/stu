@@ -1,0 +1,29 @@
+/**
+ 	去除所有margin padding,会有冲突，去掉
+
+body, form, frame, iframe, blockquote, p, pre, sup, sub, table, caption, ol, dl, ul, li, dl, dd, dt, div, span, a, input, textarea, fieldset, legend, b, strong, em, i, h1, h2, h3, h4, h5, h6, img, label {
+    margin: 0;
+    padding: 0;
+}
+* :focus {
+	outline: none;
+}
+*/
+/**
+ 	修改默认字体
+*/
+body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
+	font-family: Microsoft YaHei,'宋体' , Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;}
+	
+	
+.mg-t-150{
+	margin-top: 150px;
+}
+
+.mg-b-20{
+	margin-bottom: 20px;
+}
+.line_center{
+	margin: 0 auto;
+	width: 100%;
+}
