@@ -44,8 +44,8 @@
 				<strong class="text-danger ">确定要删除么？</strong>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" data-dismiss="modal" name="confrim">确定</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal" name="confrim">确定</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
 			</div>
 		</div>
 		<!-- /.modal-content -->
@@ -55,9 +55,10 @@
 <div class="loading_back" id="show_process">
 	<div class="container">
 		<div class="row mg-t-150">
-			<div class="col-xs-5"></div>
-			<div class="col-xs-1 ">
-				<span class="label label-info process_info center-block">正在加载，请稍候</span>
+			<div class="col-xs-12 ">
+				<div style="width: 120px; margin: 0 auto;">
+					<span class="label label-info process_info center-block ">正在加载，请稍候</span>
+				</div>
 			</div>
 		</div>
 		<div class="row">
@@ -73,28 +74,18 @@
 		</div>
 	</div>
 </div>
-<div class="loading_back" id="form_area"></div>
-<div class="container loading_content" id="form_content_area">
-	<div class="row mg-t-150">
-		<div class="col-xs-2"></div>
-		<div class="col-xs-8" name="form_content"></div>
+<div class="modal fade " id="form_modal" tabindex="-1" role="dialog" aria-labelledby="信息录入" aria-hidden="true">
+	<div class=" modal-dialog ">
+		<div name="form_content"></div>
 	</div>
+	<!-- /.modal-content -->
 </div>
-<div class="modal fade" id="form_modal" tabindex="-1" role="dialog" aria-labelledby="信息录入" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="row mg-t-150">
-			<div class="col-xs-2"></div>
-			<div class="col-xs-8" name="form_content"></div>
-		</div>
-		<!-- /.modal-content -->
-	</div>
-	<!-- /.modal -->
-</div>
+<!-- /.modal -->
 <style>
 .loading_back {
 	background: #000;
 	opacity: .5;
-	filter: alpha(opacity =             50);
+	filter: alpha(opacity =50);
 	position: fixed;
 	z-index: 1040;
 	top: 0;
@@ -119,6 +110,8 @@
 
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="${ctx}/resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="${ctx}/resources/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+<script src="${ctx}/resources/bootstrap/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script src="${ctx}/resources/jquery.dataTables/js/jquery.dataTables.cn.js"></script>
 <script src="${ctx}/resources/jquery.dataTables/js/dataTables.bootstrap.js"></script>
 <script src="${ctx}/resources/self/js/commonJs.js"></script>

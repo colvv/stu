@@ -9,6 +9,7 @@
 
 <!-- 可选的Bootstrap主题文件（一般不用引入） -->
 <link rel="stylesheet" href="${ctx}/resources/bootstrap/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="${ctx}/resources/bootstrap/css/bootstrap-datetimepicker.min.css">
 
 <link rel="stylesheet" href="${ctx}/resources/awesome/css/font-awesome.min.css">
 <link rel="stylesheet" href="${ctx}/resources/jquery.dataTables/css/jquery.dataTables.css">

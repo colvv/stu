@@ -22,35 +22,35 @@
 				$(this).addClass('selected');
 			}
 		});
-		fObject('refresh_button',baseDiv).click(function(){
-			 table.ajax.reload();
+		fObject('refresh_button', baseDiv).click(function() {
+			table.ajax.reload();
 		});
-		fObject('add_button',baseDiv).click(function(){
-			$("#form_area").show();
-			$("#form_content_area").show();
-			commonAjax("/stu/model/addModel.do",null,function(msg){
-				$("#form_content_area [name='form_content']").html(msg);
+		fObject('add_button', baseDiv).click(function() {
+			commonAjax("/stu/model/addModel.do", null, function(msg) {
+				$("#form_modal [name='form_content']").html(msg);
+				$("#form_modal").modal('show');
 			});
 		});
-		fObject('del_button',baseDiv).click(function(){
-			confrimMsg("确定要删除么？",function(){
-				alert(1);
-			});
-			return;
-			commonAjax_pro("/stu/addStu.do", {
-				stu_name : fObject("stu_name", baseDiv).val()
-			}, function(msg) {
-				processError();
-				if ("0" === msg) {
-					alertMsg("保存成功");
-					fObject('refresh_button', 'main_area').click();
-				} else {
-					alertMsg("保存失败");
-				}
+		fObject('del_button', baseDiv).click(function() {
+			if (table.$('tr.selected').length !== 1) {
+				alertMsg("请先选中要删除的学生！", "default");
+				return;
+			}
+			confrimMsg("确定要删除学生（" + table.$('tr.selected').find("td:eq(1)").text() + "）么？", function() {
+				commonAjax_pro("/stu/delStu.do", {
+					stu_id : table.$('tr.selected').find("td:eq(0)").text()
+				}, function(msg) {
+					processError();
+					if ("0" === msg) {
+						alertMsg("删除成功");
+						fObject('refresh_button', 'main_area').click();
+					} else {
+						alertMsg("删除失败");
+					}
+				});
 			});
 		});
-		
-		
+
 	});
 </script>
 <div class="row">

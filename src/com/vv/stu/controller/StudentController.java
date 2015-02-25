@@ -29,9 +29,18 @@ public class StudentController extends BaseController {
 	@RequestMapping("/addStu")
 	@ResponseBody
 	public String addStu() {
-			String stu_name = request.getParameter("stu_name");
-			String stu_no = tCommonServiceImpl.createMaxNo("stu_no", 6);
-			return tStudentServiceImpl.addStu(PubFun.getCurrentDate().substring(0, 4) + stu_no, stu_name) ? "0" : "1";
+		String stu_name = request.getParameter("stu_name");
+		String tCurrentYear = PubFun.getCurrentDate().substring(0, 4);
+		String stu_id = tCommonServiceImpl.createMaxNo("stu_id" + tCurrentYear, 6);
+		// 2015-2-25 @wangyi : 学号为年份加上
+		return tStudentServiceImpl.addStu(tCurrentYear + stu_id, stu_name) ? "0" : "1";
+	}
+
+	@RequestMapping("/delStu")
+	@ResponseBody
+	public String delStu() {
+		String stu_id = request.getParameter("stu_id");
+		return tStudentServiceImpl.delStu(stu_id) ? "0" : "1";
 	}
 
 	@RequestMapping("/model/{model_name}")

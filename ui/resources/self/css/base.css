@@ -19,11 +19,13 @@ body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
 .mg-t-150{
 	margin-top: 150px;
 }
-
+.mg-t-10{
+	margin-top: 10px;
+}
 .mg-b-20{
 	margin-bottom: 20px;
 }
 .line_center{
 	margin: 0 auto;
-	width: 100%;
+	display: block;
 }

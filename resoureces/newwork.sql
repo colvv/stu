@@ -9,7 +9,6 @@ MySQL - 5.5.25 : Database - stu_new
 /*!40101 SET SQL_MODE=''*/;
 
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 CREATE DATABASE /*!32312 IF NOT EXISTS*/`stu_new` /*!40100 DEFAULT CHARACTER SET utf8 */;
@@ -113,7 +112,7 @@ CREATE TABLE `vv_student` (
 
 /*Data for the table `vv_student` */
 
-insert  into `vv_student`(`STU_ID`,`STU_NAME`,`STU_MAKE_TIME`) values ('2008000001','王毅','2015-02-13 10:39:58'),('2008000002','王唲','2015-02-13 15:24:17');
+insert  into `vv_student`(`STU_ID`,`STU_NAME`,`STU_MAKE_TIME`) values ('2015000001','超','2015-02-25 16:02:14'),('2015000002','级','2015-02-25 16:02:20'),('2015000003','赛','2015-02-25 16:02:26'),('2015000004','亚','2015-02-25 16:02:32'),('2015000005','人','2015-02-25 16:02:37'),('2015000006','抽扯获','2015-02-25 16:13:38');
 
 /*Table structure for table `vv_student_info` */
 
@@ -134,8 +133,6 @@ CREATE TABLE `vv_student_info` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `vv_student_info` */
-
-insert  into `vv_student_info`(`STU_ID`,`STU_LITTLE_NAME`,`STU_SEX`,`STU_BIRTHDAY`,`STU_KINDERGARTEN`,`STU_ADDRESS`,`STU_PHONE`,`STU_BELONG_TEACHER`,`STU_BACKINFO`,`STU_SOURCE`) values ('2008000001','牛牛','0',20150213,'育蕾幼儿园','030001','13403517100',NULL,'哈哈',NULL),('2008000002','二二',NULL,NULL,'我擦',NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `vv_student_info_old` */
 
@@ -158,19 +155,33 @@ CREATE TABLE `vv_student_info_old` (
 
 /*Data for the table `vv_student_info_old` */
 
+/*Table structure for table `vv_sys_code` */
+
+DROP TABLE IF EXISTS `vv_sys_code`;
+
+CREATE TABLE `vv_sys_code` (
+  `codetype` varchar(40) NOT NULL,
+  `code` varchar(20) NOT NULL,
+  `codename` varchar(80) DEFAULT NULL,
+  `codealias` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`codetype`,`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `vv_sys_code` */
+
 /*Table structure for table `vv_sys_maxno` */
 
 DROP TABLE IF EXISTS `vv_sys_maxno`;
 
 CREATE TABLE `vv_sys_maxno` (
-  `id` int(11) NOT NULL,
+  `id` varchar(11) NOT NULL,
   `no` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `vv_sys_maxno` */
 
-insert  into `vv_sys_maxno`(`id`,`no`) values (33,2),(333,3);
+insert  into `vv_sys_maxno`(`id`,`no`) values ('stu_id2015',6);
 
 /*Table structure for table `vv_sys_menu` */
 
@@ -209,6 +220,5 @@ CREATE TABLE `vv_teacher` (
 insert  into `vv_teacher`(`TEA_ID`,`TEA_NAME`,`TEA_STATE`,`TEA_TYPE`,`TEA_SEX`,`TEA_BIRTHDAY`,`TEA_PHONE`,`TEA_ADDRESS`,`TEA_DESC`) values ('1','wanyi',NULL,'1','s',1,'1340','address','this is describe'),('2','wanyi','st',NULL,'s',1,'1340','address','this is describe'),('3','wanyi','st','1',NULL,1,'1340','address','this is describe'),('4','wanyi','st','1','s',NULL,'1340','address','this is describe'),('5','wanyi','st','1','s',1,NULL,'address','this is describe'),('6','wanyi','st','1','s',1,'1340',NULL,'this is describe'),('7','wanyi','st','1','s',1,'1340','address',NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
