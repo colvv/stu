@@ -85,7 +85,7 @@
 .loading_back {
 	background: #000;
 	opacity: .5;
-	filter: alpha(opacity =50);
+	filter: alpha(opacity = 50);
 	position: fixed;
 	z-index: 1040;
 	top: 0;

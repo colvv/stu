@@ -1,10 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script>
 	$(document).ready(function() {
 		var baseDiv = "main_area";
 		var table = $('#example').DataTable({
 			"ajax" : {
-				"url" : "loadTable/stu_001.do", "dataSrc" : ""
-			}, "columns" : [ {
+				"url" : "loadTable/stu_001.do",
+				"dataSrc" : ""
+			},
+			"columns" : [ {
 				"data" : "stu_id"
 			}, {
 				"data" : "stu_name"

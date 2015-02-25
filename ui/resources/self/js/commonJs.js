@@ -5,30 +5,42 @@ var process_func;
 
 function commonAjax(request_url, data, func) {
 	$.ajax({
-		type : "POST", url : request_url, data : data,
-		contentType : "application/x-www-form-urlencoded; charset=utf-8", cache : false, dataType : "text",
+		type : "POST",
+		url : request_url,
+		data : data,
+		contentType : "application/x-www-form-urlencoded; charset=utf-8",
+		cache : false,
+		dataType : "text",
 		success : function() {
-			//参数继续向下传递
+			// 参数继续向下传递
 			func(arguments[0], arguments[1], arguments[2]);
-		}, error : function() {
+		},
+		error : function() {
 			alertMsg("系统处理异常", "danger");
-		}, complete : function() {
+		},
+		complete : function() {
 		}
 	});
 }
 function commonAjax_pro(request_url, data, func) {
 	startProcess("");
 	$.ajax({
-		type : "POST", url : request_url, data : data,
-		contentType : "application/x-www-form-urlencoded; charset=utf-8", cache : false, dataType : "text",
+		type : "POST",
+		url : request_url,
+		data : data,
+		contentType : "application/x-www-form-urlencoded; charset=utf-8",
+		cache : false,
+		dataType : "text",
 		success : function() {
 			processHandler();
-			//参数继续向下传递
+			// 参数继续向下传递
 			func(arguments[0], arguments[1], arguments[2]);
-		}, error : function() {
+		},
+		error : function() {
 			processError();
 			alertMsg("系统处理异常", "danger");
-		}, complete : function() {
+		},
+		complete : function() {
 			processComplete();
 		}
 	});
@@ -42,8 +54,8 @@ function alertMsg(msg, type) {
 	$("#alert_msg").modal('show');
 }
 function confrimMsg(msg, func) {
-	fObject("confrim","comfrim_modal").unbind("click");
-	fObject("confrim","comfrim_modal").click(func);
+	fObject("confrim", "comfrim_modal").unbind("click");
+	fObject("confrim", "comfrim_modal").click(func);
 	$("#comfrim_modal .modal-body").html("<strong class='text-danger'>" + msg + "</strong>");
 	$("#comfrim_modal").modal('show');
 }
@@ -57,7 +69,7 @@ function startProcess(msg) {
 	$("#show_process").show();
 	$("#show_process .progress-bar").css("width", "10%");
 	$("#show_process .progress-bar").data("width", 10);
-	// 2015-2-12 @wangyi :  开始自动增加
+	// 2015-2-12 @wangyi : 开始自动增加
 	process_func = setTimeout(function() {
 		processUp(10, max_process)
 	}, interval_process);
@@ -109,15 +121,15 @@ function processError() {
 	$("#show_process .progress-bar").css("width", "0%");
 }
 function _log(message) {
-	var now = new Date(), y = now.getFullYear(), m = now.getMonth() + 1, //！JavaScript中月分是从0开始的
-	d = now.getDate(), h = now.getHours(), min = now.getMinutes(), s = now.getSeconds(), time = y + '/' + m + '/' + d
-			+ ' ' + h + ':' + min + ':' + s;
+	var now = new Date(), y = now.getFullYear(), m = now.getMonth() + 1, // ！JavaScript中月分是从0开始的
+	d = now.getDate(), h = now.getHours(), min = now.getMinutes(), s = now.getSeconds(), time = y + '/' + m + '/' + d + ' ' + h + ':' + min
+			+ ':' + s;
 	try {
 		if (window.console) {
 			console.log(time + ' My App: ' + message);
 		}
 	} catch (e) {
-		//do nothing
+		// do nothing
 	}
 }
 function fValue(field, baseD) {
@@ -139,4 +151,14 @@ function fObject(field, baseD) {
 	} else {
 		return $("[name='" + field + "']");
 	}
+}
+function parseParamObj($objs) {
+	var param_str = "{";
+	$objs.each(function() {
+		param_str += $(this).attr("name") + ":'";
+		param_str += $(this).val() + "',";
+	});
+	param_str = param_str.substr(0, param_str.length - 1);
+	param_str += "}";
+	return eval("(" + param_str + ")");
 }

@@ -1,16 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script>
 	$(document).ready(function() {
-
 		var baseDiv = "form_modal";
 		fObject("dialog_tabs", baseDiv).find("a:eq(0)").tab("show");
 		fObject("stu_birthday_div", baseDiv).datetimepicker({
-			weekStart : 1, todayBtn : 1, autoclose : 1, todayHighlight : 1, startView : 2, minView : 2, forceParse : 0
+			weekStart : 1,
+			todayBtn : 1,
+			autoclose : 1,
+			todayHighlight : 1,
+			startView : 2,
+			minView : 2,
+			forceParse : 0
 		});
 		fObject("confrim", baseDiv).click(function() {
-			commonAjax_pro("/stu/addStu.do", {
-				stu_name : fObject("stu_name", baseDiv).val()
-			}, function(msg) {
+			var paramObj = parseParamObj(fObject("form_content", baseDiv).find("[name]"));
+			commonAjax_pro("/stu/addStu.do", paramObj, function(msg) {
 				processError();
 				if ("0" === msg) {
 					alertMsg("保存成功");
@@ -42,15 +46,18 @@
 						<label for="stu_name">学生姓名</label> <input class="form-control" name="stu_name" type="text" placeholder="请输入学生姓名">
 					</div>
 					<div class="form-group ">
-						<label for="stu_sex">性别</label> <select class="form-control" name="stu_sex" placeholder="请输入学生性别"></select>
+						<label for="stu_sex">性别</label> <select class="form-control" name="stu_sex" placeholder="请输入学生性别">
+							<option value="">请选择</option>
+							<option value="0">男</option>
+							<option value="1">女</option>
+						</select>
 					</div>
 					<div class="form-group ">
 						<label for="stu_birthday">出生日期</label>
 						<div class="input-group  date form_date" data-date-format="yyyy-mm-dd" name="stu_birthday_div">
-							<input class="form-control" name="stu_birthday" type="text" placeholder="请输入学生出生日期" > <span class="input-group-addon"><span
-								class="glyphicon glyphicon-remove"></span></span> <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+							<input class="form-control" name="stu_birthday" type="text" placeholder="请输入学生出生日期"> <span class="input-group-addon"><span
+								class="glyphicon glyphicon-calendar"></span></span>
 						</div>
-
 					</div>
 					<div class="form-group ">
 						<label for="stu_phone">联系方式</label> <input class="form-control" name="stu_phone" type="text" placeholder="请输入联系方式">

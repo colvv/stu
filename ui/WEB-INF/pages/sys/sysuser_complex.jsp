@@ -3,8 +3,10 @@
 	$(document).ready(function() {
 		var table = $('#example').DataTable({
 			"ajax" : {
-				"url" : "loadTable/sys_001.do", "dataSrc" : ""
-			}, "columns" : [ {
+				"url" : "loadTable/sys_001.do",
+				"dataSrc" : ""
+			},
+			"columns" : [ {
 				"data" : "TEA_NAME"
 			}, {
 				"data" : "TEA_STATE"
