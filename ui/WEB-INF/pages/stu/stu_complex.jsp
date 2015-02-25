@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script>
 	$(document).ready(function() {
 		var table = $('#example').DataTable({
@@ -25,8 +26,9 @@
 			 table.ajax.reload();
 		});
 		$("[name='add_button']").click(function(){
-			$("#form_area").show();
-			$("#form_area [name='form_content']").load("/stu/model/addModel.do");
+			$("#form_area_b").show();
+			$("#form_area_m").show();
+			$("#form_area_m [name='form_content']").load("/stu/model/addModel.do");
 		});
 	});
 </script>

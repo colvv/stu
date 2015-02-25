@@ -18,7 +18,16 @@ public class DaoOperator {
 
 	public DaoOperator(String tSQL) {
 		this.op_SQL = tSQL;
-		this.op_Type = SELECT;
+		String tF_C = (tSQL.substring(0, 1)).toUpperCase();
+		if ("I".equals(tF_C)) {
+			this.op_Type = INSERT;
+		} else if ("U".equals(tF_C)) {
+			this.op_Type = UPDATE;
+		} else if ("D".equals(tF_C)) {
+			this.op_Type = DELETE;
+		} else {
+			this.op_Type = SELECT;
+		}
 	}
 
 	public DaoOperator(String tSQL_ID, Map tParams) {

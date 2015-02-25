@@ -45,7 +45,7 @@ public class DefaultQueryDaoImpl implements DefaultQueryDao {
 				tParams.put("sql_body", tDaoOperator.getOp_SQL());
 			}
 			return sqlSession.selectList(sql_ID, tParams);
-		} else {
+S		} else {
 			return null;
 		}
 	}

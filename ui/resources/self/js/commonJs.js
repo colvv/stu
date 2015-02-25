@@ -1,21 +1,27 @@
 var max_process = 61;
 var max_dealing = 91;
-var interval_process =500;
+var interval_process = 500;
 var process_func;
 
 function commonAjax(request_url, data, func) {
 	startProcess("");
 	$.ajax({
-		type : "POST", url : request_url, data : data,
-		contentType : "application/x-www-form-urlencoded; charset=utf-8", cache : false, dataType : "text",
+		type : "POST",
+		url : request_url,
+		data : data,
+		contentType : "application/x-www-form-urlencoded; charset=utf-8",
+		cache : false,
+		dataType : "text",
 		success : function() {
 			processHandler();
-			//参数继续向下传递
-			func(arguments[0],arguments[1],arguments[2]);
-		}, error : function() {
+			// 参数继续向下传递
+			func(arguments[0], arguments[1], arguments[2]);
+		},
+		error : function() {
 			processError();
-			alertMsg("系统处理异常","danger");
-		}, complete : function() {
+			alertMsg("系统处理异常", "danger");
+		},
+		complete : function() {
 			processComplete();
 		}
 	});
@@ -25,7 +31,8 @@ function alertMsg(msg, type) {
 	if (!type) {
 		type = "default";
 	}
-	$("#alert_msg .modal-body").html("<strong class='text-" + type + " '>" + msg + "</strong>");
+	$("#alert_msg .modal-body").html(
+			"<strong class='text-" + type + " '>" + msg + "</strong>");
 	$("#alert_msg").modal('show');
 }
 function startProcess(msg) {
@@ -37,7 +44,7 @@ function startProcess(msg) {
 	$("#show_process").show();
 	$("#show_process .progress-bar").css("width", "10%");
 	$("#show_process .progress-bar").data("width", 10);
-	// 2015-2-12 @wangyi :  开始自动增加
+	// 2015-2-12 @wangyi : 开始自动增加
 	process_func = setTimeout(function() {
 		processUp(10, max_process)
 	}, interval_process);
@@ -83,20 +90,36 @@ function processComplete(msg) {
 	}, interval_process)
 
 }
-function processError(){
+function processError() {
 	clearTimeout(process_func);
 	$("#show_process").hide();
 	$("#show_process .progress-bar").css("width", "0%");
 }
+function hideProcess(){
+	$("#show_process").hide();
+}
 function _log(message) {
-	var now = new Date(), y = now.getFullYear(), m = now.getMonth() + 1, //！JavaScript中月分是从0开始的
-	d = now.getDate(), h = now.getHours(), min = now.getMinutes(), s = now.getSeconds(), time = y + '/' + m + '/' + d
-			+ ' ' + h + ':' + min + ':' + s;
+	var now = new Date(), y = now.getFullYear(), m = now.getMonth() + 1, // ！JavaScript中月分是从0开始的
+	d = now.getDate(), h = now.getHours(), min = now.getMinutes(), s = now
+			.getSeconds(), time = y + '/' + m + '/' + d + ' ' + h + ':' + min
+			+ ':' + s;
 	try {
 		if (window.console) {
 			console.log(time + ' My App: ' + message);
 		}
 	} catch (e) {
-		//do nothing
+		// do nothing
 	}
+}
+function fValue(field, baseDiv) {
+	return fObject(field, baseDiv).val();
+}
+
+function fObject(field, baseDiv) {
+	if (baseDiv) {
+		return $("#" + baseDiv + " [name='" + field + "']");
+	} else {
+		return $("[name='" + field + "']");
+	}
+
 }

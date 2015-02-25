@@ -33,6 +33,7 @@ public class CommonServiceImpl extends BaseService {
 	}
 
 	public String createMaxNo(String id, int length) {
+			
 			String tSQL = "UPDATE vv_sys_maxno SET vv_sys_maxno.no = vv_sys_maxno.no+1 WHERE id = 333 AND @value := vv_sys_maxno.no+1; SELECT @value; ";
 			String tResult = tDefaultQueryDao.getOneValue(tSQL);
 			logger.debug(tResult);

@@ -44,8 +44,8 @@
 			<div class="col-xs-2"></div>
 			<div class="col-xs-8">
 				<div class="progress">
-					<div class="progress-bar progress-bar-striped " role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"
-						style="width: 0%">
+					<div class="progress-bar progress-bar-striped " role="progressbar" aria-valuenow="45" aria-valuemin="0"
+						aria-valuemax="100" style="width: 0%">
 						<span class="sr-only">0% Complete</span>
 					</div>
 				</div>
@@ -53,8 +53,8 @@
 		</div>
 	</div>
 </div>
-<div class="loading_back" id="form_area"></div>
-<div class="container loading_content" id="form_area">
+<div class="loading_back" id="form_area_b"></div>
+<div class="container loading_content" id="form_area_m">
 	<div class="row mg-t-150">
 		<div class="col-xs-2"></div>
 		<div class="col-xs-8" name="form_content"></div>
@@ -65,7 +65,7 @@
 .loading_back {
 	background: #000;
 	opacity: .5;
-	filter: alpha(opacity =           50);
+	filter: alpha(opacity = 50);
 	position: fixed;
 	z-index: 1040;
 	top: 0;

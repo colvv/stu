@@ -107,11 +107,13 @@ DROP TABLE IF EXISTS `vv_student`;
 CREATE TABLE `vv_student` (
   `STU_ID` varchar(10) NOT NULL,
   `STU_NAME` varchar(20) NOT NULL,
-  `SUT_MAKE_TIME` datetime DEFAULT NULL,
+  `STU_MAKE_TIME` datetime DEFAULT NULL,
   PRIMARY KEY (`STU_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `vv_student` */
+
+insert  into `vv_student`(`STU_ID`,`STU_NAME`,`STU_MAKE_TIME`) values ('2008000001','王毅','2015-02-13 10:39:58'),('2008000002','王唲','2015-02-13 15:24:17');
 
 /*Table structure for table `vv_student_info` */
 
@@ -132,6 +134,8 @@ CREATE TABLE `vv_student_info` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `vv_student_info` */
+
+insert  into `vv_student_info`(`STU_ID`,`STU_LITTLE_NAME`,`STU_SEX`,`STU_BIRTHDAY`,`STU_KINDERGARTEN`,`STU_ADDRESS`,`STU_PHONE`,`STU_BELONG_TEACHER`,`STU_BACKINFO`,`STU_SOURCE`) values ('2008000001','牛牛','0',20150213,'育蕾幼儿园','030001','13403517100',NULL,'哈哈',NULL),('2008000002','二二',NULL,NULL,'我擦',NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `vv_student_info_old` */
 
@@ -154,6 +158,20 @@ CREATE TABLE `vv_student_info_old` (
 
 /*Data for the table `vv_student_info_old` */
 
+/*Table structure for table `vv_sys_maxno` */
+
+DROP TABLE IF EXISTS `vv_sys_maxno`;
+
+CREATE TABLE `vv_sys_maxno` (
+  `id` int(11) NOT NULL,
+  `no` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `vv_sys_maxno` */
+
+insert  into `vv_sys_maxno`(`id`,`no`) values (33,2),(333,3);
+
 /*Table structure for table `vv_sys_menu` */
 
 DROP TABLE IF EXISTS `vv_sys_menu`;
@@ -167,7 +185,7 @@ CREATE TABLE `vv_sys_menu` (
 
 /*Data for the table `vv_sys_menu` */
 
-insert  into `vv_sys_menu`(`menu_id`,`menu_name`,`menu_url`) values ('101|1','学生报名','bootstrap.do'),('102|1','学生退学',NULL),('1|0','学生管理',NULL),('2|0','教师管理','/tea/index.do'),('3|0','系统管理',NULL);
+insert  into `vv_sys_menu`(`menu_id`,`menu_name`,`menu_url`) values ('101|1','学生报名','bootstrap.do'),('102|1','学生退学',NULL),('103|1','学生信息','/stu/stuList.do'),('1|0','学生管理',NULL),('2|0','教师管理','/tea/index.do'),('301|3','系统用户管理','/sys/userIndex.do'),('3|0','系统管理',NULL);
 
 /*Table structure for table `vv_teacher` */
 
