@@ -13,9 +13,10 @@ import com.vv.common.dao.DefaultQueryDao;
 import com.vv.common.dao.PubCommitDao;
 import com.vv.common.exception.ServiceException;
 import com.vv.common.interf.BaseService;
+import com.vv.common.util.PubFun;
 
 /**
- * 用户数据加载，不需要事务控制
+ * 用户数据加载，不需要事务控制 not any more
  * 
  * @author Administrator
  * 
@@ -31,14 +32,24 @@ public class CommonServiceImpl extends BaseService {
 			throw new ServiceException("数据处理失败");
 		}
 	}
-
+	/**
+	 * 获取系统流水号
+	 * @param id
+	 * @param length
+	 * @return
+	 * @author wangyi  2015-2-25
+	 */
 	public String createMaxNo(String id, int length) {
-			String tSQL = "UPDATE vv_sys_maxno SET vv_sys_maxno.no = vv_sys_maxno.no+1 WHERE id = 333 AND @value := vv_sys_maxno.no+1; SELECT @value; ";
-			String tResult = tDefaultQueryDao.getOneValue(tSQL);
-			logger.debug(tResult);
-			return tResult;
+		double maxno = PubFun.f_Double(tDefaultQueryDao
+				.commonQuery_SQL("SELECT IFNULL(max(vv_sys_maxno.no),-1)+1 maxno FROM vv_sys_maxno WHERE id='" + id + "' for update").get(0)
+				.get("maxno"));
+		if (maxno == 0) {
+			logger.debug("auto do insert like >>INSERT INTO vv_sys_maxno VALUES ('hello',0)<<  ");
+			tPubCommitDao.doCommit(new DaoOperator("INSERT INTO vv_sys_maxno VALUES ('"+id+"',1)",DaoOperator.INSERT));
+			maxno = 1;
+		}else{
+			tPubCommitDao.doCommit(new DaoOperator("update vv_sys_maxno set no=no+1 where id ='"+id+"'",DaoOperator.UPDATE));
 		}
-		
-		
-
+		return PubFun.LCh(PubFun.s_Double(maxno, 0), "0", length);
+	}
 }

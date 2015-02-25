@@ -42,7 +42,7 @@ body {
 				$(this).click(function() {
 					if (url !== "") {
 						//$("#main_area").load(url);
-						commonAjax(url,null,function(html){
+						commonAjax_pro(url,null,function(html){
 							$("#main_area").html(html);
 								//alertMsg("load complete","primary")
 						})

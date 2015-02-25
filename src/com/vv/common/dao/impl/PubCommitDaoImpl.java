@@ -2,6 +2,7 @@ package com.vv.common.dao.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -44,7 +45,7 @@ public class PubCommitDaoImpl implements PubCommitDao {
 	}
 
 	@Override
-	public int doCommit(ArrayList<DaoOperator> tDaoOperators) {
+	public int doCommit(List<DaoOperator> tDaoOperators) {
 		int count = 0;
 		for (DaoOperator tDaoOperator : tDaoOperators) {
 			count += doCommit(tDaoOperator);

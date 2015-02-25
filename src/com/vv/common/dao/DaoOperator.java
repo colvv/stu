@@ -20,6 +20,10 @@ public class DaoOperator {
 		this.op_SQL = tSQL;
 		this.op_Type = SELECT;
 	}
+	public DaoOperator(String tSQL,String tOp_Type) {
+		this.op_SQL = tSQL;
+		this.op_Type = tOp_Type;
+	}
 
 	public DaoOperator(String tSQL_ID, Map tParams) {
 		this.op_SQL_ID = tSQL_ID;

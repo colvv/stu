@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vv.common.dao.DefaultQueryDao;
 import com.vv.common.dao.PubCommitDao;
+import com.vv.common.service.impl.CommonServiceImpl;
 
 public abstract class BaseService {
 	@Autowired

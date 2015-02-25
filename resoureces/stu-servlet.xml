@@ -73,7 +73,7 @@
 	</tx:advice>
 
 	<aop:config>
-		<aop:pointcut id="pc" expression="execution(* com.vv.stu.service.impl.*.*(..))" /> <!--把事务控制在Service层-->
+		<aop:pointcut id="pc" expression="execution(* com.vv.*.service.impl.*.*(..))" /> <!--把事务控制在Service层-->
 		<aop:advisor pointcut-ref="pc" advice-ref="myAdvice" />
 	</aop:config>
 	<!--  之后需要配置拦截器

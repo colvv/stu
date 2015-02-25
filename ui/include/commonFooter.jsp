@@ -13,7 +13,7 @@
 </footer>
 
 
-<!-- 模态框（Modal） -->
+<!-- 模态框（Modal） alert -->
 <div class="modal fade" id="alert_msg" tabindex="-1" role="dialog" aria-labelledby="错误信息" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -26,6 +26,26 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal -->
+</div>
+<!-- 模态框（Modal）confrim -->
+<div class="modal fade" id="comfrim_modal" tabindex="-1" role="dialog" aria-labelledby="提示信息" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">提示信息</h4>
+			</div>
+			<div class="modal-body">
+				<strong class="text-danger ">确定要删除么？</strong>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal" name="confrim">确定</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 			</div>
 		</div>
 		<!-- /.modal-content -->
@@ -54,18 +74,27 @@
 	</div>
 </div>
 <div class="loading_back" id="form_area"></div>
-<div class="container loading_content" id="form_area">
+<div class="container loading_content" id="form_content_area">
 	<div class="row mg-t-150">
 		<div class="col-xs-2"></div>
 		<div class="col-xs-8" name="form_content"></div>
 	</div>
 </div>
-
+<div class="modal fade" id="form_modal" tabindex="-1" role="dialog" aria-labelledby="信息录入" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="row mg-t-150">
+			<div class="col-xs-2"></div>
+			<div class="col-xs-8" name="form_content"></div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal -->
+</div>
 <style>
 .loading_back {
 	background: #000;
 	opacity: .5;
-	filter: alpha(opacity =           50);
+	filter: alpha(opacity =             50);
 	position: fixed;
 	z-index: 1040;
 	top: 0;

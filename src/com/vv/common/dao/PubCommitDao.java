@@ -7,6 +7,6 @@ import java.util.Map;
 public interface PubCommitDao {
 	public int doCommit(DaoOperator tDaoOperator);
 	// 2015-2-10 @wangyi : 考虑有序
-	public int doCommit(ArrayList<DaoOperator> tDaoOperators);
+	public int doCommit(List<DaoOperator> tDaoOperators);
 
 }

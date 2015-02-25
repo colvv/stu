@@ -5,6 +5,6 @@
 		select * from vv_teacher
 	</select>
 	<select id="stu_001" resultType="java.util.HashMap"  parameterType="java.util.Map" >
-		SELECT st.stu_id,stu_name,stu_kindergarten,stu_address FROM vv_student st,vv_student_info sti WHERE st.stu_id=sti.stu_id 
+		SELECT st.stu_id,stu_name,stu_kindergarten,stu_address FROM vv_student st left join vv_student_info sti on st.stu_id=sti.stu_id 
 	</select>
 </mapper>

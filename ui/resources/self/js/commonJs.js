@@ -1,9 +1,22 @@
 var max_process = 61;
 var max_dealing = 91;
-var interval_process =500;
+var interval_process = 500;
 var process_func;
 
 function commonAjax(request_url, data, func) {
+	$.ajax({
+		type : "POST", url : request_url, data : data,
+		contentType : "application/x-www-form-urlencoded; charset=utf-8", cache : false, dataType : "text",
+		success : function() {
+			//参数继续向下传递
+			func(arguments[0], arguments[1], arguments[2]);
+		}, error : function() {
+			alertMsg("系统处理异常", "danger");
+		}, complete : function() {
+		}
+	});
+}
+function commonAjax_pro(request_url, data, func) {
 	startProcess("");
 	$.ajax({
 		type : "POST", url : request_url, data : data,
@@ -11,10 +24,10 @@ function commonAjax(request_url, data, func) {
 		success : function() {
 			processHandler();
 			//参数继续向下传递
-			func(arguments[0],arguments[1],arguments[2]);
+			func(arguments[0], arguments[1], arguments[2]);
 		}, error : function() {
 			processError();
-			alertMsg("系统处理异常","danger");
+			alertMsg("系统处理异常", "danger");
 		}, complete : function() {
 			processComplete();
 		}
@@ -28,6 +41,13 @@ function alertMsg(msg, type) {
 	$("#alert_msg .modal-body").html("<strong class='text-" + type + " '>" + msg + "</strong>");
 	$("#alert_msg").modal('show');
 }
+function confrimMsg(msg, func) {
+	fObject("confrim","comfrim_modal").unbind("click");
+	fObject("confrim","comfrim_modal").click(func);
+	$("#comfrim_modal .modal-body").html("<strong class='text-danger'>" + msg + "</strong>");
+	$("#comfrim_modal").modal('show');
+}
+
 function startProcess(msg) {
 	if (!msg) {
 		msg = "正在加载，请稍候";
@@ -83,7 +103,7 @@ function processComplete(msg) {
 	}, interval_process)
 
 }
-function processError(){
+function processError() {
 	clearTimeout(process_func);
 	$("#show_process").hide();
 	$("#show_process .progress-bar").css("width", "0%");
@@ -98,5 +118,25 @@ function _log(message) {
 		}
 	} catch (e) {
 		//do nothing
+	}
+}
+function fValue(field, baseD) {
+	if (baseD) {
+		return $("#" + baseD + "  [name='" + field + "']").val();
+	} else {
+		return $("[name='" + field + "']").val();
+	}
+}
+/**
+ * 根据name来获取元素本身 主要考虑页面相同id过多
+ * 
+ * @param field
+ * @returns
+ */
+function fObject(field, baseD) {
+	if (baseD) {
+		return $("#" + baseD + "  [name='" + field + "']");
+	} else {
+		return $("[name='" + field + "']");
 	}
 }

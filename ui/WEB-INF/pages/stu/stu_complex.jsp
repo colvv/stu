@@ -1,5 +1,6 @@
 <script>
 	$(document).ready(function() {
+		var baseDiv = "main_area";
 		var table = $('#example').DataTable({
 			"ajax" : {
 				"url" : "loadTable/stu_001.do", "dataSrc" : ""
@@ -21,13 +22,35 @@
 				$(this).addClass('selected');
 			}
 		});
-		$("[name='refresh_button']").click(function(){
+		fObject('refresh_button',baseDiv).click(function(){
 			 table.ajax.reload();
 		});
-		$("[name='add_button']").click(function(){
+		fObject('add_button',baseDiv).click(function(){
 			$("#form_area").show();
-			$("#form_area [name='form_content']").load("/stu/model/addModel.do");
+			$("#form_content_area").show();
+			commonAjax("/stu/model/addModel.do",null,function(msg){
+				$("#form_content_area [name='form_content']").html(msg);
+			});
 		});
+		fObject('del_button',baseDiv).click(function(){
+			confrimMsg("确定要删除么？",function(){
+				alert(1);
+			});
+			return;
+			commonAjax_pro("/stu/addStu.do", {
+				stu_name : fObject("stu_name", baseDiv).val()
+			}, function(msg) {
+				processError();
+				if ("0" === msg) {
+					alertMsg("保存成功");
+					fObject('refresh_button', 'main_area').click();
+				} else {
+					alertMsg("保存失败");
+				}
+			});
+		});
+		
+		
 	});
 </script>
 <div class="row">
@@ -38,7 +61,7 @@
 				<button type="button" class="btn btn-default input-sm" name="refresh_button">刷新</button>
 				<button type="button" class="btn btn-default input-sm" name="add_button">新增</button>
 				<button type="button" class="btn btn-default input-sm">修改</button>
-				<button type="button" class="btn btn-default input-sm">删除</button>
+				<button type="button" class="btn btn-default input-sm" name="del_button">删除</button>
 			</div>
 			<table id="example" class="display" cellspacing="0" width="100%">
 				<thead>
