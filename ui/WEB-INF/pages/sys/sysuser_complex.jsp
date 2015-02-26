@@ -1,28 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script>
 	$(document).ready(function() {
-		var table = $('#example').DataTable({
+		var table = $('#sys_001').DataTable({
 			"ajax" : {
 				"url" : "loadTable/sys_001.do",
 				"dataSrc" : ""
 			},
 			"columns" : [ {
-				"data" : "TEA_NAME"
+				"data" : "user_name"
 			}, {
-				"data" : "TEA_STATE"
+				"data" : "user_phone"
 			}, {
-				"data" : "TEA_SEX"
-			}, {
-				"data" : "TEA_BIRTHDAY"
-			}, {
-				"data" : "TEA_PHONE"
-			}, {
-				"data" : "TEA_ADDRESS"
-			}, {
-				"data" : "TEA_DESC"
+				"data" : "last_login_time"
 			} ]
 		});
-		$('#example tbody').on('click', 'tr', function() {
+		$('#sys_001 tbody').on('click', 'tr', function() {
 			if ($(this).hasClass('selected')) {
 				$(this).removeClass('selected');
 			} else {
@@ -42,16 +34,12 @@
 				<button type="button" class="btn btn-default input-sm">修改</button>
 				<button type="button" class="btn btn-default input-sm">删除</button>
 			</div>
-			<table id="example" class="display" cellspacing="0" width="100%">
+			<table id="sys_001" class="display" cellspacing="0" width="100%">
 				<thead>
 					<tr>
-						<th>教师姓名</th>
-						<th>教师状态</th>
-						<th>性别</th>
-						<th>生日</th>
-						<th>联系电话</th>
-						<th>联系地址</th>
-						<th>备注</th>
+						<th>用户姓名</th>
+						<th>联系方式</th>
+						<th>上次登录时间</th>
 					</tr>
 				</thead>
 			</table>
