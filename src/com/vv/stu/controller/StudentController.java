@@ -22,9 +22,7 @@ public class StudentController extends BaseController {
 
 	@RequestMapping("/stuList")
 	public ModelAndView stuList() {
-		ModelAndView tModelAndView = new ModelAndView();
-
-		tModelAndView.setViewName("stu/stu_complex");
+		ModelAndView tModelAndView = new ModelAndView("stu/stu_complex");
 		return tModelAndView;
 	}
 
@@ -32,8 +30,17 @@ public class StudentController extends BaseController {
 	@ResponseBody
 	public String addStu() {
 		String tCurrentYear = PubFun.getCurrentDate().substring(0, 4);
-		String stu_id = tCommonServiceImpl.createMaxNo("stu_id" + tCurrentYear, 6);
 		Map tParams = PubFun.parseReuest_all(request);
+		// 2015-2-26 @wangyi : 特殊处理时间
+		String stu_birthday = (String) tParams.get("stu_birthday");
+		if (PubFun.checkNecessaryString(stu_birthday)) {
+			stu_birthday = stu_birthday.replace("-", "");
+			stu_birthday = stu_birthday.replace("/", "");
+		} else {
+			stu_birthday = "0";
+		}
+		String stu_id = tCommonServiceImpl.createMaxNo("stu_id" + tCurrentYear, 6);
+		tParams.put("stu_birthday", stu_birthday);
 		tParams.put("stu_id", tCurrentYear + stu_id);
 		// 2015-2-25 @wangyi : 学号为年份加上
 		return tStudentServiceImpl.addStu(tParams) ? "0" : "1";
@@ -46,9 +53,37 @@ public class StudentController extends BaseController {
 		return tStudentServiceImpl.delStu(stu_id) ? "0" : "1";
 	}
 
-	@RequestMapping("/model/{model_name}")
-	public String model(@PathVariable String model_name) {
-		return "stu/model/" + model_name;
+	@RequestMapping("/modStu")
+	@ResponseBody
+	public String modStu() {
+		String stu_id = request.getParameter("stu_id");
+		Map tParams = PubFun.parseReuest_all(request);
+		// 2015-2-26 @wangyi : 特殊处理时间
+		String stu_birthday = (String) tParams.get("stu_birthday");
+		if (PubFun.checkNecessaryString(stu_birthday)) {
+			stu_birthday = stu_birthday.replace("-", "");
+			stu_birthday = stu_birthday.replace("/", "");
+		} else {
+			stu_birthday = "0";
+		}
+		tParams.put("stu_birthday", stu_birthday);
+		return tStudentServiceImpl.modStu(tParams) ? "0" : "1";
+	}
+
+	@RequestMapping("/model/addModel")
+	public ModelAndView addModel() {
+		ModelAndView tModelAndView = new ModelAndView("stu/model/addModel");
+		tModelAndView.addObject("form_action", "/stu/addStu.do");
+		return tModelAndView;
+	}
+
+	@RequestMapping("/model/modModel")
+	public ModelAndView modModel() {
+		ModelAndView tModelAndView = new ModelAndView("stu/model/addModel");
+		String stu_id = request.getParameter("stu_id");
+		tModelAndView.addAllObjects(tStudentServiceImpl.getStu(stu_id));
+		tModelAndView.addObject("form_action", "/stu/modStu.do");
+		return tModelAndView;
 	}
 
 }

@@ -5,9 +5,8 @@ var process_func;
 
 function commonAjax(request_url, data, func) {
 	$.ajax({
-		type : "POST", url : request_url, data : data,
-		contentType : "application/x-www-form-urlencoded; charset=utf-8", cache : false, dataType : "text",
-		success : function() {
+		type : "POST", url : request_url, data : data, contentType : "application/x-www-form-urlencoded; charset=utf-8", cache : false,
+		dataType : "text", success : function() {
 			// 参数继续向下传递
 			func(arguments[0], arguments[1], arguments[2]);
 		}, error : function() {
@@ -19,9 +18,8 @@ function commonAjax(request_url, data, func) {
 function commonAjax_pro(request_url, data, func) {
 	startProcess("");
 	$.ajax({
-		type : "POST", url : request_url, data : data,
-		contentType : "application/x-www-form-urlencoded; charset=utf-8", cache : false, dataType : "text",
-		success : function() {
+		type : "POST", url : request_url, data : data, contentType : "application/x-www-form-urlencoded; charset=utf-8", cache : false,
+		dataType : "text", success : function() {
 			processHandler();
 			// 参数继续向下传递
 			func(arguments[0], arguments[1], arguments[2]);
@@ -110,8 +108,8 @@ function processError() {
 }
 function _log(message) {
 	var now = new Date(), y = now.getFullYear(), m = now.getMonth() + 1, // ！JavaScript中月分是从0开始的
-	d = now.getDate(), h = now.getHours(), min = now.getMinutes(), s = now.getSeconds(), time = y + '/' + m + '/' + d
-			+ ' ' + h + ':' + min + ':' + s;
+	d = now.getDate(), h = now.getHours(), min = now.getMinutes(), s = now.getSeconds(), time = y + '/' + m + '/' + d + ' ' + h + ':' + min
+			+ ':' + s;
 	try {
 		if (window.console) {
 			console.log(time + ' My App: ' + message);
@@ -120,6 +118,23 @@ function _log(message) {
 		// do nothing
 	}
 }
+var _last_form = "";
+function showForm(url, param, refresh) {
+	if (_last_form === url && !refresh) {
+		$("#form_modal").modal('show');
+	} else {
+		_last_form = url;
+		commonAjax(url, param, function(msg) {
+			$("#form_modal [name='form_content']").html(msg);
+			$("#form_modal").modal('show');
+		});
+	}
+
+}
+function hideForm() {
+	$("#form_modal").modal('hide');
+}
+
 function fValue(field, baseD) {
 	if (baseD) {
 		return $("#" + baseD + "  [name='" + field + "']").val();
@@ -155,9 +170,31 @@ function dPicker($obj) {
 		weekStart : 1, todayBtn : 1, autoclose : 1, todayHighlight : 1, startView : 2, minView : 2, forceParse : 0
 	});
 }
+/**
+ * 校验日期合法性
+ * @param str
+ * @returns {Boolean}
+ */
+function checkDate(str) {
+	var reg = /^(\d{4})(\d{2})(\d{2})$/;
+	var r = str.match(reg);
+	if (r == null)
+		return false;
+	r[2] = r[2] - 1;
+	var d = new Date(r[1], r[2], r[3]);
+	if (d.getFullYear() != r[1])
+		return false;
+	if (d.getMonth() != r[2])
+		return false;
+	if (d.getDate() != r[3])
+		return false;
+
+	return true;
+}
 
 /**
  * 表单校验部分
+ * 
  *
  */
 (function($) {
@@ -165,30 +202,72 @@ function dPicker($obj) {
 		var validation = $(this).attr("validation");
 		var value = $.trim($(this).val());
 		var $display = $(this).closest(".form-group");
-		var $msg = $(this).closest(".control-label");
+		var $form = $(this).closest("form");
+		var $msg = $form.find("label[for='" + $(this).attr("name") + "']");
 		removeClass($display);
 		removeMsg($msg);
-		if (validation.indexOf("required") !== -1) {
-			if (value != "" && value != null && value != "null") {
-				$display.addClass("has-success");
-				$msg.appendTo("<span class='extendinfo'><i class='icon-ok-sign' style='color:green;'></i></span>");
-			} else {
+		//准备结束
+		var valis = validation.split("|");
+		for ( var i = 0; i < valis.length; i++) {
+			var checkResult = validateFunc(value, valis[i]);
+			if (checkResult !== 0) {
+				//出现错误
 				$display.addClass("has-error");
-				$msg.appendTo("<span class='extendinfo'><i class='icon-minus-sign' style='color:green;'></i>此项必须填写</span>");
+				$msg
+						.after("<div class='extendinfo label label-danger pull-right'><i class='icon-minus-sign'></i>" + checkResult
+								+ "</div>");
+				// 2015-2-26 @wangyi : 增加一个提示动画效果
+				$msg.nextAll(".extendinfo").animate({
+					marginRight : 70
+				}, 200, null, function() {
+					$msg.nextAll(".extendinfo").animate({
+						marginRight : 0
+					}, 200);
+				});
+				return false;
 			}
 		}
+		$display.addClass("has-success");
+		$msg.after("<div class='extendinfo label label-success pull-right'><i class='icon-ok-sign'></i></div>");
+		return true;
 	};
 	$.fn.vali_Form = function() {
 		$(this).find("[validation]").each(function() {
 			$(this).vali_Ele();
-
 		})
+	};
+	$.fn.hasError = function() {
+		return $(this).find(".label-danger").length > 0 ? true : false;
 	};
 	function removeClass($obj) {
 		$obj.removeClass("has-success");
 		$obj.removeClass("has-error");
 	}
 	function removeMsg($obj) {
-		$obj.find(".extendinfo").remove();
+		$obj.nextAll(".extendinfo").remove();
+	}
+	function validateFunc(value, rule) {
+		if (rule === "required") {
+			if (value == "" || value == null || value == "null") {
+				return "此项必须填写";
+			}
+		} else if (rule === "date") {
+			value = value.replace("-", "").replace("-", "");
+			value = value.replace("/", "").replace("/", "");
+			if (!checkDate(value)) {
+				return "日期不合法请重新填写";
+			}
+		} else if (rule.substr(0, 3) === "len") {
+			var length = rule.split("=")[1];
+			if (value.length != length) {
+				return "此项的长度应为" + length;
+			}
+		} else if (rule.indexOf("maxlen") !== -1) {
+			var maxlength = rule.split("=")[1];
+			if (value.length > maxlength) {
+				return "此项最大长度为" + maxlength;
+			}
+		}
+		return 0;
 	}
 })(jQuery);

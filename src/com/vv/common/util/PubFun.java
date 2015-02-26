@@ -1,6 +1,8 @@
 package com.vv.common.util;
 
 import java.math.RoundingMode;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -294,6 +296,24 @@ public class PubFun {
 		} else {
 			return "";
 		}
+	}
+	public static String MD5Encode(String strSrc, String key) {
+		try {
+			MessageDigest md5 = MessageDigest.getInstance("MD5");
+			md5.update(strSrc.getBytes("UTF8"));
+			StringBuffer result = new StringBuffer(32);
+			byte[] temp;
+			temp = md5.digest(key.getBytes("UTF8"));
+			for (int i = 0; i < temp.length; i++) {
+				result.append(Integer.toHexString((0x000000ff & temp[i]) | 0xffffff00).substring(6));
+			}
+			return result.toString();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

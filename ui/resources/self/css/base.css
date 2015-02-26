@@ -25,6 +25,9 @@ body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
 .mg-b-20{
 	margin-bottom: 20px;
 }
+.mg-l-5{
+	margin-left: 5px;
+}
 .line_center{
 	margin: 0 auto;
 	display: block;

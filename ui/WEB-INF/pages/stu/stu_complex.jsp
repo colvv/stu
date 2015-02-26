@@ -4,10 +4,8 @@
 		var baseDiv = "main_area";
 		var table = $('#example').DataTable({
 			"ajax" : {
-				"url" : "loadTable/stu_001.do",
-				"dataSrc" : ""
-			},
-			"columns" : [ {
+				"url" : "loadTable/stu_001.do", "dataSrc" : ""
+			}, "columns" : [ {
 				"data" : "stu_id"
 			}, {
 				"data" : "stu_name"
@@ -29,10 +27,16 @@
 			table.ajax.reload();
 		});
 		fObject('add_button', baseDiv).click(function() {
-			commonAjax("/stu/model/addModel.do", null, function(msg) {
-				$("#form_modal [name='form_content']").html(msg);
-				$("#form_modal").modal('show');
-			});
+			showForm("/stu/model/addModel.do", null);
+		});
+		fObject('mod_button', baseDiv).click(function() {
+			if (table.$('tr.selected').length !== 1) {
+				alertMsg("请先选中要修改的学生！", "default");
+				return;
+			}
+			showForm("/stu/model/modModel.do", {
+				stu_id : table.$('tr.selected').find("td:eq(0)").text()
+			}, true);
 		});
 		fObject('del_button', baseDiv).click(function() {
 			if (table.$('tr.selected').length !== 1) {
@@ -58,12 +62,12 @@
 </script>
 <div class="row">
 	<div class="panel panel-primary">
-		<div class="panel-heading">用户信息</div>
+		<div class="panel-heading">学生信息</div>
 		<div class="panel-body">
 			<div class="btn-group  mg-b-20" aria-label="操作按钮组">
 				<button type="button" class="btn btn-default input-sm" name="refresh_button">刷新</button>
 				<button type="button" class="btn btn-default input-sm" name="add_button">新增</button>
-				<button type="button" class="btn btn-default input-sm">修改</button>
+				<button type="button" class="btn btn-default input-sm" name="mod_button">修改</button>
 				<button type="button" class="btn btn-default input-sm" name="del_button">删除</button>
 			</div>
 			<table id="example" class="display" cellspacing="0" width="100%">
