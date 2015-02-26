@@ -5,42 +5,30 @@ var process_func;
 
 function commonAjax(request_url, data, func) {
 	$.ajax({
-		type : "POST",
-		url : request_url,
-		data : data,
-		contentType : "application/x-www-form-urlencoded; charset=utf-8",
-		cache : false,
-		dataType : "text",
+		type : "POST", url : request_url, data : data,
+		contentType : "application/x-www-form-urlencoded; charset=utf-8", cache : false, dataType : "text",
 		success : function() {
 			// 参数继续向下传递
 			func(arguments[0], arguments[1], arguments[2]);
-		},
-		error : function() {
+		}, error : function() {
 			alertMsg("系统处理异常", "danger");
-		},
-		complete : function() {
+		}, complete : function() {
 		}
 	});
 }
 function commonAjax_pro(request_url, data, func) {
 	startProcess("");
 	$.ajax({
-		type : "POST",
-		url : request_url,
-		data : data,
-		contentType : "application/x-www-form-urlencoded; charset=utf-8",
-		cache : false,
-		dataType : "text",
+		type : "POST", url : request_url, data : data,
+		contentType : "application/x-www-form-urlencoded; charset=utf-8", cache : false, dataType : "text",
 		success : function() {
 			processHandler();
 			// 参数继续向下传递
 			func(arguments[0], arguments[1], arguments[2]);
-		},
-		error : function() {
+		}, error : function() {
 			processError();
 			alertMsg("系统处理异常", "danger");
-		},
-		complete : function() {
+		}, complete : function() {
 			processComplete();
 		}
 	});
@@ -122,8 +110,8 @@ function processError() {
 }
 function _log(message) {
 	var now = new Date(), y = now.getFullYear(), m = now.getMonth() + 1, // ！JavaScript中月分是从0开始的
-	d = now.getDate(), h = now.getHours(), min = now.getMinutes(), s = now.getSeconds(), time = y + '/' + m + '/' + d + ' ' + h + ':' + min
-			+ ':' + s;
+	d = now.getDate(), h = now.getHours(), min = now.getMinutes(), s = now.getSeconds(), time = y + '/' + m + '/' + d
+			+ ' ' + h + ':' + min + ':' + s;
 	try {
 		if (window.console) {
 			console.log(time + ' My App: ' + message);
@@ -162,3 +150,45 @@ function parseParamObj($objs) {
 	param_str += "}";
 	return eval("(" + param_str + ")");
 }
+function dPicker($obj) {
+	$obj.datetimepicker({
+		weekStart : 1, todayBtn : 1, autoclose : 1, todayHighlight : 1, startView : 2, minView : 2, forceParse : 0
+	});
+}
+
+/**
+ * 表单校验部分
+ *
+ */
+(function($) {
+	$.fn.vali_Ele = function() {
+		var validation = $(this).attr("validation");
+		var value = $.trim($(this).val());
+		var $display = $(this).closest(".form-group");
+		var $msg = $(this).closest(".control-label");
+		removeClass($display);
+		removeMsg($msg);
+		if (validation.indexOf("required") !== -1) {
+			if (value != "" && value != null && value != "null") {
+				$display.addClass("has-success");
+				$msg.appendTo("<span class='extendinfo'><i class='icon-ok-sign' style='color:green;'></i></span>");
+			} else {
+				$display.addClass("has-error");
+				$msg.appendTo("<span class='extendinfo'><i class='icon-minus-sign' style='color:green;'></i>此项必须填写</span>");
+			}
+		}
+	};
+	$.fn.vali_Form = function() {
+		$(this).find("[validation]").each(function() {
+			$(this).vali_Ele();
+
+		})
+	};
+	function removeClass($obj) {
+		$obj.removeClass("has-success");
+		$obj.removeClass("has-error");
+	}
+	function removeMsg($obj) {
+		$obj.find(".extendinfo").remove();
+	}
+})(jQuery);

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vv.stu.model">
+	<insert id="insertstu" parameterType="java.util.HashMap">
+		INSERT INTO vv_student (STU_ID, STU_NAME, STU_MAKE_TIME) VALUES (#{stu_id},
+		#{stu_name}, NOW())
+	</insert>
+	<insert id="insertstuinfo" parameterType="java.util.HashMap">
+		INSERT INTO vv_student_info (STU_ID, STU_LITTLE_NAME, STU_SEX,
+		STU_BIRTHDAY, STU_KINDERGARTEN, STU_ADDRESS, STU_PHONE, STU_BELONG_TEACHER, STU_BACKINFO, STU_SOURCE) VALUES (
+		#{stu_id}, #{stu_lt_name}, #{stu_sex}, #{stu_birthday}, #{stu_kindergarten}, #{stu_address}, #{stu_phone}, '1',
+		#{stu_backinfo}, '1')
+	</insert>
+</mapper>

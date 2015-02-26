@@ -1,5 +1,7 @@
 package com.vv.stu.service.impl;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 
 import com.vv.common.dao.DaoOperator;
@@ -9,14 +11,10 @@ import com.vv.common.interf.BaseService;
 @Service
 public class StudentServiceImpl extends BaseService {
 
-	public boolean addStu(String stu_id, String stu_name) {
+	public boolean addStu(Map tParams) {
 		try {
-			tPubCommitDao.doCommit(new DaoOperator("INSERT INTO vv_student (STU_ID, STU_NAME, STU_MAKE_TIME) VALUES ('" + stu_id + "', '"
-					+ stu_name + "', NOW())", DaoOperator.INSERT));
-			tPubCommitDao
-					.doCommit(new DaoOperator(
-							"INSERT INTO vv_student_info (STU_ID, STU_LITTLE_NAME, STU_SEX, STU_BIRTHDAY, STU_KINDERGARTEN, STU_ADDRESS, STU_PHONE, STU_BELONG_TEACHER, STU_BACKINFO, STU_SOURCE) VALUES ('"
-									+ stu_id + "', '" + stu_name + "', '1', 1, '1', '1', '1', '1', '1', '1');", DaoOperator.INSERT));
+			tPubCommitDao.doCommit(new DaoOperator("insertstu", tParams));
+			tPubCommitDao.doCommit(new DaoOperator("insertstuinfo", tParams));
 			return true;
 		} catch (Exception e) {
 			logger.error("service层处理出现异常：" + e.toString());

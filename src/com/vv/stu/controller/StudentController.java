@@ -1,5 +1,7 @@
 package com.vv.stu.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,11 +31,12 @@ public class StudentController extends BaseController {
 	@RequestMapping("/addStu")
 	@ResponseBody
 	public String addStu() {
-		String stu_name = request.getParameter("stu_name");
 		String tCurrentYear = PubFun.getCurrentDate().substring(0, 4);
 		String stu_id = tCommonServiceImpl.createMaxNo("stu_id" + tCurrentYear, 6);
+		Map tParams = PubFun.parseReuest_all(request);
+		tParams.put("stu_id", tCurrentYear + stu_id);
 		// 2015-2-25 @wangyi : 学号为年份加上
-		return tStudentServiceImpl.addStu(tCurrentYear + stu_id, stu_name) ? "0" : "1";
+		return tStudentServiceImpl.addStu(tParams) ? "0" : "1";
 	}
 
 	@RequestMapping("/delStu")

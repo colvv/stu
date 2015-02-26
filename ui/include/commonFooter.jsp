@@ -74,6 +74,7 @@
 		</div>
 	</div>
 </div>
+<!-- 模态框（Modal）FORM -->
 <div class="modal fade " id="form_modal" tabindex="-1" role="dialog" aria-labelledby="信息录入" aria-hidden="true">
 	<div class=" modal-dialog ">
 		<div name="form_content"></div>
@@ -106,7 +107,7 @@
 }
 </style>
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-<script src="${ctx}/resources/jquery/jquery-1.11.2.min.js"></script>
+<script src="${ctx}/resources/jquery/js/jquery-1.11.2.min.js"></script>
 
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="${ctx}/resources/bootstrap/js/bootstrap.min.js"></script>
