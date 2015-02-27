@@ -3,22 +3,20 @@
 	$(document).ready(function() {
 		var baseDiv = "form_modal";
 		fObject("dialog_tabs", baseDiv).find("a:eq(0)").tab("show");
-		fObject("stu_sex",baseDiv).val("${stu_sex}");
-		dPicker(fObject("stu_birthday_div", baseDiv));
 		fObject("confrim", baseDiv).click(function() {
 			$("#stu_info_form").vali_Form();
 			if ($("#stu_info_form").hasError()) {
 				return;
 			}
 			hideForm();
-			var paramObj = parseParamObj(fObject("form_content", baseDiv).find("[name]"));
+			var paramObj = parseParamObj($("#stu_info_form").find("[name]"));
 			commonAjax_pro("${form_action}", paramObj, function(msg) {
-				processError();
+				processStop();
 				if ("0" === msg) {
-					alertMsg("保存成功");
+					alertMsg_B("保存成功");
 					fObject('refresh_button', 'main_area').click();
 				} else {
-					alertMsg("保存失败");
+					alertMsg_B("保存失败");
 				}
 			});
 		});
@@ -28,7 +26,9 @@
 		$("#stu_info_form [validation]").blur(function() {
 			$(this).vali_Ele();
 		});
-
+		
+		fObject("stu_sex",baseDiv).val("${stu_sex}");
+		dPicker(fObject("stu_birthday_div", baseDiv));
 	});
 </script>
 <div class="modal-content">

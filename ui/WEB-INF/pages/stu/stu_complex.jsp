@@ -23,6 +23,7 @@
 				$(this).addClass('selected');
 			}
 		});
+		// 按钮组开始~
 		fObject('refresh_button', baseDiv).click(function() {
 			table.ajax.reload();
 		});
@@ -47,12 +48,12 @@
 				commonAjax_pro("/stu/delStu.do", {
 					stu_id : table.$('tr.selected').find("td:eq(0)").text()
 				}, function(msg) {
-					processError();
+					processStop();
 					if ("0" === msg) {
-						alertMsg("删除成功");
+						alertMsg_B("删除成功");
 						fObject('refresh_button', 'main_area').click();
 					} else {
-						alertMsg("删除失败");
+						alertMsg_B("删除失败");
 					}
 				});
 			});

@@ -24,7 +24,7 @@ function commonAjax_pro(request_url, data, func) {
 			// 参数继续向下传递
 			func(arguments[0], arguments[1], arguments[2]);
 		}, error : function() {
-			processError();
+			processStop();
 			alertMsg("系统处理异常", "danger");
 		}, complete : function() {
 			processComplete();
@@ -101,7 +101,7 @@ function processComplete(msg) {
 	}, interval_process)
 
 }
-function processError() {
+function processStop() {
 	clearTimeout(process_func);
 	$("#show_process").hide();
 	$("#show_process .progress-bar").css("width", "0%");
@@ -257,6 +257,12 @@ function checkDate(str) {
 			if (!checkDate(value)) {
 				return "日期不合法请重新填写";
 			}
+		} else if (rule === "password") {
+			var regx = /^[a-zA-Z0-9_]+$/;
+			if(!regx.test(value)){
+				return "只可输入字母数字下划线";	
+			}
+
 		} else if (rule.substr(0, 3) === "len") {
 			var length = rule.split("=")[1];
 			if (value.length != length) {
@@ -267,7 +273,32 @@ function checkDate(str) {
 			if (value.length > maxlength) {
 				return "此项最大长度为" + maxlength;
 			}
+		} else if (rule.indexOf("minlen") !== -1) {
+			var minlength = rule.split("=")[1];
+			if (value.length < minlength) {
+				return "此项最小长度为" + minlength;
+			}
 		}
 		return 0;
 	}
 })(jQuery);
+
+function alertMsg_B(msg, type) {
+	if (!type) {
+		if (msg.indexOf("成功") !== -1) {
+			type = "success";
+		} else if (msg.indexOf("失败") !== -1) {
+			type = "error";
+		} else {
+			type = "info";
+		}
+	}
+	$("#alert_bottom").hide();
+	var html = '<span class="label label-' + type + ' " >' + type + '</span><i class=" icon-info-sign mg-l-5"></i><strong class="mg-l-5 ">'
+			+ msg + '</strong>';
+	fObject("dispay_area", "alert_bottom").html(html);
+	$("#alert_bottom").fadeIn("normal");
+	setTimeout(function() {
+		$("#alert_bottom").fadeOut("slow");
+	}, 5000);
+}

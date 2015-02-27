@@ -69,14 +69,14 @@ public class StudentController extends BaseController {
 
 	@RequestMapping("/model/addModel")
 	public ModelAndView addModel() {
-		ModelAndView tModelAndView = new ModelAndView("stu/model/addModel");
+		ModelAndView tModelAndView = new ModelAndView("stu/model/stuModel");
 		tModelAndView.addObject("form_action", "/stu/addStu.do");
 		return tModelAndView;
 	}
 
 	@RequestMapping("/model/modModel")
 	public ModelAndView modModel() {
-		ModelAndView tModelAndView = new ModelAndView("stu/model/addModel");
+		ModelAndView tModelAndView = new ModelAndView("stu/model/stuModel");
 		String stu_id = request.getParameter("stu_id");
 		tModelAndView.addAllObjects(tStudentServiceImpl.getStu(stu_id));
 		tModelAndView.addObject("form_action", "/stu/modStu.do");

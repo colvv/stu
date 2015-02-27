@@ -81,12 +81,23 @@
 	</div>
 	<!-- /.modal-content -->
 </div>
+<div class="container navbar-fixed-bottom" id="alert_bottom" style="display: none">
+	<div class="row">
+		<div class="col-xs-3"></div>
+		<div class="alert alert-success alert-dismissable  col-xs-6 ">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<span name="dispay_area">
+			<span class="label label-success " >success</span><strong class="mg-l-5 line_center">保存成功！</strong>
+			</span>
+		</div>
+	</div>
+</div>
 <!-- /.modal -->
 <style>
 .loading_back {
 	background: #000;
 	opacity: .5;
-	filter: alpha(opacity = 50);
+	filter: alpha(opacity =     50);
 	position: fixed;
 	z-index: 1040;
 	top: 0;
@@ -108,6 +119,8 @@
 </style>
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
 <script src="${ctx}/resources/jquery/js/jquery-1.11.2.min.js"></script>
+<script src="${ctx}/resources/jquery/js/jquery.md5.js"></script>
+
 
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="${ctx}/resources/bootstrap/js/bootstrap.min.js"></script>

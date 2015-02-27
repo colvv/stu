@@ -1,4 +1,4 @@
-/*
+﻿/*
 SQLyog Ultimate v11.52 (64 bit)
 MySQL - 5.5.25 : Database - stu_new
 *********************************************************************
@@ -222,3 +222,15 @@ insert  into `vv_teacher`(`TEA_ID`,`TEA_NAME`,`TEA_STATE`,`TEA_TYPE`,`TEA_SEX`,`
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+
+CREATE TABLE `vv_sys_user` (
+  `user_id` varchar(20) NOT NULL,
+  `user_name` varchar(20) DEFAULT NULL,
+  `user_phone` varchar(20) DEFAULT NULL,
+  `rela_role_id` varchar(10) DEFAULT NULL,
+  `user_password` varchar(45) NOT NULL,
+  `last_login_time` datetime DEFAULT NULL,
+  `user_state` varchar(2) DEFAULT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -6,7 +6,7 @@
 	</select>
 	<insert id="insertUser" parameterType="java.util.HashMap">
 		insert into vv_sys_user
-		(user_id,user_name,user_name,rela_role_id,user_password,last_login_time,user_state)
+		(user_id,user_name,user_phone,rela_role_id,user_password,last_login_time,user_state)
 		values
 		(#{user_id},#{user_name},#{user_phone},#{rela_role_id},#{user_password},null,#{user_state})
 	</insert>

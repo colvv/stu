@@ -49,6 +49,7 @@ body {
 					}
 				});
 				$(this).attr("href", "#");
+				//alertMsg_B("删除成功");
 			});
 			/** 进度条测试
 			startProcess("");
