@@ -30,24 +30,40 @@ public class SysUserController extends BaseController {
 	@ResponseBody
 	public String addSysUser() {
 		Map tParams = PubFun.parseReuest_all(request);
-		String user_id = tCommonServiceImpl.createMaxNo("sysuser", 6);
-		tParams.put("user_id", user_id);
-		return tSysUserServiceImpl.addSysUser(tParams) ? "0" : "1";
+		// 2015-2-28 @wangyi : 用户名自己生成
+		//String user_id = tCommonServiceImpl.createMaxNo("sysuser", 6);
+		//tParams.put("user_id", "SY"+user_id);
+		return tSysUserServiceImpl.addSysUser(tParams) ? "0" : "1|请检查用户名是否重复";
+	}
+	@RequestMapping("/modSysUser")
+	@ResponseBody
+	public String modSysUser() {
+		Map tParams = PubFun.parseReuest_all(request);
+		return tSysUserServiceImpl.modSysUser(tParams) ? "0" : "1";
+	}
+	@RequestMapping("/delSysUser")
+	@ResponseBody
+	public String delSysUser() {
+		Map tParams = PubFun.parseReuest_all(request);
+		return tSysUserServiceImpl.delSysUser(tParams) ? "0" : "1";
 	}
 
 	@RequestMapping("/model/addModel")
 	public ModelAndView addModel() {
 		ModelAndView tModelAndView = new ModelAndView("sys/model/sysUserModel");
 		tModelAndView.addObject("form_action", "/sys/addSysUser.do");
+		tModelAndView.addObject("password_check", "required|password|maxlen=20|minlen=5");
 		return tModelAndView;
 	}
 
 	@RequestMapping("/model/modModel")
 	public ModelAndView modModel() {
 		ModelAndView tModelAndView = new ModelAndView("sys/model/sysUserModel");
-		String stu_id = request.getParameter("stu_id");
-		// tModelAndView.addAllObjects(tStudentServiceImpl.getStu(stu_id));
+		Map tParams = PubFun.parseReuest_all(request);
+		tModelAndView.addAllObjects(tSysUserServiceImpl.getSysUser(tParams));
+		tModelAndView.addObject("mod_flag", "1");
 		tModelAndView.addObject("form_action", "/sys/modSysUser.do");
+		tModelAndView.addObject("password_check", "password|maxlen=20|minlen=5");
 		return tModelAndView;
 	}
 

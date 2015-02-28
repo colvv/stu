@@ -81,6 +81,12 @@
 		<bean class="com.cosbulk.isap.common.interceptor.CheckLoginInterceptor" />
 	</mvc:interceptors>
 	 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/*.do" />
+			<bean class="com.vv.stu.interceptor.LoginInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors> 
 	
 	<!--
 	<bean id="dataSource"

@@ -10,23 +10,46 @@
 			}
 			hideForm();
 			var paramObj = parseParamObj($("#sysuser_info_form").find("[name]"));
-			// md5 加密 twice
-			paramObj.user_password = $.md5($.md5(paramObj.user_password));
+			// md5 加密 twice,修改时不需要输入
+			if (checkNecessaryStr(paramObj.user_password)) {
+				paramObj.user_password = $.md5($.md5(paramObj.user_password));
+			}
 			commonAjax_pro("${form_action}", paramObj, function(msg) {
 				processStop();
-				if ("0" === msg) {
+				var array = msg.split("|");
+				if (array[0] === '0') {
 					alertMsg_B("保存成功");
 					fObject('refresh_button', 'main_area').click();
 				} else {
-					alertMsg_B("保存失败");
+					if (array[1]) {
+						alertMsg_B("保存失败," + array[1]);
+					} else {
+						alertMsg_B("保存失败");
+					}
 				}
 			});
 		});
+		// 修改时特殊需要处理
+		if ('${mod_flag}' === '1') {
+			fObject("user_id", baseDiv).removeAttr("validation");
+			fObject("user_id", baseDiv).attr("readonly", true);
+			$("#" + baseDiv + " [for='user_password']").append("<span class='label label-info mg-l-5'>不录入视为不更改</span>");
+		}
 		$("#sysuser_info_form [validation]").change(function() {
 			$(this).vali_Ele();
 		});
 		$("#sysuser_info_form [validation]").blur(function() {
 			$(this).vali_Ele();
+		});
+		//密码特殊样式绑定,用attr("class")有问题
+		fObject("password_icon", baseDiv).click(function() {
+			if ($(this).hasClass("icon-eye-open")) {
+				fObject("user_password", baseDiv).attr("type", "password");
+				$(this).attr("class", " icon-eye-close");
+			} else {
+				fObject("user_password", baseDiv).attr("type", "text");
+				$(this).attr("class", " icon-eye-open");
+			}
 		});
 	});
 </script>
@@ -45,16 +68,23 @@
 			<div class="tab-content">
 				<div class="tab-pane   fade in active" id="dialog_basic">
 					<div class="form-group mg-t-10">
+						<label class="control-label" for="user_id">登录名</label> <input class="form-control" name="user_id" type="text" placeholder="请输入登录名"
+							validation="required|maxlen=20|password" value="${user_id }">
+					</div>
+					<div class="form-group">
 						<label class="control-label" for="user_name">用户姓名</label> <input class="form-control" name="user_name" type="text"
-							placeholder="请输入用户姓名" validation="required|maxlen=10" value="${user_name }">
+							placeholder="请输入用户姓名" validation="required|maxlen=15" value="${user_name }">
 					</div>
 					<div class="form-group ">
-						<label class="control-label" for="user_password">密码</label> <input class="form-control" name="user_password" type="text"
-							placeholder="请输入用户初始密码" validation="required|password|maxlen=20|minlen=5" value="${user_password }">
+						<label class="control-label" for="user_password">密码</label>
+						<div class="input-group" name="password_div">
+							<input class="form-control input-group" name="user_password" type="text" placeholder="请输入密码" validation="${password_check }" value=""><span
+								class="input-group-addon"><i class=" icon-eye-open" name="password_icon"></i></span>
+						</div>
 					</div>
 					<div class="form-group ">
 						<label class="control-label" for="user_phone">联系方式</label> <input class="form-control" name="user_phone" type="text"
-							placeholder="请输入联系方式" validation="required|len=11" value="${user_phone }">
+							placeholder="请输入联系方式" validation="len=11" value="${user_phone }">
 					</div>
 				</div>
 			</div>

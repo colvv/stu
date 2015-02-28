@@ -85,9 +85,7 @@
 	<div class="row">
 		<div class="col-xs-3"></div>
 		<div class="alert alert-success alert-dismissable  col-xs-6 ">
-			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-			<span name="dispay_area">
-			<span class="label label-success " >success</span><strong class="mg-l-5 line_center">保存成功！</strong>
+			<span name="dispay_area"> <span class="label label-success ">success</span><strong class="mg-l-5 line_center">保存成功！</strong>
 			</span>
 		</div>
 	</div>
@@ -97,7 +95,7 @@
 .loading_back {
 	background: #000;
 	opacity: .5;
-	filter: alpha(opacity =     50);
+	filter: alpha(opacity =       50);
 	position: fixed;
 	z-index: 1040;
 	top: 0;

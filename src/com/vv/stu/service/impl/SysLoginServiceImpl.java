@@ -6,11 +6,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Service;
 
+import com.vv.common.dao.DaoOperator;
 import com.vv.common.exception.ServiceException;
 import com.vv.common.interf.BaseService;
 import com.vv.common.util.PubFun;
+import com.vv.stu.model.SysUser;
 
 @Service
 public class SysLoginServiceImpl extends BaseService {
@@ -67,20 +72,21 @@ public class SysLoginServiceImpl extends BaseService {
 					tInnerHtml = "";
 					for (Map innerMap : tMenus) {
 						if (ID.equals(((String) innerMap.get("menu_id")).split("\\|")[1])) {
-							// 2015-2-11 @wangyi :  son
-							tInnerHtml += "<li><a href='" + PubFun.getNullToEmpty(innerMap.get("menu_url")) + "' id='stu_menu_" + tMenu.get("menu_id") + "'>"
-									+ innerMap.get("menu_name") + "</a></li>";
+							// 2015-2-11 @wangyi : son
+							tInnerHtml += "<li><a href='" + PubFun.getNullToEmpty(innerMap.get("menu_url")) + "' id='stu_menu_"
+									+ tMenu.get("menu_id") + "'>" + innerMap.get("menu_name") + "</a></li>";
 						}
 					}
 					if ("".equals(tInnerHtml)) {
-						// 2015-2-11 @wangyi :  no son
-						sb.append("<li><a href='").append(PubFun.getNullToEmpty(tMenu.get("menu_url"))).append("' id='stu_menu_").append(tMenu.get("menu_id"))
-								.append("'>").append(tMenu.get("menu_name")).append("</a></li> ");
+						// 2015-2-11 @wangyi : no son
+						sb.append("<li><a href='").append(PubFun.getNullToEmpty(tMenu.get("menu_url"))).append("' id='stu_menu_")
+								.append(tMenu.get("menu_id")).append("'>").append(tMenu.get("menu_name")).append("</a></li> ");
 					} else {
-						// 2015-2-11 @wangyi :  have son
-						sb.append("<li class='dropdown'><a href='").append(PubFun.getNullToEmpty(tMenu.get("menu_url"))).append("' id='stu_menu_")
-								.append(tMenu.get("menu_id")).append("'  class='dropdown-toggle' data-toggle='dropdown'>")
-								.append(tMenu.get("menu_name")).append("<b class='caret'></b></a><ul class='dropdown-menu'>");
+						// 2015-2-11 @wangyi : have son
+						sb.append("<li class='dropdown'><a href='").append(PubFun.getNullToEmpty(tMenu.get("menu_url")))
+								.append("' id='stu_menu_").append(tMenu.get("menu_id"))
+								.append("'  class='dropdown-toggle' data-toggle='dropdown'>").append(tMenu.get("menu_name"))
+								.append("<b class='caret'></b></a><ul class='dropdown-menu'>");
 						sb.append(tInnerHtml);
 						sb.append("</ul></li>");
 					}
@@ -88,6 +94,39 @@ public class SysLoginServiceImpl extends BaseService {
 
 			}
 			return sb.toString();
+		} catch (Exception e) {
+			logger.error("service层处理出现异常：" + e.toString());
+			e.printStackTrace();
+			throw new ServiceException("数据处理失败");
+		}
+	}
+
+	public SysUser sysLogin(Map tParams) {
+
+		try {
+			List<Map> tUser = tDefaultQueryDao.commonQuery_SQL(new DaoOperator("selectSysUser", tParams));
+			if (tUser.size() != 1) {
+				return null;
+			}
+			// 2015-2-28 @wangyi : 更新用户登录时间
+			tPubCommitDao.doCommit(new DaoOperator("updateLastLogin", tParams));
+			SysUser tSysUser = new SysUser();
+			tSysUser.setUser_id((String) tUser.get(0).get("user_id"));
+			tSysUser.setUser_name((String) tUser.get(0).get("user_name"));
+			tSysUser.setUser_phone((String) tUser.get(0).get("user_phone"));
+			tSysUser.setUser_state((String) tUser.get(0).get("user_state"));
+			tSysUser.setRela_role_id((String) tUser.get(0).get("rela_role_id"));
+//			if ("true".equals(tParams.get("auto_login"))) {
+//				Cookie cookie1 = new Cookie("SESSION_LOGIN_USERNAME", (String) tParams.get("user_id")); // 保存用户名到Cookie
+//				cookie1.setPath("/");
+//				cookie1.setMaxAge(24 * 60 * 60 * 7);// 设置有效期，单位为秒，这里为1周
+//				response.addCookie(cookie1);
+//				Cookie cookie2 = new Cookie("SESSION_LOGIN_PASSWORD", (String) tParams.get("user_password")); // 保存密码到Cookie
+//				cookie2.setPath("/");
+//				cookie2.setMaxAge(24 * 60 * 60 * 7);// 设置有效期，单位为秒，这里为1周
+//				response.addCookie(cookie2);
+//			}
+			return tSysUser;
 		} catch (Exception e) {
 			logger.error("service层处理出现异常：" + e.toString());
 			e.printStackTrace();

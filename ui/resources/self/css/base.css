@@ -28,6 +28,12 @@ body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
 .mg-l-5{
 	margin-left: 5px;
 }
+.mg-l-20{
+	margin-left: 20px;
+}
+.mg-r-5{
+	margin-right: 5px;
+}
 .line_center{
 	margin: 0 auto;
 	display: block;
@@ -39,4 +45,10 @@ body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
   margin: auto;
   position: absolute;
   top: 0; left: 0; bottom: 0; right: 0;
+}
+.color-w{
+	color: white;
+}
+.color-b{
+	color:rgb(0, 149, 255);
 }

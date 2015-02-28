@@ -13,38 +13,56 @@ body {
 </head>
 <body>
 	<header role="header">
-		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="header_menu">
 			<div class="container">
 				<div class="row">
 					<div class="navbar-header">
-						<a class="navbar-brand" href="#"><strong>学生管理系统</strong></a>
+						<a class="navbar-brand " href="#"><span class="color-w"><strong><i class="icon-book mg-r-5"></i>学生管理系统</strong></span></a>
 					</div>
-					<div>
-						<ul class="nav navbar-nav" id="menu_area">${menustr}
-						</ul>
-					</div>
+					<ul class="nav navbar-nav" id="menu_area">${menustr}
+					</ul>
+					<ul class="nav navbar-nav pull-right mg-l-20">
+						<li class="dropdown"><a href="#" class=" dropdown-toggle " data-toggle="dropdown"><span class="color-b"><i
+									class='icon-th-large icon-spin'></i>设置</span></a>
+							<ul class="dropdown-menu">
+								<li class="dropdown"><a href="#" name="quit_sys"><i class="icon-signout"></i>退出</a></li>
+								<li class="dropdown"><a href="#" name="change_password"><i class="icon-key"></i>修改密码</a></li>
+							</ul></li>
+					</ul>
 					<div class="navbar-text navbar-right ">
-						<span>欢迎回来，王毅</span>
+						<span class="">欢迎回来，${sysuser.user_name }</span>
 					</div>
 				</div>
 			</div>
 		</nav>
 	</header>
-	<div class="container" id="main_area" role="main" style="margin-bottom: 30px;">
-		
-	</div>
+	<div class="container" id="main_area" role="main" style="margin-bottom: 30px;"></div>
 	<%@include file="/include/commonFooter.jsp"%>
 	<script>
 		$(document).ready(function() {
+			var baseDiv = "header_menu";
+			fObject("quit_sys", baseDiv).click(function() {
+				confrimMsg("确定要退出么？", function() {
+					commonAjax("/loginOut.do", null, function(msg) {
+						// 登出之后删除cookie否则可能继续自动登录
+						delCookie("user_id");
+						delCookie("user_password");
+						window.location.href = "/";
+					});
+				});
+			})
+			fObject("change_password", baseDiv).click(function() {
+				alert(2);
+			})
 			// 将首页的连接置换为"#"
 			$("#menu_area a[href]").each(function() {
 				var url = $(this).attr("href")
 				$(this).click(function() {
 					if (url !== "") {
 						//$("#main_area").load(url);
-						commonAjax_pro(url,null,function(html){
+						commonAjax_pro(url, null, function(html) {
 							$("#main_area").html(html);
-								//alertMsg("load complete","primary")
+							//alertMsg("load complete","primary")
 						})
 					}
 				});

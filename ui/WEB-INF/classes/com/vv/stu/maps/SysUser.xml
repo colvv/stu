@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.vv.stu.model">
-	<select id="selectUsers" resultType="java.util.HashMap">
-		SELECT * FROM vv_teacher
-	</select>
-	<insert id="insertUser" parameterType="java.util.HashMap">
+	<insert id="insertSysUser" parameterType="java.util.HashMap">
 		insert into vv_sys_user
 		(user_id,user_name,user_phone,rela_role_id,user_password,last_login_time,user_state)
 		values
 		(#{user_id},#{user_name},#{user_phone},#{rela_role_id},#{user_password},null,#{user_state})
 	</insert>
-	<delete id="deleteUser" parameterType="java.util.HashMap">
+	<delete id="deleteSysUser" parameterType="java.util.HashMap">
 		delete from vv_sys_user
 		where user_id=#{user_id}
 	</delete>
-	<update id="updateUser" parameterType="java.util.HashMap">
-		update vv_sys_user set
+	<update id="updateSysUser" parameterType="java.util.HashMap">
+		update vv_sys_user
 		<set>
 			<if test="user_name != null">user_name=#{user_name},</if>
 			<if test="user_phone != null">user_phone=#{user_phone},</if>
 			<if test="rela_role_id != null">rela_role_id=#{rela_role_id},</if>
-			<if test="user_password != null">user_password=#{user_password}</if>
+			<if test="user_password != null and user_password !=''">user_password=#{user_password}</if>
 			<if test="last_login_time != null">last_login_time=#{last_login_time}</if>
 			<if test="user_state != null">user_state=#{user_state}</if>
 		</set>
 		where user_id=#{user_id}
 	</update>
-	<select id="selectUser" parameterType="java.util.HashMap">
+	<select id="selectSysUser" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select
-		user_id,user_name,user_name,rela_role_id,user_password,last_login_time,user_state
+		user_id,user_name,user_phone,rela_role_id,user_password,last_login_time,user_state
 		from vv_sys_user
 		where 1=1
 		<if test="user_id != null"> and user_id=#{user_id}</if>
+		<if test="user_password != null"> and user_password=#{user_password}</if>
 	</select>
+	<update id="updateLastLogin" parameterType="java.util.HashMap">
+		update vv_sys_user set last_login_time=now() where user_id=#{user_id}
+	</update>
 </mapper>

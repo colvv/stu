@@ -13,8 +13,6 @@
 				"data" : "user_phone"
 			}, {
 				"data" : "last_login_time"
-			} ], "columnDefs" : [ {
-				"targets" : [ 0 ], "visible" : false
 			} ]
 		});
 		$('#sys_001 tbody').on('click', 'tr', function() {
@@ -34,11 +32,11 @@
 		});
 		fObject('mod_button', baseDiv).click(function() {
 			if (table.$('tr.selected').length !== 1) {
-				alertMsg("请先选中要修改的学生！", "default");
+				alertMsg("请先选中要修改的用户！", "default");
 				return;
 			}
 			showForm("/sys/model/modModel.do", {
-				stu_id : table.$('tr.selected').find("td:eq(0)").text()
+				user_id : table.$('tr.selected').find("td:eq(0)").text()
 			}, true);
 		});
 		fObject('del_button', baseDiv).click(function() {
@@ -46,10 +44,9 @@
 				alertMsg("请先选中要删除的用户！", "default");
 				return;
 			}
-			alert(table.fnGetData(table.$('tr.selected')));
 			confrimMsg("确定要删除用户（" + table.$('tr.selected').find("td:eq(1)").text() + "）么？", function() {
 				commonAjax_pro("/sys/delSysUser.do", {
-					stu_id : table.$('tr.selected').find("td:eq(0)").text()
+					user_id : table.$('tr.selected').find("td:eq(0)").text()
 				}, function(msg) {
 					processStop();
 					if ("0" === msg) {
@@ -76,7 +73,7 @@
 			<table id="sys_001" class="display" cellspacing="0" width="100%">
 				<thead>
 					<tr>
-						<th>用户编号</th>
+						<th>登录名</th>
 						<th>用户姓名</th>
 						<th>联系方式</th>
 						<th>上次登录时间</th>

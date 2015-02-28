@@ -2,6 +2,16 @@ var max_process = 61;
 var max_dealing = 91;
 var interval_process = 500;
 var process_func;
+var alertB_func;
+
+// 2015-2-28 @wangyi : 防止连点,disabled不能点，不用特殊考虑
+$("body").on("click", "button", function() {
+	var $obj = $(this);
+	$obj.attr("disabled", true);
+	setTimeout(function() {
+		$obj.attr("disabled", false);
+	}, 1000);
+});
 
 function commonAjax(request_url, data, func) {
 	$.ajax({
@@ -191,14 +201,19 @@ function checkDate(str) {
 
 	return true;
 }
-
+function checkNecessaryStr(str) {
+	if (str !== "" && str !== null && str !== "null") {
+		return true;
+	}
+	return false;
+}
 /**
  * 表单校验部分
- * 
+ * 1.加入参数，校验成功不显示正确
  *
  */
 (function($) {
-	$.fn.vali_Ele = function() {
+	$.fn.vali_Ele = function(succ_none) {
 		var validation = $(this).attr("validation");
 		var value = $.trim($(this).val());
 		var $display = $(this).closest(".form-group");
@@ -227,13 +242,15 @@ function checkDate(str) {
 				return false;
 			}
 		}
-		$display.addClass("has-success");
-		$msg.after("<div class='extendinfo label label-success pull-right'><i class='icon-ok-sign'></i></div>");
+		if (!succ_none) {
+			$display.addClass("has-success");
+			$msg.after("<div class='extendinfo label label-success pull-right'><i class='icon-ok-sign'></i></div>");
+		}
 		return true;
 	};
-	$.fn.vali_Form = function() {
+	$.fn.vali_Form = function(succ_none) {
 		$(this).find("[validation]").each(function() {
-			$(this).vali_Ele();
+			$(this).vali_Ele(succ_none);
 		})
 	};
 	$.fn.hasError = function() {
@@ -248,7 +265,7 @@ function checkDate(str) {
 	}
 	function validateFunc(value, rule) {
 		if (rule === "required") {
-			if (value == "" || value == null || value == "null") {
+			if (!checkNecessaryStr(value)) {
 				return "此项必须填写";
 			}
 		} else if (rule === "date") {
@@ -258,15 +275,17 @@ function checkDate(str) {
 				return "日期不合法请重新填写";
 			}
 		} else if (rule === "password") {
-			var regx = /^[a-zA-Z0-9_]+$/;
-			if(!regx.test(value)){
-				return "只可输入字母数字下划线";	
+			var regx = /^[a-zA-Z0-9_]*$/;
+			if (!regx.test(value)) {
+				return "只可输入字母数字下划线";
 			}
 
 		} else if (rule.substr(0, 3) === "len") {
-			var length = rule.split("=")[1];
-			if (value.length != length) {
-				return "此项的长度应为" + length;
+			if (checkNecessaryStr(value)) {
+				var length = rule.split("=")[1];
+				if (value.length != length) {
+					return "此项的长度应为" + length;
+				}
 			}
 		} else if (rule.indexOf("maxlen") !== -1) {
 			var maxlength = rule.split("=")[1];
@@ -274,9 +293,11 @@ function checkDate(str) {
 				return "此项最大长度为" + maxlength;
 			}
 		} else if (rule.indexOf("minlen") !== -1) {
-			var minlength = rule.split("=")[1];
-			if (value.length < minlength) {
-				return "此项最小长度为" + minlength;
+			if (checkNecessaryStr(value)) {
+				var minlength = rule.split("=")[1];
+				if (value.length < minlength) {
+					return "此项最小长度为" + minlength;
+				}
 			}
 		}
 		return 0;
@@ -288,17 +309,47 @@ function alertMsg_B(msg, type) {
 		if (msg.indexOf("成功") !== -1) {
 			type = "success";
 		} else if (msg.indexOf("失败") !== -1) {
-			type = "error";
+			type = "danger";
 		} else {
 			type = "info";
 		}
 	}
 	$("#alert_bottom").hide();
+	$("#alert_bottom").finish();
+	clearTimeout(alertB_func);
+	$("#alert_bottom .alert").removeClass().addClass("alert alert-" + type + " alert-dismissable  col-xs-6 ");
 	var html = '<span class="label label-' + type + ' " >' + type + '</span><i class=" icon-info-sign mg-l-5"></i><strong class="mg-l-5 ">'
 			+ msg + '</strong>';
 	fObject("dispay_area", "alert_bottom").html(html);
 	$("#alert_bottom").fadeIn("normal");
-	setTimeout(function() {
+	alertB_func = setTimeout(function() {
 		$("#alert_bottom").fadeOut("slow");
 	}, 5000);
+}
+function addCookie(name, value, days) {
+	var cookieString = name + "=" + escape(value);
+	//判断是否设置过期时间 
+	if (days > 0) {
+		var date = new Date();
+		date.setTime(date.getTime() + days * 24 * 3600 * 1000);
+		cookieString = cookieString + "; path=/;expires=" + date.toGMTString();
+	}
+	document.cookie = cookieString;
+}
+function getCookie(name) {
+	var strCookie = document.cookie;
+	var arrCookie = strCookie.split("; ");
+	for ( var i = 0; i < arrCookie.length; i++) {
+		var arr = arrCookie[i].split("=");
+		if (arr[0] == name)
+			return arr[1];
+	}
+	return "";
+}
+function delCookie(name) {
+	var exp = new Date();
+	exp.setTime(exp.getTime() - 1);
+	var cval = getCookie(name);
+	if (cval != null)
+		document.cookie = name + "=" + cval + ";path=/;expires=" + exp.toGMTString();
 }
