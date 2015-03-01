@@ -26,6 +26,7 @@
 		$("#stu_info_form [validation]").blur(function() {
 			$(this).vali_Ele();
 		});
+		$("#stu_info_form").displayNec_Form();
 		
 		fObject("stu_sex",baseDiv).val("${stu_sex}");
 		dPicker(fObject("stu_birthday_div", baseDiv));

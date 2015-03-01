@@ -7,6 +7,16 @@ var alertB_func;
 // 2015-2-28 @wangyi : 防止连点,disabled不能点，不用特殊考虑
 $("body").on("click", "button", function() {
 	var $obj = $(this);
+	// 增加图形转动特效
+	$obj.find("i").each(function() {
+		if (!$(this).hasClass("icon-spin")) {
+			var $i_obj = $(this);
+			$i_obj.addClass("icon-spin");
+			setTimeout(function() {
+				$i_obj.removeClass("icon-spin");
+			}, 2000);
+		}
+	});
 	$obj.attr("disabled", true);
 	setTimeout(function() {
 		$obj.attr("disabled", false);
@@ -15,28 +25,42 @@ $("body").on("click", "button", function() {
 
 function commonAjax(request_url, data, func) {
 	$.ajax({
-		type : "POST", url : request_url, data : data, contentType : "application/x-www-form-urlencoded; charset=utf-8", cache : false,
-		dataType : "text", success : function() {
+		type : "POST",
+		url : request_url,
+		data : data,
+		contentType : "application/x-www-form-urlencoded; charset=utf-8",
+		cache : false,
+		dataType : "text",
+		success : function() {
 			// 参数继续向下传递
 			func(arguments[0], arguments[1], arguments[2]);
-		}, error : function() {
+		},
+		error : function() {
 			alertMsg("系统处理异常", "danger");
-		}, complete : function() {
+		},
+		complete : function() {
 		}
 	});
 }
 function commonAjax_pro(request_url, data, func) {
 	startProcess("");
 	$.ajax({
-		type : "POST", url : request_url, data : data, contentType : "application/x-www-form-urlencoded; charset=utf-8", cache : false,
-		dataType : "text", success : function() {
+		type : "POST",
+		url : request_url,
+		data : data,
+		contentType : "application/x-www-form-urlencoded; charset=utf-8",
+		cache : false,
+		dataType : "text",
+		success : function() {
 			processHandler();
 			// 参数继续向下传递
 			func(arguments[0], arguments[1], arguments[2]);
-		}, error : function() {
+		},
+		error : function() {
 			processStop();
 			alertMsg("系统处理异常", "danger");
-		}, complete : function() {
+		},
+		complete : function() {
 			processComplete();
 		}
 	});
@@ -177,11 +201,18 @@ function parseParamObj($objs) {
 }
 function dPicker($obj) {
 	$obj.datetimepicker({
-		weekStart : 1, todayBtn : 1, autoclose : 1, todayHighlight : 1, startView : 2, minView : 2, forceParse : 0
+		weekStart : 1,
+		todayBtn : 1,
+		autoclose : 1,
+		todayHighlight : 1,
+		startView : 2,
+		minView : 2,
+		forceParse : 0
 	});
 }
 /**
  * 校验日期合法性
+ * 
  * @param str
  * @returns {Boolean}
  */
@@ -208,9 +239,8 @@ function checkNecessaryStr(str) {
 	return false;
 }
 /**
- * 表单校验部分
- * 1.加入参数，校验成功不显示正确
- *
+ * 表单校验部分 1.加入参数，校验成功不显示正确
+ * 
  */
 (function($) {
 	$.fn.vali_Ele = function(succ_none) {
@@ -221,12 +251,12 @@ function checkNecessaryStr(str) {
 		var $msg = $form.find("label[for='" + $(this).attr("name") + "']");
 		removeClass($display);
 		removeMsg($msg);
-		//准备结束
+		// 准备结束
 		var valis = validation.split("|");
 		for ( var i = 0; i < valis.length; i++) {
 			var checkResult = validateFunc(value, valis[i]);
 			if (checkResult !== 0) {
-				//出现错误
+				// 出现错误
 				$display.addClass("has-error");
 				$msg
 						.after("<div class='extendinfo label label-danger pull-right'><i class='icon-minus-sign'></i>" + checkResult
@@ -255,6 +285,21 @@ function checkNecessaryStr(str) {
 	};
 	$.fn.hasError = function() {
 		return $(this).find(".label-danger").length > 0 ? true : false;
+	};
+	$.fn.displayNec_Ele = function() {
+		var validation = $(this).attr("validation");
+		var $form = $(this).closest("form");
+		var $msg = $form.find("label[for='" + $(this).attr("name") + "']");
+		if (validation.indexOf("required") !== -1) {
+			$msg.append("<span class='label label-warning mg-l-20'>必要</span>");
+		} else {
+			$msg.append("<span class='label label-primary mg-l-20'>可选</span>");
+		}
+	};
+	$.fn.displayNec_Form = function() {
+		$(this).find("[validation]").each(function() {
+			$(this).displayNec_Ele();
+		});
 	};
 	function removeClass($obj) {
 		$obj.removeClass("has-success");
@@ -328,7 +373,7 @@ function alertMsg_B(msg, type) {
 }
 function addCookie(name, value, days) {
 	var cookieString = name + "=" + escape(value);
-	//判断是否设置过期时间 
+	// 判断是否设置过期时间
 	if (days > 0) {
 		var date = new Date();
 		date.setTime(date.getTime() + days * 24 * 3600 * 1000);

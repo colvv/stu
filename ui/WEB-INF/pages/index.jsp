@@ -17,7 +17,7 @@ body {
 			<div class="container">
 				<div class="row">
 					<div class="navbar-header">
-						<a class="navbar-brand " href="#"><span class="color-w"><strong><i class="icon-book mg-r-5"></i>学生管理系统</strong></span></a>
+						<a class="navbar-brand " href="#"><span class="color-w"><strong><i class="icon-user mg-r-5"></i>学生管理系统</strong></span></a>
 					</div>
 					<ul class="nav navbar-nav" id="menu_area">${menustr}
 					</ul>
@@ -52,7 +52,7 @@ body {
 				});
 			})
 			fObject("change_password", baseDiv).click(function() {
-				alert(2);
+				showForm("/model/changePwd.do", null);
 			})
 			// 将首页的连接置换为"#"
 			$("#menu_area a[href]").each(function() {
@@ -77,7 +77,7 @@ body {
 					processComplete();
 				},"5000");
 			},"5000");
-			*/
+			 */
 		});
 		//alertMsg("wca","success");
 	</script>

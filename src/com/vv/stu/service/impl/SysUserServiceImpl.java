@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.vv.common.dao.DaoOperator;
 import com.vv.common.dao.DefaultQueryDao;
 import com.vv.common.dao.PubCommitDao;
+import com.vv.common.exception.BusinessException;
 import com.vv.common.exception.ServiceException;
 import com.vv.common.interf.BaseService;
 import com.vv.common.util.PubFun;
@@ -19,7 +20,7 @@ import com.vv.common.util.PubFun;
 @Service
 public class SysUserServiceImpl extends BaseService {
 
-	public boolean addSysUser(Map tParams) {
+	public boolean addSysUser(Map tParams) throws BusinessException {
 		try {
 			// 加密放到了js端
 			// String tPassword = (String) tParams.get("user_password");
@@ -29,7 +30,7 @@ public class SysUserServiceImpl extends BaseService {
 			tPubCommitDao.doCommit(new DaoOperator("insertSysUser", tParams));
 			return true;
 		} catch (DuplicateKeyException e) {
-			return false;
+			throw new BusinessException("用户名重复，请更换");
 		} catch (Exception e) {
 			logger.error("service层处理出现异常：" + e.toString());
 			throw new ServiceException("数据处理失败");

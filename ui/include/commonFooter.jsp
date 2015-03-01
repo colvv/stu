@@ -85,7 +85,7 @@
 	<div class="row">
 		<div class="col-xs-3"></div>
 		<div class="alert alert-success alert-dismissable  col-xs-6 ">
-			<span name="dispay_area"> <span class="label label-success ">success</span><strong class="mg-l-5 line_center">保存成功！</strong>
+			<span name="dispay_area"> <span class="label label-success ">success</span><strong class="mg-l-5 center-block">保存成功！</strong>
 			</span>
 		</div>
 	</div>
@@ -127,3 +127,4 @@
 <script src="${ctx}/resources/jquery.dataTables/js/jquery.dataTables.cn.js"></script>
 <script src="${ctx}/resources/jquery.dataTables/js/dataTables.bootstrap.js"></script>
 <script src="${ctx}/resources/self/js/commonJs.js"></script>
+<script src="${ctx}/resources/self/js/sha512.js"></script>

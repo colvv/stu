@@ -17,6 +17,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		String uri = request.getRequestURI();
 		logger.debug("拦截url: " + uri);
+		// @wangyi 2015-2-28 过滤登录的url
+		if(uri.endsWith("login.do")){
+			return true;
+		}
 		SysUser tSysUser = (SysUser) request.getSession(true).getAttribute("sysuser");
 		if (tSysUser == null) {
 			PrintWriter out = (PrintWriter) response.getWriter();

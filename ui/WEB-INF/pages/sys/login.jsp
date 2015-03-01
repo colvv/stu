@@ -45,62 +45,62 @@ body {
 	</div>
 	<%@include file="/include/commonFooter.jsp"%>
 	<script>
-		$(document).ready(
-				function() {
-					$("body").keyup(function() {
-						if (event.keyCode == 13) {
-							fObject("login_button").click();
-						}
-					});
-					//自动登录判断
-					if (checkNecessaryStr(getCookie("user_id")) && checkNecessaryStr(getCookie("user_password"))) {
-						commonAjax("/login.do", {
-							"user_id" : getCookie("user_id"), "user_password" : getCookie("user_password")
-						}, function(msg) {
-							if ("0" === msg) {
-								alertMsg_B("自动登录成功，稍候跳转...");
-								setTimeout(function() {
-									window.location.href = "/index.do";
-								}, 1000);
-							} else {
-								// 失败删除cookie
-								delCookie("user_id");
-								delCookie("user_password");
-								alertMsg_B("自动登陆失败，请重新输入用户名密码");
-							}
-						});
+		$(document).ready(function() {
+			$("body").keyup(function() {
+				if (event.keyCode == 13) {
+					fObject("login_button").click();
+				}
+			});
+			//自动登录判断
+			if (checkNecessaryStr(getCookie("user_id")) && checkNecessaryStr(getCookie("user_password"))) {
+				commonAjax("/login.do", {
+					"user_id" : getCookie("user_id"),
+					"user_password" : getCookie("user_password")
+				}, function(msg) {
+					if ("0" === msg) {
+						alertMsg_B("自动登录成功，稍候跳转...");
+						setTimeout(function() {
+							window.location.href = "/index.do";
+						}, 1000);
+					} else {
+						// 失败删除cookie
+						delCookie("user_id");
+						delCookie("user_password");
+						alertMsg_B("自动登陆失败，请重新输入用户名密码");
 					}
-					// 正常的登录
-					fObject("login_button").click(
-							function() {
-								$("form").vali_Form(true);
-								if ($("form").hasError()) {
-									return;
-								}
-								var md5_password = $.md5($.md5(fObject("user_password").val()));
-								commonAjax("/login.do", {
-									"user_id" : fObject("user_id").val(), "user_password" : md5_password,
-									"auto_login" : fObject("auto_login").prop("checked")
-								}, function(msg) {
-									if ("0" === msg) {
-										// 成功并勾选添加cookie
-										if (fObject("auto_login").prop("checked") === true) {
-											addCookie("user_id", fObject("user_id").val(), 7);
-											addCookie("user_password", md5_password, 7);
-										}
-										alertMsg_B("登录成功，稍候跳转...");
-										setTimeout(function() {
-											window.location.href = "/index.do";
-										}, 1000);
-									} else {
-										// 失败删除cookie
-										delCookie("user_id");
-										delCookie("user_password");
-										alertMsg_B("登陆失败，请检查用户名、密码");
-									}
-								});
-							});
 				});
+			}
+			// 正常的登录
+			fObject("login_button").click(function() {
+				$("form").vali_Form(true);
+				if ($("form").hasError()) {
+					return;
+				}
+				var md5_password = $.md5(b64_sha512(fObject("user_password").val()));
+				commonAjax("/login.do", {
+					"user_id" : fObject("user_id").val(),
+					"user_password" : md5_password,
+					"auto_login" : fObject("auto_login").prop("checked")
+				}, function(msg) {
+					if ("0" === msg) {
+						// 成功并勾选添加cookie
+						if (fObject("auto_login").prop("checked") === true) {
+							addCookie("user_id", fObject("user_id").val(), 7);
+							addCookie("user_password", md5_password, 7);
+						}
+						alertMsg_B("登录成功，稍候跳转...");
+						setTimeout(function() {
+							window.location.href = "/index.do";
+						}, 1000);
+					} else {
+						// 失败删除cookie
+						delCookie("user_id");
+						delCookie("user_password");
+						alertMsg_B("登陆失败，请检查用户名、密码");
+					}
+				});
+			});
+		});
 	</script>
 </body>
 </html>

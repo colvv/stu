@@ -6,7 +6,7 @@ package com.vv.common.exception;
  * @author vv
  * 
  */
-public class BusinessException extends RuntimeException {
+public class BusinessException extends Exception {
 	/**
 	 * 
 	 */

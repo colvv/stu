@@ -34,6 +34,7 @@ body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
 .mg-r-5{
 	margin-right: 5px;
 }
+/** equals to center-block by bootstrap  */
 .line_center{
 	margin: 0 auto;
 	display: block;

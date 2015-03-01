@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
 
 import com.vv.common.dao.DaoOperator;
+import com.vv.common.exception.BusinessException;
 import com.vv.common.exception.ServiceException;
 import com.vv.common.interf.BaseService;
 import com.vv.common.util.PubFun;
@@ -116,16 +117,18 @@ public class SysLoginServiceImpl extends BaseService {
 			tSysUser.setUser_phone((String) tUser.get(0).get("user_phone"));
 			tSysUser.setUser_state((String) tUser.get(0).get("user_state"));
 			tSysUser.setRela_role_id((String) tUser.get(0).get("rela_role_id"));
-//			if ("true".equals(tParams.get("auto_login"))) {
-//				Cookie cookie1 = new Cookie("SESSION_LOGIN_USERNAME", (String) tParams.get("user_id")); // 保存用户名到Cookie
-//				cookie1.setPath("/");
-//				cookie1.setMaxAge(24 * 60 * 60 * 7);// 设置有效期，单位为秒，这里为1周
-//				response.addCookie(cookie1);
-//				Cookie cookie2 = new Cookie("SESSION_LOGIN_PASSWORD", (String) tParams.get("user_password")); // 保存密码到Cookie
-//				cookie2.setPath("/");
-//				cookie2.setMaxAge(24 * 60 * 60 * 7);// 设置有效期，单位为秒，这里为1周
-//				response.addCookie(cookie2);
-//			}
+			// if ("true".equals(tParams.get("auto_login"))) {
+			// Cookie cookie1 = new Cookie("SESSION_LOGIN_USERNAME", (String)
+			// tParams.get("user_id")); // 保存用户名到Cookie
+			// cookie1.setPath("/");
+			// cookie1.setMaxAge(24 * 60 * 60 * 7);// 设置有效期，单位为秒，这里为1周
+			// response.addCookie(cookie1);
+			// Cookie cookie2 = new Cookie("SESSION_LOGIN_PASSWORD", (String)
+			// tParams.get("user_password")); // 保存密码到Cookie
+			// cookie2.setPath("/");
+			// cookie2.setMaxAge(24 * 60 * 60 * 7);// 设置有效期，单位为秒，这里为1周
+			// response.addCookie(cookie2);
+			// }
 			return tSysUser;
 		} catch (Exception e) {
 			logger.error("service层处理出现异常：" + e.toString());
@@ -133,4 +136,18 @@ public class SysLoginServiceImpl extends BaseService {
 			throw new ServiceException("数据处理失败");
 		}
 	}
+
+	public boolean changePwdConfrim(Map tParams) throws BusinessException {
+		if (tDefaultQueryDao.commonQuery_SQL(new DaoOperator("selectSysUser", tParams)).size() == 1) {
+			Map tParam = new HashMap<>();
+			tParam.put("user_password", tParams.get("user_password_new"));
+			tParam.put("user_id", tParams.get("user_id"));
+			tPubCommitDao.doCommit(new DaoOperator("updateSysUser", tParam));
+			return true;
+		} else {
+			throw new BusinessException("原始密码输入不正确，请检查");
+		}
+
+	}
+
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.vv.common.exception.BusinessException;
 import com.vv.common.interf.BaseController;
 import com.vv.common.util.PubFun;
 import com.vv.stu.service.impl.SysUserServiceImpl;
@@ -29,18 +30,25 @@ public class SysUserController extends BaseController {
 	@RequestMapping("/addSysUser")
 	@ResponseBody
 	public String addSysUser() {
-		Map tParams = PubFun.parseReuest_all(request);
-		// 2015-2-28 @wangyi : 用户名自己生成
-		//String user_id = tCommonServiceImpl.createMaxNo("sysuser", 6);
-		//tParams.put("user_id", "SY"+user_id);
-		return tSysUserServiceImpl.addSysUser(tParams) ? "0" : "1|请检查用户名是否重复";
+		try {
+			Map tParams = PubFun.parseReuest_all(request);
+			// 2015-2-28 @wangyi : 用户名自己生成
+			// String user_id = tCommonServiceImpl.createMaxNo("sysuser", 6);
+			// tParams.put("user_id", "SY"+user_id);
+			return tSysUserServiceImpl.addSysUser(tParams) ? "0" : "1";
+		} catch (BusinessException e) {
+			// @wangyi 2015-3-1 捕获bussiness异常
+			return "1|" + e.getMessage();
+		}
 	}
+
 	@RequestMapping("/modSysUser")
 	@ResponseBody
 	public String modSysUser() {
 		Map tParams = PubFun.parseReuest_all(request);
 		return tSysUserServiceImpl.modSysUser(tParams) ? "0" : "1";
 	}
+
 	@RequestMapping("/delSysUser")
 	@ResponseBody
 	public String delSysUser() {
