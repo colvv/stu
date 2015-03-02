@@ -17,7 +17,7 @@ body {
 			<div class="container">
 				<div class="row">
 					<div class="navbar-header">
-						<a class="navbar-brand " href="#"><span class="color-w"><strong><i class="icon-user mg-r-5"></i>学生管理系统</strong></span></a>
+						<a class="navbar-brand " href="#" name="index_content"><span class="color-w"><strong><i class="icon-user mg-r-5"></i>学生管理系统</strong></span></a>
 					</div>
 					<ul class="nav navbar-nav" id="menu_area">${menustr}
 					</ul>
@@ -36,7 +36,7 @@ body {
 			</div>
 		</nav>
 	</header>
-	<div class="container" id="main_area" role="main" style="margin-bottom: 30px;"></div>
+	<div class="container" id="main_area" role="main"></div>
 	<%@include file="/include/commonFooter.jsp"%>
 	<script>
 		$(document).ready(function() {
@@ -50,36 +50,30 @@ body {
 						window.location.href = "/";
 					});
 				});
-			})
+			});
 			fObject("change_password", baseDiv).click(function() {
 				showForm("/model/changePwd.do", null);
-			})
+			});
 			// 将首页的连接置换为"#"
 			$("#menu_area a[href]").each(function() {
 				var url = $(this).attr("href")
 				$(this).click(function() {
 					if (url !== "") {
-						//$("#main_area").load(url);
 						commonAjax_pro(url, null, function(html) {
 							$("#main_area").html(html);
-							//alertMsg("load complete","primary")
 						})
 					}
 				});
 				$(this).attr("href", "#");
-				//alertMsg_B("删除成功");
 			});
-			/** 进度条测试
-			startProcess("");
-			setTimeout(function(){
-				processHandler();
-				setTimeout(function(){
-					processComplete();
-				},"5000");
-			},"5000");
-			 */
+			fObject("index_content", baseDiv).click(function() {
+				commonAjax_pro("/indexContent.do", null, function(html) {
+					$("#main_area").html(html);
+				});
+			});
+			fObject("index_content", baseDiv).click();
+
 		});
-		//alertMsg("wca","success");
 	</script>
 </body>
 </html>

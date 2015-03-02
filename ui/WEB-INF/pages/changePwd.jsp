@@ -43,10 +43,10 @@
 		//密码特殊样式绑定,用attr("class")有问题
 		fObject("password_icon", baseDiv).parent().click(function() {
 			if (fObject("password_icon", baseDiv).hasClass("icon-eye-open")) {
-				fObject("user_password", baseDiv).attr("type", "password");
+				fObject("user_password_new", baseDiv).attr("type", "password");
 				fObject("password_icon", baseDiv).attr("class", " icon-eye-close");
 			} else {
-				fObject("user_password", baseDiv).attr("type", "text");
+				fObject("user_password_new", baseDiv).attr("type", "text");
 				fObject("password_icon", baseDiv).attr("class", " icon-eye-open");
 			}
 		});

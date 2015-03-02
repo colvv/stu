@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<footer class="bs-footer navbar-fixed-bottom" role="footer">
+<footer class="bs-footer navbar-bottom mg-t-50" role="footer">
 	<div class="container">
 		<div class="row ">
 			<div class="col-xs-6">

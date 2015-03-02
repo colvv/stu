@@ -66,11 +66,17 @@ public class SysLoginController extends BaseController {
 		tModelAndView.setViewName("index");
 		return tModelAndView;
 	}
-	
+
+	@RequestMapping("/indexContent")
+	public ModelAndView indexContent() {
+		ModelAndView tModelAndView = new ModelAndView();
+		tModelAndView.setViewName("indexContent");
+		return tModelAndView;
+	}
+
 	/**
-	 * 登录入口
-	 * 07932f02f3323059544d188be8e847e7 
-	 * 3087554
+	 * 登录入口 07932f02f3323059544d188be8e847e7 3087554
+	 * 
 	 * @return
 	 */
 	@RequestMapping("/login")
