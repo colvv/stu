@@ -9,11 +9,11 @@ $("body").on("click", "button", function() {
 	var $obj = $(this);
 	// 增加图形转动特效
 	$obj.find("i").each(function() {
-		if (!$(this).hasClass("icon-spin")) {
+		if (!$(this).hasClass("fa-spin")) {
 			var $i_obj = $(this);
-			$i_obj.addClass("icon-spin");
+			$i_obj.addClass("fa-spin");
 			setTimeout(function() {
-				$i_obj.removeClass("icon-spin");
+				$i_obj.removeClass("fa-spin");
 			}, 2000);
 		}
 	});
@@ -259,7 +259,7 @@ function checkNecessaryStr(str) {
 				// 出现错误
 				$display.addClass("has-error");
 				$msg
-						.after("<div class='extendinfo label label-danger pull-right'><i class='icon-minus-sign'></i>" + checkResult
+						.after("<div class='extendinfo label label-danger pull-right'><i class='fa fa-minus-circle'></i>" + checkResult
 								+ "</div>");
 				// 2015-2-26 @wangyi : 增加一个提示动画效果
 				$msg.nextAll(".extendinfo").animate({
@@ -274,7 +274,7 @@ function checkNecessaryStr(str) {
 		}
 		if (!succ_none) {
 			$display.addClass("has-success");
-			$msg.after("<div class='extendinfo label label-success pull-right'><i class='icon-ok-sign'></i></div>");
+			$msg.after("<div class='extendinfo label label-success pull-right'><i class='fa fa-check-circle'></i></div>");
 		}
 		return true;
 	};
@@ -363,7 +363,7 @@ function alertMsg_B(msg, type) {
 	$("#alert_bottom").finish();
 	clearTimeout(alertB_func);
 	$("#alert_bottom .alert").removeClass().addClass("alert alert-" + type + " alert-dismissable  col-xs-6 ");
-	var html = '<span class="label label-' + type + ' " >' + type + '</span><i class=" icon-info-sign mg-l-5"></i><strong class="mg-l-5 ">'
+	var html = '<span class="label label-' + type + ' " >' + type + '</span><i class=" fa fa-info-circle mg-l-5"></i><strong class="mg-l-5 ">'
 			+ msg + '</strong>';
 	fObject("dispay_area", "alert_bottom").html(html);
 	$("#alert_bottom").fadeIn("normal");

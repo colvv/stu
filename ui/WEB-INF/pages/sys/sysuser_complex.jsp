@@ -65,10 +65,18 @@
 		<div class="panel-heading">用户信息</div>
 		<div class="panel-body">
 			<div class="btn-group  mg-b-20" aria-label="操作按钮组">
-				<button type="button" class="btn btn-default input-sm" name="refresh_button">刷新<i class="icon-refresh mg-l-5"></i></button>
-				<button type="button" class="btn btn-default input-sm" name="add_button">新增<i class="icon-plus mg-l-5"></i></button>
-				<button type="button" class="btn btn-default input-sm" name="mod_button">修改<i class="icon-pencil mg-l-5"></i></button>
-				<button type="button" class="btn btn-default input-sm" name="del_button">删除<i class="icon-trash mg-l-5"></i></button>
+				<button type="button" class="btn btn-default input-sm" name="refresh_button">
+					刷新<i class="fa fa-refresh mg-l-5"></i>
+				</button>
+				<button type="button" class="btn btn-default input-sm" name="add_button">
+					新增<i class="fa fa-plus mg-l-5"></i>
+				</button>
+				<button type="button" class="btn btn-default input-sm" name="mod_button">
+					修改<i class="fa fa-pencil mg-l-5"></i>
+				</button>
+				<button type="button" class="btn btn-default input-sm" name="del_button">
+					删除<i class="fa fa-trash mg-l-5"></i>
+				</button>
 			</div>
 			<table id="sys_001" class="display" cellspacing="0" width="100%">
 				<thead>

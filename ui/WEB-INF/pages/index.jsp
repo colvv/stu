@@ -17,16 +17,16 @@ body {
 			<div class="container">
 				<div class="row">
 					<div class="navbar-header">
-						<a class="navbar-brand " href="#" name="index_content"><span class="color-w"><strong><i class="icon-user mg-r-5"></i>学生管理系统</strong></span></a>
+						<a class="navbar-brand " href="#" name="index_content"><span class="color-w"><strong><i class="fa fa-user mg-r-5"></i>学生管理系统</strong></span></a>
 					</div>
 					<ul class="nav navbar-nav" id="menu_area">${menustr}
 					</ul>
 					<ul class="nav navbar-nav pull-right mg-l-20">
 						<li class="dropdown"><a href="#" class=" dropdown-toggle " data-toggle="dropdown"><span class="color-b"><i
-									class='icon-th-large icon-spin'></i>设置</span></a>
+									class='fa fa-th-large fa-spin'></i>设置</span></a>
 							<ul class="dropdown-menu">
-								<li class="dropdown"><a href="#" name="quit_sys"><i class="icon-signout"></i>退出</a></li>
-								<li class="dropdown"><a href="#" name="change_password"><i class="icon-key"></i>修改密码</a></li>
+								<li class="dropdown"><a href="#" name="quit_sys"><i class="fa fa-sign-out"></i>退出</a></li>
+								<li class="dropdown"><a href="#" name="change_password"><i class="fa fa-key"></i>修改密码</a></li>
 							</ul></li>
 					</ul>
 					<div class="navbar-text navbar-right ">

@@ -40,7 +40,7 @@
 	<div class="modal-body">
 		<form id="stu_info_form" class="" role="form">
 			<ul class="nav nav-tabs" name="dialog_tabs">
-				<li><a href="#dialog_basic" data-toggle="tab">基本信息<i class="icon-star" style="color: red;"></i></a></li>
+				<li><a href="#dialog_basic" data-toggle="tab">基本信息<i class="fa fa-star" style="color: red;"></i></a></li>
 				<li><a href="#dialog_extend" data-toggle="tab">更多信息</a></li>
 			</ul>
 

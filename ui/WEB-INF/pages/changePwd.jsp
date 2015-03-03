@@ -42,12 +42,12 @@
 		});
 		//密码特殊样式绑定,用attr("class")有问题
 		fObject("password_icon", baseDiv).parent().click(function() {
-			if (fObject("password_icon", baseDiv).hasClass("icon-eye-open")) {
+			if (fObject("password_icon", baseDiv).hasClass("fa-eye")) {
 				fObject("user_password_new", baseDiv).attr("type", "password");
-				fObject("password_icon", baseDiv).attr("class", " icon-eye-close");
+				fObject("password_icon", baseDiv).attr("class", " fa fa-eye-slash");
 			} else {
 				fObject("user_password_new", baseDiv).attr("type", "text");
-				fObject("password_icon", baseDiv).attr("class", " icon-eye-open");
+				fObject("password_icon", baseDiv).attr("class", " fa fa-eye");
 			}
 		});
 	});
@@ -69,7 +69,7 @@
 					<label class="control-label" for="user_password_new">新密码</label>
 					<div class="input-group" name="password_div">
 						<input class="form-control input-group" name="user_password_new" type="text" placeholder="请输入新密码"
-							validation="required|password|maxlen=20|minlen=5" value=""><span class="input-group-addon"><i class=" icon-eye-open"
+							validation="required|password|maxlen=20|minlen=5" value=""><span class="input-group-addon"><i class=" fa fa-eye"
 							name="password_icon"></i></span>
 					</div>
 				</div>

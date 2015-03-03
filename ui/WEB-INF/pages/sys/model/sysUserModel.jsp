@@ -49,12 +49,12 @@
 
 		//密码特殊样式绑定,用attr("class")有问题
 		fObject("password_icon", baseDiv).parent().click(function() {
-			if (fObject("password_icon", baseDiv).hasClass("icon-eye-open")) {
+			if (fObject("password_icon", baseDiv).hasClass("fa-eye")) {
 				fObject("user_password", baseDiv).attr("type", "password");
-				fObject("password_icon", baseDiv).attr("class", " icon-eye-close");
+				fObject("password_icon", baseDiv).attr("class", " fa fa-eye-slash");
 			} else {
 				fObject("user_password", baseDiv).attr("type", "text");
-				fObject("password_icon", baseDiv).attr("class", " icon-eye-open");
+				fObject("password_icon", baseDiv).attr("class", " fa fa-eye");
 			}
 		});
 	});
@@ -79,7 +79,7 @@
 					<label class="control-label" for="user_password">密码</label>
 					<div class="input-group" name="password_div">
 						<input class="form-control input-group" name="user_password" type="text" placeholder="请输入密码" validation="${password_check }" value=""><span
-							class="input-group-addon"><i class=" icon-eye-open" name="password_icon"></i></span>
+							class="input-group-addon"><i class=" fa fa-eye" name="password_icon"></i></span>
 					</div>
 				</div>
 				<div class="form-group ">

@@ -6,7 +6,7 @@
 				<span class="muted "> &copy; 2015 学生管理</span> <span class="text-primary">当前版本： v1.0</span>
 			</div>
 			<div class="col-xs-6 text-right">
-				<strong> @我:</strong> <a href="mailto:5vwy89@163.com"><i class="icon-envelope-alt icon-large"></i> </a>
+				<strong> @我:</strong> <a href="mailto:5vwy89@163.com"><i class="fa fa-envelope-o fa-lg"></i> </a>
 			</div>
 		</div>
 	</div>
@@ -126,5 +126,8 @@
 <script src="${ctx}/resources/bootstrap/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script src="${ctx}/resources/jquery.dataTables/js/jquery.dataTables.cn.js"></script>
 <script src="${ctx}/resources/jquery.dataTables/js/dataTables.bootstrap.js"></script>
+<script src="${ctx}/resources/highcharts/js/highcharts.js"></script>
+<script src="${ctx}/resources/highcharts/js/highcharts-3d.js"></script>
+<script src="${ctx}/resources/highcharts/js/modules/exporting.js"></script>
 <script src="${ctx}/resources/self/js/commonJs.js"></script>
 <script src="${ctx}/resources/self/js/sha512.js"></script>
