@@ -64,6 +64,8 @@ public class SysLoginServiceImpl extends BaseService {
 			String pID;
 			String tInnerHtml;
 			StringBuffer sb = new StringBuffer(512);
+			// FIXME @wangyi 2015-3-3 PubFun is available ,后续如果实际需要进行替换
+			// PubFun.formatTree(tMenus, "0", "menu_id");
 			for (Map tMenu : tMenus) {
 				tMenu_ID = (String) tMenu.get("menu_id");
 				tempArray = tMenu_ID.split("\\|");

@@ -8,6 +8,6 @@
 		SELECT st.stu_id,stu_name,stu_kindergarten,stu_address FROM vv_student st left join vv_student_info sti on st.stu_id=sti.stu_id 
 	</select>
 	<select id="sys_001" resultType="java.util.HashMap"  parameterType="java.util.Map">
-	    select user_id,user_name,user_phone,rela_role_id,user_password,DATE_FORMAT(last_login_time, '%Y-%m-%d %h:%i:%s') last_login_time,user_state  from vv_sys_user
+	    select user_id,user_name,user_phone,rela_role_id,user_password,DATE_FORMAT(last_login_time, '%Y-%m-%d %H:%i:%s') last_login_time,user_state  from vv_sys_user
 	</select>
 </mapper>

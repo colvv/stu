@@ -17,7 +17,7 @@ body {
 			<div class="container">
 				<div class="row">
 					<div class="navbar-header">
-						<a class="navbar-brand " href="#" name="index_content"><span class="color-w"><strong><i class="fa fa-user mg-r-5"></i>学生管理系统</strong></span></a>
+						<a class="navbar-brand " href="#" name="index_content"><span class="color-w"><strong><i class="fa fa-laptop fa-lg mg-r-5"></i>学生管理系统</strong></span></a>
 					</div>
 					<ul class="nav navbar-nav" id="menu_area">${menustr}
 					</ul>

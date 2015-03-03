@@ -5,11 +5,13 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -297,6 +299,7 @@ public class PubFun {
 			return "";
 		}
 	}
+
 	public static String MD5Encode(String strSrc, String key) {
 		try {
 			MessageDigest md5 = MessageDigest.getInstance("MD5");
@@ -316,4 +319,55 @@ public class PubFun {
 		return null;
 	}
 
+	/**
+	 * ques is simple there is some data like 1|0,2|0,3|0,101|1 ...... after the
+	 * func the data should like a tree 将有数特征的数据转化为实际的数据结构
+	 * 
+	 * @return
+	 */
+
+	public static List<Map> formatTree(List<Map> tTreeSource, String tRootEle, String tNodeName) {
+		Map<String, List<Map>> tParentsMap = new HashMap<>();
+		String tNodeID;
+		String tParentID;
+		List<Map> tSonList;
+		for (Map tNode : tTreeSource) {
+			tNodeID = (String) tNode.get(tNodeName);
+			// @wangyi 2015-3-3 还是特别注意一下这点
+			tParentID = tNodeID.split("\\|")[1];
+			tSonList = tParentsMap.get(tParentID);
+			if (tSonList == null) {
+				tSonList = new ArrayList<>();
+			}
+			tSonList.add(tNode);
+			tParentsMap.put(tParentID, tSonList);
+		}
+		// @wangyi 2015-3-3 after 循环，数据为 父节点为0的 【1，2，3，4】 父节点为1的【5，6，7，8】....
+		// List<Map> tResult = treeHelper(tParentsMap, tRootEle, tNodeName);
+		// @wangyi 2015-3-3 应该开始递归了
+		return treeHelper(tParentsMap, tRootEle, tNodeName);
+	}
+
+	private static List<Map> treeHelper(Map<String, List<Map>> tParentsMap, String tCurrentEle, String tNodeName) {
+		List<Map> tNodes = tParentsMap.get(tCurrentEle);
+		List<Map> tResult = new ArrayList<>();
+		String tNodeID;
+		String tFatherID;
+		List<Map> tSonList;
+		Map tNodeMap;
+		for (Map tNode : tNodes) {
+			tNodeID = (String) tNode.get(tNodeName);
+			tFatherID = tNodeID.split("\\|")[0];
+			tSonList = tParentsMap.get(tFatherID);
+			tNodeMap = new HashMap<>();
+			if (tSonList != null) {
+				// @wangyi 2015-3-3 此处递归
+				tNodeMap.put(tNode, treeHelper(tParentsMap, tFatherID, tNodeName));
+			} else {
+				tNodeMap.put(tNode, null);
+			}
+			tResult.add(tNodeMap);
+		}
+		return tResult;
+	}
 }
