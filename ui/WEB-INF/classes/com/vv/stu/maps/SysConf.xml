@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vv.stu.model">
+	<select id="selectExistCodes" resultType="java.util.HashMap">
+		SELECT codetype,conf.name,conf.desc,(SELECT COUNT(1) FROM vv_sys_code WHERE codetype=conf.codetype) codecount FROM
+		vv_sys_code_conf
+		conf WHERE editable=0
+		<if test="codetype != null"> and codetype=#{codetype}</if>
+	</select>
+	<select id="selectTargetCodes" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT * FROM vv_sys_code WHERE
+		codetype=#{codetype}
+	</select>
+	<update id="updateSysCodeConf" parameterType="java.util.HashMap">
+		update vv_sys_code_conf set vv_sys_code_conf.desc=#{desc} where codetype=#{codetype}
+	</update>
+	<insert id="insertSysCode" parameterType="java.util.HashMap">
+		insert into vv_sys_code values
+		(#{codetype},#{code},#{codename},#{codealias})
+	</insert>
+</mapper>

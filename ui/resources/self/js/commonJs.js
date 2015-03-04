@@ -3,6 +3,7 @@ var max_dealing = 91;
 var interval_process = 500;
 var process_func;
 var alertB_func;
+var slefAnim_func;
 
 // 2015-2-28 @wangyi : 防止连点,disabled不能点，不用特殊考虑
 $("body").on("click", "button", function() {
@@ -24,6 +25,7 @@ $("body").on("click", "button", function() {
 });
 
 function commonAjax(request_url, data, func) {
+	startSimpleLoad();
 	$.ajax({
 		type : "POST",
 		url : request_url,
@@ -39,6 +41,7 @@ function commonAjax(request_url, data, func) {
 			alertMsg("系统处理异常", "danger");
 		},
 		complete : function() {
+			stopSimpleLoad();
 		}
 	});
 }
@@ -140,6 +143,33 @@ function processStop() {
 	$("#show_process").hide();
 	$("#show_process .progress-bar").css("width", "0%");
 }
+
+function startSimpleLoad() {
+	$("#loading_simple_content [name='self-animate']").val("");
+	$("#loading_simple_back").show();
+	$("#loading_simple_content").show();
+	selfAnimate($("#loading_simple_content [name='self-animate']"));
+}
+function selfAnimate($obj) {
+	var text = $obj.text();
+	if (text.length == 6) {
+		text = "";
+	} else {
+		text += ".";
+	}
+	$obj.text(text);
+	slefAnim_func = setTimeout(function() {
+		selfAnimate($obj);
+	}, 1000);
+}
+function stopSimpleLoad() {
+	setTimeout(function() {
+		clearTimeout(slefAnim_func);
+		$("#loading_simple_back").hide();
+		$("#loading_simple_content").hide();
+	}, interval_process/2);
+}
+
 function _log(message) {
 	var now = new Date(), y = now.getFullYear(), m = now.getMonth() + 1, // ！JavaScript中月分是从0开始的
 	d = now.getDate(), h = now.getHours(), min = now.getMinutes(), s = now.getSeconds(), time = y + '/' + m + '/' + d + ' ' + h + ':' + min
@@ -152,14 +182,24 @@ function _log(message) {
 		// do nothing
 	}
 }
+
 var _last_form = "";
-function showForm(url, param, refresh) {
-	if (_last_form === url && !refresh) {
+/**
+ * url, param, refresh,title user new
+ */
+function showForm(paramObj) {
+	if (_last_form === paramObj.url && !paramObj.refresh) {
 		$("#form_modal").modal('show');
 	} else {
-		_last_form = url;
-		commonAjax(url, param, function(msg) {
-			$("#form_modal [name='form_content']").html(msg);
+		if (!paramObj.title) {
+			paramObj.title = "表单信息";
+		}
+		$("#form_modal [name='form_title']").text(paramObj.title);
+		_last_form = paramObj.url;
+		commonAjax(paramObj.url, paramObj.param, function(msg) {
+			// 2015-3-4 @wangyi : 需要去除之前的绑定哦
+			fObject("confrim", "form_modal").unbind("click");
+			$("#form_modal [name='form_body']").html(msg);
 			$("#form_modal").modal('show');
 		});
 	}
@@ -258,9 +298,8 @@ function checkNecessaryStr(str) {
 			if (checkResult !== 0) {
 				// 出现错误
 				$display.addClass("has-error");
-				$msg
-						.after("<div class='extendinfo label label-danger pull-right'><i class='fa fa-minus-circle'></i>" + checkResult
-								+ "</div>");
+				$msg.after("<div class='extendinfo label label-danger pull-right'><i class='fa fa-minus-circle'></i>" + checkResult
+						+ "</div>");
 				// 2015-2-26 @wangyi : 增加一个提示动画效果
 				$msg.nextAll(".extendinfo").animate({
 					marginRight : 70
@@ -363,8 +402,8 @@ function alertMsg_B(msg, type) {
 	$("#alert_bottom").finish();
 	clearTimeout(alertB_func);
 	$("#alert_bottom .alert").removeClass().addClass("alert alert-" + type + " alert-dismissable  col-xs-6 ");
-	var html = '<span class="label label-' + type + ' " >' + type + '</span><i class=" fa fa-info-circle mg-l-5"></i><strong class="mg-l-5 ">'
-			+ msg + '</strong>';
+	var html = '<span class="label label-' + type + ' " >' + type
+			+ '</span><i class=" fa fa-info-circle mg-l-5"></i><strong class="mg-l-5 ">' + msg + '</strong>';
 	fObject("dispay_area", "alert_bottom").html(html);
 	$("#alert_bottom").fadeIn("normal");
 	alertB_func = setTimeout(function() {

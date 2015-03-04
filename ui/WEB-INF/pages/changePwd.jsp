@@ -52,32 +52,20 @@
 		});
 	});
 </script>
-<div class="modal-content">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		<h4 class="modal-title">修改密码</h4>
-	</div>
-	<div class="modal-body">
-		<form id="changePwd_form" class="" role="form">
-			<div id="dialog_basic">
-				<div class="form-group ">
-					<label class="control-label" for="user_password">原始密码</label> <input class="form-control input-group" name="user_password"
-						type="password" placeholder="请输入原始密码" validation="required" value="">
+<form id="changePwd_form" class="" role="form">
+	<div>
+		<div class="form-group ">
+			<label class="control-label" for="user_password">原始密码</label> <input class="form-control input-group" name="user_password"
+				type="password" placeholder="请输入原始密码" validation="required" value="">
 
-				</div>
-				<div class="form-group ">
-					<label class="control-label" for="user_password_new">新密码</label>
-					<div class="input-group" name="password_div">
-						<input class="form-control input-group" name="user_password_new" type="text" placeholder="请输入新密码"
-							validation="required|password|maxlen=20|minlen=5" value=""><span class="input-group-addon"><i class=" fa fa-eye"
-							name="password_icon"></i></span>
-					</div>
-				</div>
+		</div>
+		<div class="form-group ">
+			<label class="control-label" for="user_password_new">新密码</label>
+			<div class="input-group" name="password_div">
+				<input class="form-control input-group" name="user_password_new" type="text" placeholder="请输入新密码"
+					validation="required|password|maxlen=20|minlen=5" value=""><span class="input-group-addon"><i class=" fa fa-eye"
+					name="password_icon"></i></span>
 			</div>
-		</form>
+		</div>
 	</div>
-	<div class="modal-footer">
-		<button type="button" class="btn btn-primary" name="confrim">确定</button>
-		<button type="button" class="btn btn-default" data-dismiss="modal" name="cancel">取消</button>
-	</div>
-</div>
+</form>

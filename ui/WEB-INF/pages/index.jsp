@@ -36,7 +36,7 @@ body {
 			</div>
 		</nav>
 	</header>
-	<div class="container" id="main_area" role="main"></div>
+	<div class="container min-width-500" id="main_area" role="main"></div>
 	<%@include file="/include/commonFooter.jsp"%>
 	<script>
 		$(document).ready(function() {
@@ -52,7 +52,10 @@ body {
 				});
 			});
 			fObject("change_password", baseDiv).click(function() {
-				showForm("/model/changePwd.do", null);
+				showForm({
+					url : "/model/changePwd.do",
+					title : "修改密码"
+				});
 			});
 			// 将首页的连接置换为"#"
 			$("#menu_area a[href]").each(function() {
@@ -72,7 +75,6 @@ body {
 				});
 			});
 			fObject("index_content", baseDiv).click();
-
 		});
 	</script>
 </body>

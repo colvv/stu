@@ -28,16 +28,24 @@
 			table.ajax.reload();
 		});
 		fObject('add_button', baseDiv).click(function() {
-			showForm("/stu/model/addModel.do", null);
+			showForm({
+				url : "/stu/model/addModel.do",
+				title : "新增学生"
+			});
 		});
 		fObject('mod_button', baseDiv).click(function() {
 			if (table.$('tr.selected').length !== 1) {
 				alertMsg("请先选中要修改的学生！", "default");
 				return;
 			}
-			showForm("/stu/model/modModel.do", {
-				stu_id : table.$('tr.selected').find("td:eq(0)").text()
-			}, true);
+			showForm({
+				url : "/stu/model/modModel.do",
+				param:{
+						stu_id : table.$('tr.selected').find("td:eq(0)").text()
+				},
+				title : "修改学生信息",
+				refresh : true
+			});
 		});
 		fObject('del_button', baseDiv).click(function() {
 			if (table.$('tr.selected').length !== 1) {
@@ -66,10 +74,18 @@
 		<div class="panel-heading">学生信息</div>
 		<div class="panel-body">
 			<div class="btn-group  mg-b-20" aria-label="操作按钮组">
-				<button type="button" class="btn btn-default input-sm" name="refresh_button">刷新<i class="fa fa-refresh mg-l-5"></i></button>
-				<button type="button" class="btn btn-default input-sm" name="add_button">新增<i class="fa fa-plus mg-l-5"></i></button>
-				<button type="button" class="btn btn-default input-sm" name="mod_button">修改<i class="fa fa-pencil mg-l-5"></i></button>
-				<button type="button" class="btn btn-default input-sm" name="del_button">删除<i class="fa fa-trash mg-l-5"></i></button>
+				<button type="button" class="btn btn-default input-sm" name="refresh_button">
+					刷新<i class="fa fa-refresh mg-l-5"></i>
+				</button>
+				<button type="button" class="btn btn-default input-sm" name="add_button">
+					新增<i class="fa fa-plus mg-l-5"></i>
+				</button>
+				<button type="button" class="btn btn-default input-sm" name="mod_button">
+					修改<i class="fa fa-pencil mg-l-5"></i>
+				</button>
+				<button type="button" class="btn btn-default input-sm" name="del_button">
+					删除<i class="fa fa-trash mg-l-5"></i>
+				</button>
 			</div>
 			<table id="example" class="display" cellspacing="0" width="100%">
 				<thead>

@@ -17,7 +17,15 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.vv.common.exception.ServiceException;
+
 public class PubFun {
+
+	protected final static Log logger = LogFactory.getLog(PubFun.class);
+
 	public static boolean randomBoolean() {
 		return ((int) (Math.random() * 100)) % 2 == 0;
 	}
@@ -369,5 +377,11 @@ public class PubFun {
 			tResult.add(tNodeMap);
 		}
 		return tResult;
+	}
+
+	public static void throwServiceException(Exception e) {
+		logger.error("service层处理出现异常：" + e.toString());
+		e.printStackTrace();
+		throw new ServiceException("数据处理失败");
 	}
 }

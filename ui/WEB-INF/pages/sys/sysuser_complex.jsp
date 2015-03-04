@@ -4,8 +4,10 @@
 		var baseDiv = "main_area";
 		var table = $('#sys_001').DataTable({
 			"ajax" : {
-				"url" : "loadTable/sys_001.do", "dataSrc" : ""
-			}, "columns" : [ {
+				"url" : "loadTable/sys_001.do",
+				"dataSrc" : ""
+			},
+			"columns" : [ {
 				"data" : "user_id"
 			}, {
 				"data" : "user_name"
@@ -28,16 +30,24 @@
 			table.ajax.reload();
 		});
 		fObject('add_button', baseDiv).click(function() {
-			showForm("/sys/model/addModel.do", null);
+			showForm({
+				url : "/sys/model/addModel.do",
+				title : "新增用户信息"
+			});
 		});
 		fObject('mod_button', baseDiv).click(function() {
 			if (table.$('tr.selected').length !== 1) {
 				alertMsg("请先选中要修改的用户！", "default");
 				return;
 			}
-			showForm("/sys/model/modModel.do", {
-				user_id : table.$('tr.selected').find("td:eq(0)").text()
-			}, true);
+			showForm({
+				url : "/sys/model/modModel.do",
+				param : {
+					user_id : table.$('tr.selected').find("td:eq(0)").text()
+				},
+				title : "修改用户信息",
+				refresh : true
+			});
 		});
 		fObject('del_button', baseDiv).click(function() {
 			if (table.$('tr.selected').length !== 1) {

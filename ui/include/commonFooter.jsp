@@ -74,10 +74,30 @@
 		</div>
 	</div>
 </div>
+<!--  简单的loading效果 -->
+<div class="loading_back" id="loading_simple_back" ></div>
+<div class="loading_content" id="loading_simple_content" >
+	<div class="">
+		<h2 class="text-center color-w">
+			<i class="fa fa-spinner fa-spin mg-r-5"></i>Loading<span name="self-animate"></span>
+		</h2>
+	</div>
+</div>
+
 <!-- 模态框（Modal）FORM -->
 <div class="modal fade " id="form_modal" tabindex="-1" role="dialog" aria-labelledby="信息录入" aria-hidden="true">
 	<div class=" modal-dialog ">
-		<div name="form_content"></div>
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" name="form_title">系统用户信息</h4>
+			</div>
+			<div class="modal-body" name="form_body"></div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" name="confrim">确定</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal" name="cancel">取消</button>
+			</div>
+		</div>
 	</div>
 	<!-- /.modal-content -->
 </div>
@@ -95,7 +115,7 @@
 .loading_back {
 	background: #000;
 	opacity: .5;
-	filter: alpha(opacity =       50);
+	filter: alpha(opacity =                     50);
 	position: fixed;
 	z-index: 1040;
 	top: 0;
@@ -108,10 +128,10 @@
 .loading_content {
 	position: fixed;
 	z-index: 1041;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
+	top: 50%;
+	left: 50%;
+	margin-left: -100px;
+	margin-top: -100px;
 	display: none;
 }
 </style>
@@ -130,4 +150,5 @@
 <script src="${ctx}/resources/highcharts/js/highcharts-3d.js"></script>
 <script src="${ctx}/resources/highcharts/js/modules/exporting.js"></script>
 <script src="${ctx}/resources/self/js/commonJs.js"></script>
+<script src="${ctx}/resources/self/js/table.js"></script>
 <script src="${ctx}/resources/self/js/sha512.js"></script>

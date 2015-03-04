@@ -59,38 +59,26 @@
 		});
 	});
 </script>
-<div class="modal-content">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		<h4 class="modal-title">系统用户信息</h4>
-	</div>
-	<div class="modal-body">
-		<form id="sysuser_info_form" class="" role="form">
-			<div class="tab-pane   fade in active" id="dialog_basic">
-				<div class="form-group">
-					<label class="control-label" for="user_id">登录名</label> <input class="form-control" name="user_id" type="text" placeholder="请输入登录名"
-						validation="required|maxlen=20|password" value="${user_id }">
-				</div>
-				<div class="form-group">
-					<label class="control-label" for="user_name">用户姓名</label> <input class="form-control" name="user_name" type="text"
-						placeholder="请输入用户姓名" validation="required|maxlen=15" value="${user_name }">
-				</div>
-				<div class="form-group ">
-					<label class="control-label" for="user_password">密码</label>
-					<div class="input-group" name="password_div">
-						<input class="form-control input-group" name="user_password" type="text" placeholder="请输入密码" validation="${password_check }" value=""><span
-							class="input-group-addon"><i class=" fa fa-eye" name="password_icon"></i></span>
-					</div>
-				</div>
-				<div class="form-group ">
-					<label class="control-label" for="user_phone">联系方式</label> <input class="form-control" name="user_phone" type="text"
-						placeholder="请输入联系方式" validation="len=11" value="${user_phone }">
-				</div>
+<form id="sysuser_info_form" class="" role="form">
+	<div class="tab-pane   fade in active">
+		<div class="form-group">
+			<label class="control-label" for="user_id">登录名</label> <input class="form-control" name="user_id" type="text" placeholder="请输入登录名"
+				validation="required|maxlen=20|password" value="${user_id }">
+		</div>
+		<div class="form-group">
+			<label class="control-label" for="user_name">用户姓名</label> <input class="form-control" name="user_name" type="text" placeholder="请输入用户姓名"
+				validation="required|maxlen=15" value="${user_name }">
+		</div>
+		<div class="form-group ">
+			<label class="control-label" for="user_password">密码</label>
+			<div class="input-group" name="password_div">
+				<input class="form-control input-group" name="user_password" type="text" placeholder="请输入密码" validation="${password_check }" value=""><span
+					class="input-group-addon"><i class=" fa fa-eye" name="password_icon"></i></span>
 			</div>
-		</form>
+		</div>
+		<div class="form-group ">
+			<label class="control-label" for="user_phone">联系方式</label> <input class="form-control" name="user_phone" type="text"
+				placeholder="请输入联系方式" validation="len=11" value="${user_phone }">
+		</div>
 	</div>
-	<div class="modal-footer">
-		<button type="button" class="btn btn-primary" name="confrim">确定</button>
-		<button type="button" class="btn btn-default" data-dismiss="modal" name="cancel">取消</button>
-	</div>
-</div>
+</form>

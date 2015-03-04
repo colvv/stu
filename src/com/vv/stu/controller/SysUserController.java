@@ -74,5 +74,6 @@ public class SysUserController extends BaseController {
 		tModelAndView.addObject("password_check", "password|maxlen=20|minlen=5");
 		return tModelAndView;
 	}
+	
 
 }

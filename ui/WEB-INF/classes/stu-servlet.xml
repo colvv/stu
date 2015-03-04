@@ -84,6 +84,8 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/*.do" />
+			<mvc:mapping path="/*/*.do" />
+			<mvc:mapping path="/*/*/*.do" />
 			<bean class="com.vv.stu.interceptor.LoginInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors> 
