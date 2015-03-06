@@ -11,11 +11,41 @@
 		SELECT * FROM vv_sys_code WHERE
 		codetype=#{codetype}
 	</select>
+	<select id="selectSysMenu" resultType="java.util.HashMap">
+		SELECT menu_id,menu_name,menu_url,open_power FROM vv_sys_menu where 1=1
+		<if test="menu_id != null"> and menu_id=#{menu_id}</if>
+		<if test="user_id != null"> and (open_power IS NULL OR open_power='0' or ( open_power='1' and exists (select 1 from vv_sys_user_menu
+			where
+			user_id=#{user_id} and menu_id=vv_sys_menu.menu_id)) )
+		</if>
+	</select>
+	<select id="selectCheckedSysMenu" resultType="java.util.HashMap">
+		SELECT menu_id,menu_name,menu_url,open_power,(case when exists (select 1 from vv_sys_user_menu where
+		user_id=#{user_id} and menu_id=vv_sys_menu.menu_id) then '0' else '1' end) user_select FROM vv_sys_menu where 1=1
+		<if test="menu_id != null"> and menu_id=#{menu_id}</if>
+		<if test="menu_codition != null"> ${menu_codition}</if>
+	</select>
+
 	<update id="updateSysCodeConf" parameterType="java.util.HashMap">
-		update vv_sys_code_conf set vv_sys_code_conf.desc=#{desc} where codetype=#{codetype}
+		update vv_sys_code_conf set vv_sys_code_conf.desc=#{desc} where
+		codetype=#{codetype}
 	</update>
 	<insert id="insertSysCode" parameterType="java.util.HashMap">
 		insert into vv_sys_code values
 		(#{codetype},#{code},#{codename},#{codealias})
+	</insert>
+	<update id="updateMenuInfo" parameterType="java.util.HashMap">
+		update vv_sys_menu
+		<set>
+			<if test="menu_name != null">menu_name=#{menu_name},</if>
+			<if test="open_power != null">open_power=#{open_power},</if>
+		</set>
+		where menu_id=#{menu_id}
+	</update>
+	<delete id="deleteUserMenu" parameterType="java.util.HashMap">
+		delete from vv_sys_user_menu where user_id =#{user_id}
+	</delete>
+	<insert id="insertUserMenu" parameterType="java.util.HashMap">
+		insert into vv_sys_user_menu values (#{user_id},#{menu_id})
 	</insert>
 </mapper>

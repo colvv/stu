@@ -41,6 +41,26 @@ CREATE TABLE `vv_class_rela` (
 
 /*Data for the table `vv_class_rela` */
 
+/*Table structure for table `vv_finance` */
+
+DROP TABLE IF EXISTS `vv_finance`;
+
+CREATE TABLE `vv_finance` (
+  `fin_id` varchar(20) NOT NULL,
+  `fin_create_type` varchar(2) DEFAULT NULL,
+  `fin_rela_id` varchar(40) DEFAULT NULL,
+  `fin_date` int(11) DEFAULT NULL,
+  `fin_type` varchar(10) DEFAULT NULL,
+  `fin_money` decimal(20,2) DEFAULT NULL,
+  `fin_rela_user` varchar(10) DEFAULT NULL,
+  `fin_user` varchar(10) DEFAULT NULL,
+  `fin_record_time` datetime DEFAULT NULL,
+  `fin_desc` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`fin_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `vv_finance` */
+
 /*Table structure for table `vv_lesson` */
 
 DROP TABLE IF EXISTS `vv_lesson`;
@@ -171,7 +191,7 @@ CREATE TABLE `vv_sys_code` (
 
 /*Data for the table `vv_sys_code` */
 
-insert  into `vv_sys_code`(`codetype`,`code`,`codename`,`codealias`) values ('lesson_type','01','基础课程',''),('student_state','03','我的世界','我的世界'),('student_state','04','他的世界',''),('student_type','01','系统管理员',NULL),('student_type','02','我擦1',''),('student_type','03','我要你',''),('student_type','043','达到','332121 '),('student_type','06','我靠','大口大口大口啃'),('student_type','09','我去','擦擦啊'),('student_type','099','挖槽','213213'),('student_type','10','haha','误区'),('student_type','11','123','但洒洒'),('student_type','12','要有秩序',''),('student_type','13','排排坐','吃果果'),('student_type','14','误区','达到'),('student_type','213231','213213',''),('student_type','91','213','达到');
+insert  into `vv_sys_code`(`codetype`,`code`,`codename`,`codealias`) values ('student_state','01','新生','我晕');
 
 /*Table structure for table `vv_sys_code_conf` */
 
@@ -211,13 +231,13 @@ CREATE TABLE `vv_sys_menu` (
   `menu_id` varchar(10) NOT NULL,
   `menu_name` varchar(40) NOT NULL,
   `menu_url` varchar(100) DEFAULT NULL,
-  `open_power` tinyint(1) DEFAULT NULL,
+  `open_power` varchar(1) DEFAULT NULL,
   PRIMARY KEY (`menu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `vv_sys_menu` */
 
-insert  into `vv_sys_menu`(`menu_id`,`menu_name`,`menu_url`,`open_power`) values ('101|1','学生报名','bootstrap.do',NULL),('102|1','学生退学',NULL,NULL),('103|1','学生信息','/stu/stuList.do',NULL),('1|0','学生管理',NULL,NULL),('2|0','教师管理','/tea/index.do',NULL),('301|3','系统用户管理','/sys/userIndex.do',NULL),('302|3','菜单管理','/sys/menu/menuIndex.do',NULL),('303|3','用户菜单管理','/sys/menu/userMenuIndex.do',NULL),('304|3','系统枚举','/sys/code/confIndex.do',NULL),('3|0','系统管理',NULL,NULL);
+insert  into `vv_sys_menu`(`menu_id`,`menu_name`,`menu_url`,`open_power`) values ('101|1','学生报名','bootstrap.do','1'),('102|1','学生退学',NULL,'1'),('103|1','学生信息','/stu/stuList.do','1'),('1|0','学生管理',NULL,'0'),('2|0','教师管理','/tea/index.do','1'),('301|3','系统用户管理','/sys/userIndex.do','1'),('302|3','菜单管理','/sys/menu/menuIndex.do','1'),('304|3','系统枚举','/sys/code/confIndex.do','1'),('3|0','系统管理',NULL,'1'),('401|4','新建收支','/fin/createFinance.do',NULL),('4|0','财务管理',NULL,'0');
 
 /*Table structure for table `vv_sys_user` */
 
@@ -236,7 +256,21 @@ CREATE TABLE `vv_sys_user` (
 
 /*Data for the table `vv_sys_user` */
 
-insert  into `vv_sys_user`(`user_id`,`user_name`,`user_phone`,`rela_role_id`,`user_password`,`last_login_time`,`user_state`) values ('000002','我擦','13403517100',NULL,'14e1b600b1fd579f47433b88e8d85291',NULL,NULL),('000003','新用户','13403517100',NULL,'2072d493c4fc8bc11b8d2f6f49d178c9',NULL,NULL),('000006','我擦','13403517100',NULL,'',NULL,NULL),('admin','系统管理员','13403517100',NULL,'0c909a141f1f2c0a1cb602b0b2d7d050',NULL,NULL),('sy000001','haha好','13403517105','100','','2015-02-27 10:33:58','01'),('SY000007','wlgq','',NULL,'b626940cf772654ed931b05be5722121',NULL,NULL),('SY000008','王毅','13403517100',NULL,'03557285e0c7dcf73459ef5cbee4551c',NULL,NULL),('SY000009','王毅','',NULL,'03557285e0c7dcf73459ef5cbee4551c',NULL,NULL),('wangyi','王毅','',NULL,'07932f02f3323059544d188be8e847e7','2015-03-04 17:52:38',NULL),('wangyi2','王毅','',NULL,'03557285e0c7dcf73459ef5cbee4551c',NULL,NULL),('wangyi3','213123','13132321321',NULL,'5b32af2e42cbaa6bdcf216b65cd8287c','2015-02-28 16:11:39',NULL),('wcccccc','eddasdsadasd','',NULL,'044e2952bf40ecc61933d8ad16e0074c',NULL,NULL);
+insert  into `vv_sys_user`(`user_id`,`user_name`,`user_phone`,`rela_role_id`,`user_password`,`last_login_time`,`user_state`) values ('000002','我擦','13403517100',NULL,'14e1b600b1fd579f47433b88e8d85291',NULL,NULL),('000003','新用户','13403517100',NULL,'2072d493c4fc8bc11b8d2f6f49d178c9',NULL,NULL),('000006','我擦','13403517100',NULL,'',NULL,NULL),('admin','系统管理员','13403517100',NULL,'0c909a141f1f2c0a1cb602b0b2d7d050',NULL,NULL),('sy000001','haha好','13403517105','100','','2015-02-27 10:33:58','01'),('SY000007','wlgq','',NULL,'b626940cf772654ed931b05be5722121',NULL,NULL),('SY000008','王毅','13403517100',NULL,'03557285e0c7dcf73459ef5cbee4551c',NULL,NULL),('SY000009','王毅','',NULL,'03557285e0c7dcf73459ef5cbee4551c',NULL,NULL),('wangyi','王毅','',NULL,'07932f02f3323059544d188be8e847e7','2015-03-06 18:18:59',NULL),('wangyi2','王毅','',NULL,'03557285e0c7dcf73459ef5cbee4551c',NULL,NULL),('wangyi3','213123','13132321321',NULL,'5b32af2e42cbaa6bdcf216b65cd8287c','2015-02-28 16:11:39',NULL),('wcccccc','eddasdsadasd','',NULL,'044e2952bf40ecc61933d8ad16e0074c',NULL,NULL),('yanshi','演示用户','',NULL,'31bde6a12ed45884f1dd420e50ebcbd4','2015-03-06 11:53:14',NULL);
+
+/*Table structure for table `vv_sys_user_menu` */
+
+DROP TABLE IF EXISTS `vv_sys_user_menu`;
+
+CREATE TABLE `vv_sys_user_menu` (
+  `user_id` varchar(20) NOT NULL,
+  `menu_id` varchar(10) NOT NULL,
+  PRIMARY KEY (`user_id`,`menu_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `vv_sys_user_menu` */
+
+insert  into `vv_sys_user_menu`(`user_id`,`menu_id`) values ('000002','101|1'),('wangyi','101|1'),('wangyi','102|1'),('wangyi','103|1'),('wangyi','2|0'),('wangyi','301|3'),('wangyi','302|3'),('wangyi','304|3'),('wangyi','3|0'),('yanshi','103|1'),('yanshi','301|3'),('yanshi','302|3'),('yanshi','304|3'),('yanshi','3|0');
 
 /*Table structure for table `vv_teacher` */
 

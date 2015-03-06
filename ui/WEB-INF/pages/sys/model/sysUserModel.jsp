@@ -41,7 +41,7 @@
 			fObject("user_id", baseDiv).attr("readonly", true);
 			// 增加样式展示
 			$("#sysuser_info_form").displayNec_Form();
-			$("#" + baseDiv + " [for='user_password']").append("<span class='label label-info mg-l-5'>不录入视为不更改</span>");
+			$("#" + baseDiv + " [for='user_password']").addLabel("不录入视为不更改","info");
 		} else {
 			// 增加样式展示
 			$("#sysuser_info_form").displayNec_Form();

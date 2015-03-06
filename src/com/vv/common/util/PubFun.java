@@ -384,4 +384,35 @@ public class PubFun {
 		e.printStackTrace();
 		throw new ServiceException("数据处理失败");
 	}
+
+	public static String getZtreeHtml(List<Map> tDatas, String tID,String tName, List<String> tElements) {
+		StringBuffer tList = new StringBuffer(256);
+		tList.append("[");
+		String menu_id;
+		String[] id_pid;
+		for (Map tData : tDatas) {
+			menu_id = (String) tData.get(tID);
+			id_pid = menu_id.split("\\|");
+			if (id_pid.length != 2) {
+				continue;
+			}
+			tList.append("{id:'" + id_pid[0] + "',");
+			tList.append("pId:'" + id_pid[1] + "',");
+			tList.append("name:'" + (String) tData.get(tName) + "',");
+			// 2015-1-26 @wangyi : 增强用户体验，一级的默认打开
+			if ("0".equals(id_pid[1])) {
+				tList.append("open:true,");
+			}
+			for (String tEle : tElements) {
+				tList.append(tEle + ":'" + (String) tData.get(tEle) + "',");
+			}
+			// tList = new StringBuffer(tList.substring(0, tList.length() - 1));
+			tList.append("},");
+		}
+		// if (tDatas.size() != 0)
+		// tList = new StringBuffer(tList.substring(0, tList.length() - 1));
+		tList.append("]");
+		return tList.toString();
+	}
+
 }

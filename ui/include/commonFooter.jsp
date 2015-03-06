@@ -86,7 +86,7 @@
 
 <!-- 模态框（Modal）FORM -->
 <div class="modal fade " id="form_modal" tabindex="-1" role="dialog" aria-labelledby="信息录入" aria-hidden="true">
-	<div class=" modal-dialog ">
+	<div class=" modal-dialog " >
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -146,9 +146,10 @@
 <script src="${ctx}/resources/bootstrap/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script src="${ctx}/resources/jquery.dataTables/js/jquery.dataTables.cn.js"></script>
 <script src="${ctx}/resources/jquery.dataTables/js/dataTables.bootstrap.js"></script>
+<script src="${ctx}/resources/jquery.ztree/js/jquery.ztree.all-3.5.js"></script>
 <script src="${ctx}/resources/highcharts/js/highcharts.js"></script>
 <script src="${ctx}/resources/highcharts/js/highcharts-3d.js"></script>
 <script src="${ctx}/resources/highcharts/js/modules/exporting.js"></script>
 <script src="${ctx}/resources/self/js/commonJs.js"></script>
-<script src="${ctx}/resources/self/js/table.js"></script>
+<script src="${ctx}/resources/self/js/jquery.common.js"></script>
 <script src="${ctx}/resources/self/js/sha512.js"></script>

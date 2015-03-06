@@ -52,8 +52,8 @@
 	<button type="button" class="btn btn-default input-sm" name="add_button">
 		新增编码<i class="fa fa-plus mg-l-5"></i>
 	</button>
-	<button type="button" class="btn btn-warning input-sm" disabled>
-		其他操作@管理员<i class="fa fa-phone   mg-l-5"></i>
+	<button type="button" class="btn btn-info input-sm" disabled>
+		其他操作@管理员<i class="fa fa-whatsapp fa-lg   mg-l-5"></i>
 	</button>
 </div>
 <div class="" name="table_area"></div>

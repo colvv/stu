@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="${ctx}/resources/awesome/css/font-awesome.min.css">
 <link rel="stylesheet" href="${ctx}/resources/jquery.dataTables/css/jquery.dataTables.css">
 <link rel="stylesheet" href="${ctx}/resources/jquery.dataTables/css/dataTables.bootstrap.css">
+<link rel="stylesheet" href="${ctx}/resources/jquery.ztree/css/zTreeStyle/zTreeStyle.css">
 <link rel="stylesheet" href="${ctx}/resources/self/css/base.css" />
 
 <!--[if lt IE 9]>

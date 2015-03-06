@@ -17,9 +17,9 @@
 			<if test="user_name != null">user_name=#{user_name},</if>
 			<if test="user_phone != null">user_phone=#{user_phone},</if>
 			<if test="rela_role_id != null">rela_role_id=#{rela_role_id},</if>
-			<if test="user_password != null and user_password !=''">user_password=#{user_password}</if>
-			<if test="last_login_time != null">last_login_time=#{last_login_time}</if>
-			<if test="user_state != null">user_state=#{user_state}</if>
+			<if test="user_password != null and user_password !=''">user_password=#{user_password},</if>
+			<if test="last_login_time != null">last_login_time=#{last_login_time},</if>
+			<if test="user_state != null">user_state=#{user_state},</if>
 		</set>
 		where user_id=#{user_id}
 	</update>

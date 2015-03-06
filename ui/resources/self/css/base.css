@@ -13,7 +13,7 @@ body, form, frame, iframe, blockquote, p, pre, sup, sub, table, caption, ol, dl,
  	修改默认字体
 */
 body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
-	font-family: Microsoft YaHei,'宋体' , Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;}
+	font-family: Microsoft YaHei,'宋体' , Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif !important;}
 	
 	
 .mg-t-150{
@@ -36,6 +36,9 @@ body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
 }
 .mg-r-5{
 	margin-right: 5px;
+}
+.pd-r-50{
+	padding-right: 50px;
 }
 /** equals to center-block by bootstrap  */
 .line_center{

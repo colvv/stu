@@ -53,10 +53,10 @@ public class SysLoginServiceImpl extends BaseService {
 	 * @return
 	 * @author wangyi 2015-2-11
 	 */
-	public String loadMenuHtml() {
+	public String loadMenuHtml(Map tParams) {
 
 		try {
-			List<Map> tMenus = tDefaultQueryDao.commonQuery_SQL("SELECT menu_id,menu_name,menu_url FROM vv_sys_menu ");
+			List<Map> tMenus = tDefaultQueryDao.commonQuery_SQL(new DaoOperator("selectSysMenu", tParams));
 			// 2015-2-11 @wangyi : 一次sql查询，通过java代码进行处理层级关系
 			String tMenu_ID;
 			String[] tempArray;

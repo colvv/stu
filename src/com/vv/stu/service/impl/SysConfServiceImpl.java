@@ -1,5 +1,6 @@
 package com.vv.stu.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,59 @@ public class SysConfServiceImpl extends BaseService {
 		}
 		return "";
 	}
-	@SuppressWarnings("rawtypes") 
+
+	public String loadMenuZtree() {
+		try {
+			List<Map> tMenus = tDefaultQueryDao.commonQuery_SQL(new DaoOperator("selectSysMenu", new HashMap()));
+			List<String> tElements = new ArrayList<>();
+			tElements.add("menu_id");
+			return PubFun.getZtreeHtml(tMenus, "menu_id", "menu_name", tElements);
+		} catch (Exception e) {
+			PubFun.throwServiceException(e);
+		}
+		return "";
+	}
+
+	public String loadMenuZtreeChecked(Map tParams) {
+		try {
+			List<Map> tMenus = tDefaultQueryDao.commonQuery_SQL(new DaoOperator("selectCheckedSysMenu", tParams));
+			StringBuffer tList = new StringBuffer(256);
+			tList.append("[");
+			String menu_id;
+			String[] id_pid;
+			for (Map tData : tMenus) {
+				menu_id = (String) tData.get("menu_id");
+				id_pid = menu_id.split("\\|");
+				if (id_pid.length != 2) {
+					continue;
+				}
+				tList.append("{id:'" + id_pid[0] + "',");
+				tList.append("pId:'" + id_pid[1] + "',");
+				tList.append("name:'" + (String) tData.get("menu_name") + "',");
+				// 2015-1-26 @wangyi : 增强用户体验，一级的默认打开
+				if ("0".equals(id_pid[1])) {
+					tList.append("open:true,");
+				}
+				if (!"1".equals(tData.get("open_power"))) {
+					tList.append("checked:true,");
+					tList.append("chkDisabled:true,");
+				} else if ("0".equals(tData.get("user_select"))) {
+					tList.append("checked:true,");
+				}
+				tList.append("menu_id" + ":'" + menu_id + "',");
+				// tList = new StringBuffer(tList.substring(0, tList.length() -
+				// 1));
+				tList.append("},");
+			}
+			tList.append("]");
+			return tList.toString();
+		} catch (Exception e) {
+			PubFun.throwServiceException(e);
+		}
+		return "";
+	}
+
+	@SuppressWarnings("rawtypes")
 	public Map loadCodeAreaInfo(Map tParams) {
 		Map tMap = new HashMap<>();
 		try {
@@ -50,7 +103,19 @@ public class SysConfServiceImpl extends BaseService {
 		}
 		return tMap;
 	}
-	public boolean saveSysCodeConf(Map tParams){
+
+	@SuppressWarnings("rawtypes")
+	public Map loadMenuAreaInfo(Map tParams) {
+		Map tMap = new HashMap<>();
+		try {
+			tMap.put("sys_menu", tDefaultQueryDao.commonQuery_SQL(new DaoOperator("selectSysMenu", tParams)).get(0));
+		} catch (Exception e) {
+			PubFun.throwServiceException(e);
+		}
+		return tMap;
+	}
+
+	public boolean saveSysCodeConf(Map tParams) {
 		try {
 			tPubCommitDao.doCommit(new DaoOperator("updateSysCodeConf", tParams));
 		} catch (Exception e) {
@@ -59,7 +124,7 @@ public class SysConfServiceImpl extends BaseService {
 		return true;
 	}
 
-	public boolean insertSysCode(Map tParams) throws BusinessException{
+	public boolean insertSysCode(Map tParams) throws BusinessException {
 		try {
 			tPubCommitDao.doCommit(new DaoOperator("insertSysCode", tParams));
 		} catch (DuplicateKeyException e) {
@@ -69,5 +134,29 @@ public class SysConfServiceImpl extends BaseService {
 		}
 		return true;
 	}
-	
+
+	public boolean saveMenuInfo(Map tParams) {
+		try {
+			tPubCommitDao.doCommit(new DaoOperator("updateMenuInfo", tParams));
+		} catch (Exception e) {
+			PubFun.throwServiceException(e);
+		}
+		return true;
+	}
+
+	public boolean updateUserMenu(Map tParams) {
+		try {
+			String tMenus = (String) tParams.get("menus");
+			tPubCommitDao.doCommit(new DaoOperator("deleteUserMenu", tParams));
+			for (String tMenu : tMenus.split(",")) {
+				tParams.put("menu_id", tMenu);
+				tPubCommitDao.doCommit(new DaoOperator("insertUserMenu", tParams));
+			}
+		} catch (Exception e) {
+			PubFun.throwServiceException(e);
+		}
+		return true;
+
+	}
+
 }

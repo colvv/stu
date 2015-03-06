@@ -324,10 +324,12 @@ table.dataTable td {
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button {
   box-sizing: border-box;
+  
   display: inline-block;
+  /**  @wangyi 修改了样式，翻页间距过大
   min-width: 1.5em;
-  /**  @wangyi 修改了样式，翻页间距过大*/
-  padding: 0.3em 0.1em;
+    padding: 0.3em 0.1em;
+  */
   margin-left: 2px;
   text-align: center;
   text-decoration: none !important;

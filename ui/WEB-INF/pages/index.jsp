@@ -62,7 +62,7 @@ body {
 				var url = $(this).attr("href")
 				$(this).click(function() {
 					if (url !== "") {
-						commonAjax_pro(url, null, function(html) {
+						commonAjax(url, null, function(html) {
 							$("#main_area").html(html);
 						})
 					}
@@ -70,7 +70,7 @@ body {
 				$(this).attr("href", "#");
 			});
 			fObject("index_content", baseDiv).click(function() {
-				commonAjax_pro("/indexContent.do", null, function(html) {
+				commonAjax("/indexContent.do", null, function(html) {
 					$("#main_area").html(html);
 				});
 			});

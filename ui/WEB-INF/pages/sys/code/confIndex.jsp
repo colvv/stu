@@ -41,7 +41,11 @@
 		<div class="panel panel-primary min-width-500">
 			<!-- /.panel-heading -->
 			<div class="panel-heading">具体信息</div>
-			<div class="panel-body" style="width: 100%;" name="display_area"></div>
+			<div class="panel-body" style="width: 100%;" name="display_area">
+				<h3 class="text-center mg-t-150">
+					<i class=" fa fa-arrow-left mg-r-5"></i>Select First
+				</h3>
+			</div>
 		</div>
 	</div>
 </div>

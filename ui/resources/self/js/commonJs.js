@@ -25,50 +25,63 @@ $("body").on("click", "button", function() {
 });
 
 function commonAjax(request_url, data, func) {
-	startSimpleLoad();
-	$.ajax({
-		type : "POST",
-		url : request_url,
+	ajaxInner({
+		request_url : request_url,
 		data : data,
-		contentType : "application/x-www-form-urlencoded; charset=utf-8",
-		cache : false,
-		dataType : "text",
-		success : function() {
-			// 参数继续向下传递
-			func(arguments[0], arguments[1], arguments[2]);
-		},
-		error : function() {
-			alertMsg("系统处理异常", "danger");
-		},
-		complete : function() {
-			stopSimpleLoad();
-		}
+		func : func,
+		protype : 'loading'
+	});
+}
+function commonAjax_none(request_url, data, func) {
+	ajaxInner({
+		request_url : request_url,
+		data : data,
+		func : func
 	});
 }
 function commonAjax_pro(request_url, data, func) {
-	startProcess("");
+	ajaxInner({
+		request_url : request_url,
+		data : data,
+		func : func,
+		protype : 'process'
+	});
+}
+function ajaxInner(paramobj) {
+	if (paramobj.protype == 'process') {
+		startProcess("");
+	} else if (paramobj.protype == 'loading') {
+		startSimpleLoad();
+	}
 	$.ajax({
 		type : "POST",
-		url : request_url,
-		data : data,
+		url : paramobj.request_url,
+		data : paramobj.data,
 		contentType : "application/x-www-form-urlencoded; charset=utf-8",
 		cache : false,
 		dataType : "text",
 		success : function() {
-			processHandler();
+			if (paramobj.protype == 'process') {
+				processHandler();
+			}
 			// 参数继续向下传递
-			func(arguments[0], arguments[1], arguments[2]);
+			paramobj.func(arguments[0], arguments[1], arguments[2]);
 		},
 		error : function() {
-			processStop();
+			if (paramobj.protype == 'process') {
+				processStop();
+			}
 			alertMsg("系统处理异常", "danger");
 		},
 		complete : function() {
-			processComplete();
+			if (paramobj.protype == 'process') {
+				processComplete();
+			} else if (paramobj.protype == 'loading') {
+				stopSimpleLoad();
+			}
 		}
 	});
 }
-
 function alertMsg(msg, type) {
 	if (!type) {
 		type = "default";
@@ -145,7 +158,8 @@ function processStop() {
 }
 
 function startSimpleLoad() {
-	$("#loading_simple_content [name='self-animate']").val("");
+	clearTimeout(slefAnim_func);
+	$("#loading_simple_content [name='self-animate']").text("");
 	$("#loading_simple_back").show();
 	$("#loading_simple_content").show();
 	selfAnimate($("#loading_simple_content [name='self-animate']"));
@@ -167,7 +181,7 @@ function stopSimpleLoad() {
 		clearTimeout(slefAnim_func);
 		$("#loading_simple_back").hide();
 		$("#loading_simple_content").hide();
-	}, interval_process/2);
+	}, interval_process / 2);
 }
 
 function _log(message) {
@@ -194,6 +208,12 @@ function showForm(paramObj) {
 		if (!paramObj.title) {
 			paramObj.title = "表单信息";
 		}
+		if (paramObj.width) {
+			$("#form_modal .modal-dialog").css("width", paramObj.width);
+		}else{
+			$("#form_modal .modal-dialog").css("width", "");
+		}
+		
 		$("#form_modal [name='form_title']").text(paramObj.title);
 		_last_form = paramObj.url;
 		commonAjax(paramObj.url, paramObj.param, function(msg) {
@@ -278,115 +298,6 @@ function checkNecessaryStr(str) {
 	}
 	return false;
 }
-/**
- * 表单校验部分 1.加入参数，校验成功不显示正确
- * 
- */
-(function($) {
-	$.fn.vali_Ele = function(succ_none) {
-		var validation = $(this).attr("validation");
-		var value = $.trim($(this).val());
-		var $display = $(this).closest(".form-group");
-		var $form = $(this).closest("form");
-		var $msg = $form.find("label[for='" + $(this).attr("name") + "']");
-		removeClass($display);
-		removeMsg($msg);
-		// 准备结束
-		var valis = validation.split("|");
-		for ( var i = 0; i < valis.length; i++) {
-			var checkResult = validateFunc(value, valis[i]);
-			if (checkResult !== 0) {
-				// 出现错误
-				$display.addClass("has-error");
-				$msg.after("<div class='extendinfo label label-danger pull-right'><i class='fa fa-minus-circle'></i>" + checkResult
-						+ "</div>");
-				// 2015-2-26 @wangyi : 增加一个提示动画效果
-				$msg.nextAll(".extendinfo").animate({
-					marginRight : 70
-				}, 200, null, function() {
-					$msg.nextAll(".extendinfo").animate({
-						marginRight : 0
-					}, 200);
-				});
-				return false;
-			}
-		}
-		if (!succ_none) {
-			$display.addClass("has-success");
-			$msg.after("<div class='extendinfo label label-success pull-right'><i class='fa fa-check-circle'></i></div>");
-		}
-		return true;
-	};
-	$.fn.vali_Form = function(succ_none) {
-		$(this).find("[validation]").each(function() {
-			$(this).vali_Ele(succ_none);
-		})
-	};
-	$.fn.hasError = function() {
-		return $(this).find(".label-danger").length > 0 ? true : false;
-	};
-	$.fn.displayNec_Ele = function() {
-		var validation = $(this).attr("validation");
-		var $form = $(this).closest("form");
-		var $msg = $form.find("label[for='" + $(this).attr("name") + "']");
-		if (validation.indexOf("required") !== -1) {
-			$msg.append("<span class='label label-warning mg-l-20'>必要</span>");
-		} else {
-			$msg.append("<span class='label label-primary mg-l-20'>可选</span>");
-		}
-	};
-	$.fn.displayNec_Form = function() {
-		$(this).find("[validation]").each(function() {
-			$(this).displayNec_Ele();
-		});
-	};
-	function removeClass($obj) {
-		$obj.removeClass("has-success");
-		$obj.removeClass("has-error");
-	}
-	function removeMsg($obj) {
-		$obj.nextAll(".extendinfo").remove();
-	}
-	function validateFunc(value, rule) {
-		if (rule === "required") {
-			if (!checkNecessaryStr(value)) {
-				return "此项必须填写";
-			}
-		} else if (rule === "date") {
-			value = value.replace("-", "").replace("-", "");
-			value = value.replace("/", "").replace("/", "");
-			if (!checkDate(value)) {
-				return "日期不合法请重新填写";
-			}
-		} else if (rule === "password") {
-			var regx = /^[a-zA-Z0-9_]*$/;
-			if (!regx.test(value)) {
-				return "只可输入字母数字下划线";
-			}
-
-		} else if (rule.substr(0, 3) === "len") {
-			if (checkNecessaryStr(value)) {
-				var length = rule.split("=")[1];
-				if (value.length != length) {
-					return "此项的长度应为" + length;
-				}
-			}
-		} else if (rule.indexOf("maxlen") !== -1) {
-			var maxlength = rule.split("=")[1];
-			if (value.length > maxlength) {
-				return "此项最大长度为" + maxlength;
-			}
-		} else if (rule.indexOf("minlen") !== -1) {
-			if (checkNecessaryStr(value)) {
-				var minlength = rule.split("=")[1];
-				if (value.length < minlength) {
-					return "此项最小长度为" + minlength;
-				}
-			}
-		}
-		return 0;
-	}
-})(jQuery);
 
 function alertMsg_B(msg, type) {
 	if (!type) {

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vv.stu.model">
+	<select id="selectFinaceInfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT
+		fin_id,fin_create_type,fin_rela_id,fin_date,fin_type,fin_money,fin_user,fin_record_time,fin_desc FROM vv_finance
+	</select>
+</mapper>

@@ -4,8 +4,10 @@
 		var baseDiv = "main_area";
 		var table = $('#example').DataTable({
 			"ajax" : {
-				"url" : "loadTable/stu_001.do", "dataSrc" : ""
-			}, "columns" : [ {
+				"url" : "loadTable/stu_001.do",
+				"dataSrc" : ""
+			},
+			"columns" : [ {
 				"data" : "stu_id"
 			}, {
 				"data" : "stu_name"
@@ -40,8 +42,8 @@
 			}
 			showForm({
 				url : "/stu/model/modModel.do",
-				param:{
-						stu_id : table.$('tr.selected').find("td:eq(0)").text()
+				param : {
+					stu_id : table.$('tr.selected').find("td:eq(0)").text()
 				},
 				title : "修改学生信息",
 				refresh : true

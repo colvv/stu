@@ -1,5 +1,6 @@
 package com.vv.stu.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -62,7 +63,10 @@ public class SysLoginController extends BaseController {
 	@RequestMapping("/index")
 	public ModelAndView index() {
 		ModelAndView tModelAndView = new ModelAndView();
-		tModelAndView.addObject("menustr", tSysLoginServiceImpl.loadMenuHtml());
+		SysUser tSysUser = (SysUser) session.getAttribute("sysuser");
+		Map tParams = new HashMap<>();
+		tParams.put("user_id", tSysUser.getUser_id());
+		tModelAndView.addObject("menustr", tSysLoginServiceImpl.loadMenuHtml(tParams));
 		tModelAndView.setViewName("index");
 		return tModelAndView;
 	}

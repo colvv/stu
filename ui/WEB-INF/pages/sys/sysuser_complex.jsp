@@ -68,6 +68,20 @@
 				});
 			});
 		});
+		fObject("menu_conf",baseDiv).click(function(){
+			if (table.$('tr.selected').length !== 1) {
+				alertMsg("请先选中要配置的用户！", "default");
+				return;
+			}
+			showForm({
+				url : "/sys/menu/menu_select.do",
+				title : "菜单配置",
+				refresh:true,
+				param : {
+					user_id : table.$('tr.selected').find("td:eq(0)").text()
+				}
+			});
+		});
 	});
 </script>
 <div class="row">
@@ -86,6 +100,9 @@
 				</button>
 				<button type="button" class="btn btn-default input-sm" name="del_button">
 					删除<i class="fa fa-trash mg-l-5"></i>
+				</button>
+				<button type="button" class="btn btn-default input-sm" name="menu_conf">
+					菜单配置<i class="fa fa-reorder mg-l-5"></i>
 				</button>
 			</div>
 			<table id="sys_001" class="display" cellspacing="0" width="100%">
