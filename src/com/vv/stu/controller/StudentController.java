@@ -30,14 +30,8 @@ public class StudentController extends BaseController {
 		Map tParams = PubFun.parseReuest_all(request);
 		// 2015-2-26 @wangyi : 特殊处理时间
 		String stu_birthday = (String) tParams.get("stu_birthday");
-		if (PubFun.checkNecessaryString(stu_birthday)) {
-			stu_birthday = stu_birthday.replace("-", "");
-			stu_birthday = stu_birthday.replace("/", "");
-		} else {
-			stu_birthday = "0";
-		}
 		String stu_id = tCommonServiceImpl.createMaxNo("stu_id" + tCurrentYear, 6);
-		tParams.put("stu_birthday", stu_birthday);
+		tParams.put("stu_birthday", PubFun.getSimpleDate(stu_birthday));
 		tParams.put("stu_id", tCurrentYear + stu_id);
 		// 2015-2-25 @wangyi : 学号为年份加上
 		return tStudentServiceImpl.addStu(tParams) ? "0" : "1";

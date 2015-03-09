@@ -348,3 +348,6 @@ function delCookie(name) {
 	if (cval != null)
 		document.cookie = name + "=" + cval + ";path=/;expires=" + exp.toGMTString();
 }
+function getSimpleDate(str){
+	return str.replace("-", "").replace("-", "").replace("/", "").replace("/", "");
+}

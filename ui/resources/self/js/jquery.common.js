@@ -69,7 +69,7 @@
 	$.fn.hasError = function() {
 		return $(this).find(".label-danger").length > 0 ? true : false;
 	};
-	$.fn.removeError = function(){
+	$.fn.removeError = function() {
 		var $form = $(this);
 		$form.find("[validation]").each(function() {
 			removeClass($(this).closest(".form-group"));
@@ -77,7 +77,15 @@
 		})
 	}
 	$.fn.addLabel = function(info, labelType) {
-		$(this).append("<span class='label label-" + labelType + " mg-l-5'>" + info + "</span>");
+		if ($(this).attr("for")) {
+			$(this).append("<span class='label label-" + labelType + " mg-l-5'>" + info + "</span>");
+		} else {
+			$(this).closest("form").find("[for='" + $(this).attr("name") + "']").append(
+					"<span class='label label-" + labelType + " mg-l-5'>" + info + "</span>");
+		}
+	}
+	$.fn.delLabel = function(text) {
+		$(this).find(".label[text='" + text + "']").remove();
 	}
 	$.fn.displayNec_Ele = function() {
 		var validation = $(this).attr("validation");
@@ -107,8 +115,7 @@
 				return "此项必须填写";
 			}
 		} else if (rule === "date") {
-			value = value.replace("-", "").replace("-", "");
-			value = value.replace("/", "").replace("/", "");
+			value = getSimpleDate(value);
 			if (!checkDate(value)) {
 				return "日期不合法请重新填写";
 			}
@@ -125,6 +132,14 @@
 					return "此项的长度应为" + length;
 				}
 			}
+		} else if (rule.indexOf("maxdate") !== -1) {
+			var maxdate = rule.split("=")[1];
+			var maxdateval = getSimpleDate(maxdate);
+			value = getSimpleDate(value);
+			if (value > maxdateval) {
+				return "超过最大日期范围:" + maxdate;
+			}
+
 		} else if (rule.indexOf("maxlen") !== -1) {
 			var maxlength = rule.split("=")[1];
 			if (value.length > maxlength) {
@@ -142,8 +157,52 @@
 	}
 })(jQuery);
 (function($) {
-	$.fn.load_Selection = function(codetype) {
-		$selectOjb = $(this);
+	$.fn.load_Selection = function(settings) {
+		var defaults = {
+			codetype : '',
+			// 2015-3-9 @wangyi : 是否可以访问缓存
+			cache : true,
+			// 2015-3-9 @wangyi : 拼接条件生成方法
+			conditionFunc : undefined,
+			needEmpty : true
+		}, opt = $.extend(defaults, settings), condition = '', cacheValue = null;
 
+		if (opt.conditionFunc) {
+			condition = opt.conditionFunc();
+		}
+		if (opt.cache) {
+			cacheValue = $("body").data(opt.codetype + "|" + condition);
+		}
+		$selectOjb = $(this);
+		initELement($selectOjb);
+		if (cacheValue) {
+			displayResult(cacheValue, $selectOjb, opt.needEmpty);
+		} else {
+			commonAjax_none("/loadSelection.do", {
+				codetype : opt.codetype,
+				condition : condition
+			}, function(msg) {
+				$("body").data(opt.codetype + "|" + condition, msg);
+				displayResult(msg, $selectOjb, opt.needEmpty);
+			});
+		}
 	};
+	function initELement() {
+		$selectOjb.empty();
+		$selectOjb.append("<option value=''>正在加载...</option>");
+		$selectOjb.prop("disabled", true);
+	}
+	function displayResult(msg, $selectOjb, needEmpty) {
+		$selectOjb.empty();
+		var datas = eval("(" + msg + ")");
+		var html = "";
+		if (needEmpty) {
+			html += "<option value=''>请选择</option>"
+		}
+		for (i = 0; i < datas.length; i++) {
+			html += "<option value='" + datas[i].code + "'>" + datas[i].codename + "</option>"
+		}
+		$selectOjb.append(html);
+		$selectOjb.prop("disabled", false);
+	}
 })(jQuery);

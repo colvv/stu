@@ -32,24 +32,43 @@ public class CommonServiceImpl extends BaseService {
 			throw new ServiceException("数据处理失败");
 		}
 	}
+
 	/**
 	 * 获取系统流水号
+	 * 
 	 * @param id
 	 * @param length
 	 * @return
-	 * @author wangyi  2015-2-25
+	 * @author wangyi 2015-2-25
 	 */
 	public String createMaxNo(String id, int length) {
 		double maxno = PubFun.f_Double(tDefaultQueryDao
-				.commonQuery_SQL("SELECT IFNULL(max(vv_sys_maxno.no),-1)+1 maxno FROM vv_sys_maxno WHERE id='" + id + "' for update").get(0)
-				.get("maxno"));
+				.commonQuery_SQL("SELECT IFNULL(max(vv_sys_maxno.no),-1)+1 maxno FROM vv_sys_maxno WHERE id='" + id + "' for update")
+				.get(0).get("maxno"));
 		if (maxno == 0) {
 			logger.debug("auto do insert like >>INSERT INTO vv_sys_maxno VALUES ('hello',0)<<  ");
-			tPubCommitDao.doCommit(new DaoOperator("INSERT INTO vv_sys_maxno VALUES ('"+id+"',1)",DaoOperator.INSERT));
+			tPubCommitDao.doCommit(new DaoOperator("INSERT INTO vv_sys_maxno VALUES ('" + id + "',1)", DaoOperator.INSERT));
 			maxno = 1;
-		}else{
-			tPubCommitDao.doCommit(new DaoOperator("update vv_sys_maxno set no=no+1 where id ='"+id+"'",DaoOperator.UPDATE));
+		} else {
+			tPubCommitDao.doCommit(new DaoOperator("update vv_sys_maxno set no=no+1 where id ='" + id + "'", DaoOperator.UPDATE));
 		}
 		return PubFun.LCh(PubFun.s_Double(maxno, 0), "0", length);
+	}
+
+	/**
+	 * 加载系统的下拉选项
+	 * 
+	 * @param codetype
+	 * @return
+	 * @author wangyi 2015-3-9
+	 */
+	public List<Map> loadSelection(Map tMap) {
+		String tSQL = "SELECT code,codename,codealias FROM vv_sys_code where codetype='" + tMap.get("codetype") + "' ";
+		if (tMap.get("condition") != null&&!"".equals(tMap.get("condition") )) {
+			// FIXME 2015-3-9 @wangyi : 后期考虑加入统一的防止注入方式
+			tSQL += "and code like '" + tMap.get("condition") + "' ";
+		}
+		tSQL += " ORDER BY code";
+		return tDefaultQueryDao.commonQuery_SQL(tSQL);
 	}
 }

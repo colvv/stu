@@ -5,4 +5,10 @@
 		SELECT
 		fin_id,fin_create_type,fin_rela_id,fin_date,fin_type,fin_money,fin_user,fin_record_time,fin_desc FROM vv_finance
 	</select>
+	<insert id="insertFinaceInfo" parameterType="java.util.HashMap">
+		INSERT INTO vv_finance
+		(fin_id, fin_create_type, fin_rela_id, fin_date, fin_type, fin_money, fin_rela_user, fin_user, fin_record_time, fin_desc)
+		VALUES (#{fin_id}, #{fin_create_type},null, #{fin_date}, #{fin_type}, #{fin_money}, #{user_id}, #{user_id}, now(),
+		#{fin_desc});
+	</insert>
 </mapper>

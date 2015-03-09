@@ -414,5 +414,13 @@ public class PubFun {
 		tList.append("]");
 		return tList.toString();
 	}
-
+	public static String getSimpleDate(String tDate){
+		if (PubFun.checkNecessaryString(tDate)) {
+			tDate = tDate.replace("-", "");
+			tDate = tDate.replace("/", "");
+		} else {
+			tDate = "0";
+		}
+		return tDate;
+	}
 }

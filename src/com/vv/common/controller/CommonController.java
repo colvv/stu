@@ -29,9 +29,22 @@ public class CommonController extends BaseController {
 		}
 		return "";
 	}
-	
+
 	@RequestMapping("/directView")
 	public String directView() {
 		return request.getParameter("viewName");
+	}
+
+	@RequestMapping("/loadSelection")
+	@ResponseBody
+	public String loadSelection() {
+		try {
+			return JSONObject.toJSONString(tCommonServiceImpl.loadSelection(PubFun.parseReuest_all(request)));
+		} catch (ServiceException e) {
+			logger.debug("service层处理失败");
+		} catch (Exception e) {
+			logger.error("controller出现异常：" + e.toString());
+		}
+		return "";
 	}
 }

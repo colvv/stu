@@ -55,13 +55,10 @@
 					return fObject("fin_oi_type", baseDiv).val() + "%";
 				}
 			});
-			fObject("fin_money", baseDiv).addLabel("输入0.00格式的金额","info");
-			fObject("fin_money", baseDiv).addLabel("整数可以省略小数部分","info");
 			fObject("detail_area", baseDiv).fadeIn(1000);
 			fObject("confrim", baseDiv).prop("disabled", false);
 		}
 
-		
 		fObject("fin_oi_type", baseDiv).load_Selection({
 			codetype : "fin_oi_type"
 		});
@@ -101,11 +98,8 @@
 				</div>
 				<div class="form-group col-xs-1"></div>
 				<div class="form-group  col-xs-7">
-					<label class="control-label" for="fin_money">收支金额</label>
-					<div class="input-group">
-						<span class="input-group-addon">￥</span> <input class="form-control" name="fin_money" type="text" placeholder="请输入金额"
-							value="${fin_money }" validation="required"><span class="input-group-addon">元</span>
-					</div>
+					<label class="control-label" for="fin_money">收支金额</label> <input class="form-control" name="fin_money" type="text" placeholder="请输入金额"
+						value="${fin_money }" validation="required">
 				</div>
 				<div class="form-group col-xs-4">
 					<label class="control-label" for="fin_user">录入人员</label> <input class="form-control" name="fin_user" type="text"
