@@ -75,8 +75,8 @@
 	</div>
 </div>
 <!--  简单的loading效果 -->
-<div class="loading_back" id="loading_simple_back" ></div>
-<div class="loading_content" id="loading_simple_content" >
+<div class="loading_back" id="loading_simple_back"></div>
+<div class="loading_content" id="loading_simple_content">
 	<div class="">
 		<h2 class="text-center color-w">
 			<i class="fa fa-spinner fa-spin mg-r-5"></i>Loading<span name="self-animate"></span>
@@ -86,7 +86,7 @@
 
 <!-- 模态框（Modal）FORM -->
 <div class="modal fade " id="form_modal" tabindex="-1" role="dialog" aria-labelledby="信息录入" aria-hidden="true">
-	<div class=" modal-dialog " >
+	<div class=" modal-dialog ">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -115,7 +115,7 @@
 .loading_back {
 	background: #000;
 	opacity: .5;
-	filter: alpha(opacity =                     50);
+	filter: alpha(opacity =                       50);
 	position: fixed;
 	z-index: 1040;
 	top: 0;
@@ -137,8 +137,6 @@
 </style>
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
 <script src="${ctx}/resources/jquery/js/jquery-1.11.2.min.js"></script>
-<script src="${ctx}/resources/jquery/js/jquery.md5.js"></script>
-
 
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="${ctx}/resources/bootstrap/js/bootstrap.min.js"></script>
@@ -153,3 +151,4 @@
 <script src="${ctx}/resources/self/js/commonJs.js"></script>
 <script src="${ctx}/resources/self/js/jquery.common.js"></script>
 <script src="${ctx}/resources/self/js/sha512.js"></script>
+<script src="${ctx}/resources/jquery/js/jquery.md5.js"></script>

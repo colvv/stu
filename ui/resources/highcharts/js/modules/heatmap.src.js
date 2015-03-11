@@ -1,5 +1,5 @@
 /**
- * @license Highcharts JS v4.0.3 (2014-07-03)
+ * @license Highcharts JS v4.1.3 (2015-02-27)
  *
  * (c) 2011-2014 Torstein Honsi
  *
@@ -17,7 +17,6 @@ var UNDEFINED,
 	Legend = Highcharts.Legend,
 	LegendSymbolMixin = Highcharts.LegendSymbolMixin,
 	Series = Highcharts.Series,
-	SVGRenderer = Highcharts.SVGRenderer,
 	
 	defaultOptions = Highcharts.getOptions(),
 	each = Highcharts.each,
@@ -25,7 +24,6 @@ var UNDEFINED,
 	extendClass = Highcharts.extendClass,
 	merge = Highcharts.merge,
 	pick = Highcharts.pick,
-	numberFormat = Highcharts.numberFormat,
 	seriesTypes = Highcharts.seriesTypes,
 	wrap = Highcharts.wrap,
 	noop = function () {};
@@ -103,20 +101,28 @@ extend(ColorAxis.prototype, {
 	tweenColors: function (from, to, pos) {
 		// Check for has alpha, because rgba colors perform worse due to lack of
 		// support in WebKit.
-		var hasAlpha = (to.rgba[3] !== 1 || from.rgba[3] !== 1);
+		var hasAlpha;
+
+		from = from.rgba;
+		to = to.rgba;
+		hasAlpha = (to[3] !== 1 || from[3] !== 1);
+		if (!to.length || !from.length) {
+			Highcharts.error(23);
+		}
 		return (hasAlpha ? 'rgba(' : 'rgb(') + 
-			Math.round(to.rgba[0] + (from.rgba[0] - to.rgba[0]) * (1 - pos)) + ',' + 
-			Math.round(to.rgba[1] + (from.rgba[1] - to.rgba[1]) * (1 - pos)) + ',' + 
-			Math.round(to.rgba[2] + (from.rgba[2] - to.rgba[2]) * (1 - pos)) + 
-			(hasAlpha ? (',' + (to.rgba[3] + (from.rgba[3] - to.rgba[3]) * (1 - pos))) : '') + ')';
-		},
+			Math.round(to[0] + (from[0] - to[0]) * (1 - pos)) + ',' + 
+			Math.round(to[1] + (from[1] - to[1]) * (1 - pos)) + ',' + 
+			Math.round(to[2] + (from[2] - to[2]) * (1 - pos)) + 
+			(hasAlpha ? (',' + (to[3] + (from[3] - to[3]) * (1 - pos))) : '') + ')';
+	},
 
 	initDataClasses: function (userOptions) {
 		var axis = this,
 			chart = this.chart,
 			dataClasses,
 			colorCounter = 0,
-			options = this.options;
+			options = this.options,
+			len = userOptions.dataClasses.length;
 		this.dataClasses = dataClasses = [];
 		this.legendItems = [];
 
@@ -134,7 +140,11 @@ extend(ColorAxis.prototype, {
 						colorCounter = 0;
 					}
 				} else {
-					dataClass.color = axis.tweenColors(Color(options.minColor), Color(options.maxColor), i / (userOptions.dataClasses.length - 1));
+					dataClass.color = axis.tweenColors(
+						Color(options.minColor), 
+						Color(options.maxColor), 
+						len < 2 ? 0.5 : i / (len - 1) // #3219
+					);
 				}
 			}
 		});
@@ -253,6 +263,9 @@ extend(ColorAxis.prototype, {
 				this.labelGroup.add(group);
 
 				this.added = true;
+
+				this.labelLeft = 0;
+				this.labelRight = this.width;
 			}
 			// Reset it to avoid color axis reserving space
 			this.chart.axisOffset[this.side] = sideOffset;
@@ -265,9 +278,10 @@ extend(ColorAxis.prototype, {
 	setLegendColor: function () {
 		var grad,
 			horiz = this.horiz,
-			options = this.options;
+			options = this.options,
+			reversed = this.reversed;
 
-		grad = horiz ? [0, 0, 1, 0] : [0, 0, 0, 1]; 
+		grad = horiz ? [+reversed, 0, +!reversed, 0] : [0, +!reversed, 0, +reversed]; // #3190
 		this.legendColor = {
 			linearGradient: { x1: grad[0], y1: grad[1], x2: grad[2], y2: grad[3] },
 			stops: options.stops || [
@@ -322,15 +336,14 @@ extend(ColorAxis.prototype, {
 		}
 	},
 	drawCrosshair: function (e, point) {
-		var newCross = !this.cross,
-			plotX = point && point.plotX,
+		var plotX = point && point.plotX,
 			plotY = point && point.plotY,
 			crossPos,
 			axisPos = this.pos,
 			axisLen = this.len;
 		
 		if (point) {
-			crossPos = this.toPixels(point.value);
+			crossPos = this.toPixels(point[point.series.colorKey]);
 			if (crossPos < axisPos) {
 				crossPos = axisPos - 2;
 			} else if (crossPos > axisPos + axisLen) {
@@ -343,12 +356,12 @@ extend(ColorAxis.prototype, {
 			point.plotX = plotX;
 			point.plotY = plotY;
 			
-			if (!newCross && this.cross) {
+			if (this.cross) {
 				this.cross
 					.attr({
 						fill: this.crosshair.color
 					})
-					.add(this.labelGroup);
+					.add(this.legendGroup);
 			}
 		}
 	},
@@ -399,13 +412,13 @@ extend(ColorAxis.prototype, {
 					name = '> ';
 				}
 				if (from !== UNDEFINED) {
-					name += numberFormat(from, valueDecimals) + valueSuffix;
+					name += Highcharts.numberFormat(from, valueDecimals) + valueSuffix;
 				}
 				if (from !== UNDEFINED && to !== UNDEFINED) {
 					name += ' - ';
 				}
 				if (to !== UNDEFINED) {
-					name += numberFormat(to, valueDecimals) + valueSuffix;
+					name += Highcharts.numberFormat(to, valueDecimals) + valueSuffix;
 				}
 				
 				// Add a mock object to the legend items
@@ -436,7 +449,14 @@ extend(ColorAxis.prototype, {
 	name: '' // Prevents 'undefined' in legend in IE8
 });
 
-
+/**
+ * Handle animation of the color attributes directly
+ */
+each(['fill', 'stroke'], function (prop) {
+	HighchartsAdapter.addAnimSetter(prop, function (fx) {
+		fx.elem.attr(prop, ColorAxis.prototype.tweenColors(Color(fx.start), Color(fx.end), fx.pos));
+	});
+});
 
 /**
  * Extend the chart getAxes method to also get the color axis
@@ -521,55 +541,6 @@ var colorSeriesMixin = {
 		});
 	}
 };
-
-
-/**
- * Wrap the buildText method and add the hook for add text stroke
- */
-wrap(SVGRenderer.prototype, 'buildText', function (proceed, wrapper) {
-
-	var textStroke = wrapper.styles && wrapper.styles.HcTextStroke;
-
-	proceed.call(this, wrapper);
-
-	// Apply the text stroke
-	if (textStroke && wrapper.applyTextStroke) {
-		wrapper.applyTextStroke(textStroke);
-	}
-});
-
-/**
- * Apply an outside text stroke to data labels, based on the custom CSS property, HcTextStroke.
- * Consider moving this to Highcharts core, also makes sense on stacked columns etc.
- */
-SVGRenderer.prototype.Element.prototype.applyTextStroke = function (textStroke) {
-	var elem = this.element,
-		tspans,
-		firstChild;
-	
-	textStroke = textStroke.split(' ');
-	tspans = elem.getElementsByTagName('tspan');
-	firstChild = elem.firstChild;
-	
-	// In order to get the right y position of the clones, 
-	// copy over the y setter
-	this.ySetter = this.xSetter;
-	
-	each([].slice.call(tspans), function (tspan, y) {
-		var clone;
-		if (y === 0) {
-			tspan.setAttribute('x', elem.getAttribute('x'));
-			if ((y = elem.getAttribute('y')) !== null) {
-				tspan.setAttribute('y', y);
-			}
-		}
-		clone = tspan.cloneNode(1);
-		clone.setAttribute('stroke', textStroke[1]);
-		clone.setAttribute('stroke-width', textStroke[0]);
-		clone.setAttribute('stroke-linejoin', 'round');
-		elem.insertBefore(clone, firstChild);
-	});
-};
 /**
  * Extend the default options with map options
  */
@@ -581,14 +552,11 @@ defaultOptions.plotOptions.heatmap = merge(defaultOptions.plotOptions.scatter, {
 		formatter: function () { // #2945
 			return this.point.value;
 		},
+		inside: true,
 		verticalAlign: 'middle',
 		crop: false,
 		overflow: false,
-		style: {
-			color: 'white',
-			fontWeight: 'bold',
-			HcTextStroke: '1px rgba(0,0,0,0.5)'
-		}
+		padding: 0 // #3837
 	},
 	marker: null,
 	tooltip: {
@@ -599,6 +567,7 @@ defaultOptions.plotOptions.heatmap = merge(defaultOptions.plotOptions.scatter, {
 			animation: true
 		},
 		hover: {
+			halo: false,  // #3406, halo is not required on heatmaps
 			brightness: 0.2
 		}
 	}
@@ -650,7 +619,7 @@ seriesTypes.heatmap = extendClass(seriesTypes.scatter, merge(colorSeriesMixin, {
 		// Make sure colors are updated on colorAxis update (#2893)
 		if (this.chart.hasRendered) {
 			each(series.points, function (point) {
-				point.shapeArgs.fill = point.color;
+				point.shapeArgs.fill = point.options.color || point.color; // #3311
 			});
 		}
 	},

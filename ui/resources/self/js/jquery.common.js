@@ -67,7 +67,7 @@
 		})
 	};
 	$.fn.hasError = function() {
-		return $(this).find(".label-danger").length > 0 ? true : false;
+		return $(this).find(".label-danger").filter(".extendinfo").length > 0 ? true : false;
 	};
 	$.fn.removeError = function() {
 		var $form = $(this);
@@ -78,14 +78,18 @@
 	}
 	$.fn.addLabel = function(info, labelType) {
 		if ($(this).attr("for")) {
-			$(this).append("<span class='label label-" + labelType + " mg-l-5'>" + info + "</span>");
+			$(this).append("<span class='label label-" + labelType + " mg-l-5 user_label_info'>" + info + "</span>");
 		} else {
 			$(this).closest("form").find("[for='" + $(this).attr("name") + "']").append(
-					"<span class='label label-" + labelType + " mg-l-5'>" + info + "</span>");
+					"<span class='label label-" + labelType + " mg-l-5 user_label_info'>" + info + "</span>");
 		}
 	}
-	$.fn.delLabel = function(text) {
-		$(this).find(".label[text='" + text + "']").remove();
+	$.fn.delLabel = function() {
+		if ($(this).attr("for")) {
+			$(this).find(".label").filter(".user_label_info").remove();
+		} else {
+			$(this).closest("form").find("[for='" + $(this).attr("name") + "']").find(".label").filter(".user_label_info").remove();
+		}
 	}
 	$.fn.displayNec_Ele = function() {
 		var validation = $(this).attr("validation");
@@ -113,6 +117,10 @@
 		if (rule === "required") {
 			if (!checkNecessaryStr(value)) {
 				return "此项必须填写";
+			}
+		} else if (rule === "num") {
+			if (isNaN(value)) {
+				return "请输入正确的数字";
 			}
 		} else if (rule === "date") {
 			value = getSimpleDate(value);
@@ -164,8 +172,9 @@
 			cache : true,
 			// 2015-3-9 @wangyi : 拼接条件生成方法
 			conditionFunc : undefined,
-			needEmpty : true
-		}, opt = $.extend(defaults, settings), condition = '', cacheValue = null;
+			needEmpty : true,
+			defaultVal : ''
+		}, opt = $.extend(defaults, settings), condition = '', cacheValue = null, $selectOjb = $(this);
 
 		if (opt.conditionFunc) {
 			condition = opt.conditionFunc();
@@ -173,26 +182,25 @@
 		if (opt.cache) {
 			cacheValue = $("body").data(opt.codetype + "|" + condition);
 		}
-		$selectOjb = $(this);
 		initELement($selectOjb);
 		if (cacheValue) {
-			displayResult(cacheValue, $selectOjb, opt.needEmpty);
+			displayResult(cacheValue, $selectOjb, opt.needEmpty, opt.defaultVal);
 		} else {
 			commonAjax_none("/loadSelection.do", {
 				codetype : opt.codetype,
 				condition : condition
 			}, function(msg) {
 				$("body").data(opt.codetype + "|" + condition, msg);
-				displayResult(msg, $selectOjb, opt.needEmpty);
+				displayResult(msg, $selectOjb, opt.needEmpty, opt.defaultVal);
 			});
 		}
 	};
-	function initELement() {
+	function initELement($selectOjb) {
 		$selectOjb.empty();
 		$selectOjb.append("<option value=''>正在加载...</option>");
 		$selectOjb.prop("disabled", true);
 	}
-	function displayResult(msg, $selectOjb, needEmpty) {
+	function displayResult(msg, $selectOjb, needEmpty, defaultVal) {
 		$selectOjb.empty();
 		var datas = eval("(" + msg + ")");
 		var html = "";
@@ -204,5 +212,6 @@
 		}
 		$selectOjb.append(html);
 		$selectOjb.prop("disabled", false);
+		$selectOjb.val(defaultVal);
 	}
 })(jQuery);

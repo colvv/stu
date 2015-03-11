@@ -67,6 +67,90 @@ public class PubFun {
 		String tString = df.format(today);
 		return tString;
 	}
+	public static Date calDate(Date baseDate, int interval, String unit,
+			Date compareDate) {
+		Date returnDate = null;
+
+		GregorianCalendar tBaseCalendar = new GregorianCalendar();
+		tBaseCalendar.setTime(baseDate);
+
+		if (unit.equals("Y")) {
+			tBaseCalendar.add(Calendar.YEAR, interval);
+		}
+		if (unit.equals("M")) {
+			tBaseCalendar.add(Calendar.MONTH, interval);
+		}
+		if (unit.equals("D")) {
+			tBaseCalendar.add(Calendar.DATE, interval);
+		}
+
+		if (compareDate != null) {
+			GregorianCalendar tCompCalendar = new GregorianCalendar();
+			tCompCalendar.setTime(compareDate);
+			int nBaseYears = tBaseCalendar.get(Calendar.YEAR);
+			int nBaseMonths = tBaseCalendar.get(Calendar.MONTH);
+			int nCompMonths = tCompCalendar.get(Calendar.MONTH);
+			int nCompDays = tCompCalendar.get(Calendar.DATE);
+			int oldDays = tCompCalendar.get(Calendar.DATE);
+
+			if (unit.equals("Y")) {
+				// 2014-7-9 @wangyi : 好一个目前看来- -#
+				/*
+				 * 目前来看，compareDate非空的情况下unit一定是Y，这样确保新日期的月和日是不变的，但是此时还需要考虑一种情况，
+				 * 如果旧日期是闰年2
+				 * -29，例如2008-2-29，而新的年份为非闰年，例如2038，拼在一起为2038-2-29，对于此种数据，
+				 * tCompCalendar.set(nBaseYears, nCompMonths,
+				 * nCompDays)将会自动将其置为2038-3-1，为了避免出现此问题， 我们需要特殊处理nCompDays
+				 */
+				// 特殊处理1，如果旧日期为润年2-29，新年份nBaseYears为非闰年，日nCompDays只能为28
+				if (1 == nCompMonths && 29 == oldDays
+						&& !isLeapYear(nBaseYears)) {
+					nCompDays = 28;
+				}
+				tCompCalendar.set(nBaseYears, nCompMonths, nCompDays);
+				if (tCompCalendar.before(tBaseCalendar)) {
+					// 特殊处理2，如果旧日期为润年2-29，新年份nBaseYears+1为非闰年，日nCompDays只能为28
+					if (1 == nCompMonths && 29 == oldDays
+							&& !isLeapYear(nBaseYears + 1)) {
+						nCompDays = 28;
+					}
+					// 特殊处理3，如果旧日期为润年2-29，新年份nBaseYears为非闰年，日nCompDays在特殊处理1中改为28
+					// 但是如果nBaseYears+1为闰年，需要还原nCompDays，实际上就是29。
+					if (1 == nCompMonths && 29 == oldDays
+							&& isLeapYear(nBaseYears + 1)) {
+						nCompDays = oldDays;
+					}
+					tBaseCalendar.set(nBaseYears + 1, nCompMonths, nCompDays);
+					returnDate = tBaseCalendar.getTime();
+				} else {
+					returnDate = tCompCalendar.getTime();
+				}
+			}
+			if (unit.equals("M")) {
+				// 2014-7-9 @wangyi : 月处理日会用到参考日期，所以这里的逻辑修改
+				tCompCalendar.set(nBaseYears, nBaseMonths, nCompDays);
+				if (nBaseMonths < tCompCalendar.get(Calendar.MONTH)) {
+					// 取当前月的最后一天日期
+					tCompCalendar.set(nBaseYears, nBaseMonths + 1, 0);
+				}
+				if (tCompCalendar.before(tBaseCalendar)) {
+					tBaseCalendar.set(nBaseYears, nBaseMonths + 1, nCompDays);
+					returnDate = tBaseCalendar.getTime();
+				} else {
+					returnDate = tCompCalendar.getTime();
+				}
+			}
+			if (unit.equals("D")) {
+				returnDate = tBaseCalendar.getTime();
+			}
+			tCompCalendar = null;
+		} else {
+			returnDate = tBaseCalendar.getTime();
+		}
+		tBaseCalendar = null;
+
+		return returnDate;
+	}
 
 	/**
 	 * 获取当前时间

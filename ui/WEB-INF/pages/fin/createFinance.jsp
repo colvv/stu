@@ -1,72 +1,91 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script>
-	$(document).ready(function() {
-		var baseDiv = "main_area";
-		$("#create_finance_form [validation]").change(function() {
-			$(this).vali_Ele();
-			if ($(this).attr("name") == "fin_oi_type" || $(this).attr("name") == "fin_date") {
-				if (fObject("fin_oi_type", baseDiv).vali_Ele() && fObject("fin_date", baseDiv).vali_Ele()) {
-					activc_display_area();
-				} else {
+	$(document).ready(
+			function() {
+				var baseDiv = "main_area";
+				$("#create_finance_form [validation]").change(function() {
+					$(this).vali_Ele();
+					if ($(this).attr("name") == "fin_oi_type" || $(this).attr("name") == "fin_date") {
+						if (fObject("fin_oi_type", baseDiv).vali_Ele() && fObject("fin_date", baseDiv).vali_Ele()) {
+							activc_display_area();
+						} else {
+							hide_display_area();
+						}
+					}
+				});
+				$("#create_finance_form [validation]").blur(function() {
+					$(this).vali_Ele();
+				});
+				fObject('confrim', baseDiv).click(
+						function() {
+							$("#create_finance_form").vali_Form();
+							if ($("#create_finance_form").hasError()) {
+								return;
+							}
+							var paramObj = parseParamObj($("#create_finance_form").find("[name]"));
+							var money = parseFloat(paramObj.fin_money);
+							if ((fObject("fin_oi_type", baseDiv).val() === "0" && money <= 0)
+									|| (fObject("fin_oi_type", baseDiv).val() === "1" && money >= 0)) {
+								alertMsg_B("请按照提示录入金额", "danger");
+								return;
+							}
+							hideForm();
+							commonAjax_pro("/fin/addFinance.do", paramObj, function(msg) {
+								processStop();
+								var array = msg.split("|");
+								if (array[0] === '0') {
+									alertMsg_B("保存成功");
+									fObject('reset', baseDiv).click();
+								} else {
+									if (array[1]) {
+										alertMsg_B("保存失败," + array[1]);
+									} else {
+										alertMsg_B("保存失败");
+									}
+								}
+							});
+						});
+				fObject('reset', baseDiv).click(function() {
 					hide_display_area();
-				}
-			}
-		});
-		$("#create_finance_form [validation]").blur(function() {
-			$(this).vali_Ele();
-		});
-		fObject('confrim', baseDiv).click(function() {
-			$("#create_finance_form").vali_Form();
-			if ($("#create_finance_form").hasError()) {
-				return;
-			}
-			hideForm();
-			var paramObj = parseParamObj($("#create_finance_form").find("[name]"));
-			commonAjax_pro("/fin/addFinance.do", paramObj, function(msg) {
-				processStop();
-				if ("0" === msg) {
-					alertMsg_B("保存成功");
-					fObject('reset', baseDiv).click();
-				} else {
-					alertMsg_B("保存失败");
-				}
-			});
-		});
-		fObject('reset', baseDiv).click(function() {
-			hide_display_area();
-			$("#create_finance_form").removeError();
-			fObject("fin_date", baseDiv).val("");
-			fObject("fin_oi_type", baseDiv).val("");
-			fObject("fin_type", baseDiv).val("");
-			fObject("fin_rela_user", baseDiv).val("");
-			fObject("fin_money", baseDiv).val("");
-			fObject("fin_desc", baseDiv).val("");
+					$("#create_finance_form").removeError();
+					fObject("fin_date", baseDiv).val("");
+					fObject("fin_oi_type", baseDiv).val("");
+					fObject("fin_type", baseDiv).val("");
+					fObject("fin_rela_user", baseDiv).val("");
+					fObject("fin_money", baseDiv).val("");
+					fObject("fin_desc", baseDiv).val("");
 
-		});
-		function hide_display_area() {
-			fObject("detail_area", baseDiv).fadeOut(1000, function() {
-				fObject("confrim", baseDiv).prop("disabled", true);
-			});
-		}
-		function activc_display_area() {
-			fObject("fin_type", baseDiv).load_Selection({
-				codetype : "fin_type",
-				conditionFunc : function() {
-					return fObject("fin_oi_type", baseDiv).val() + "%";
+				});
+				function hide_display_area() {
+					fObject("detail_area", baseDiv).fadeOut(1000, function() {
+						fObject("confrim", baseDiv).prop("disabled", true);
+					});
 				}
-			});
-			fObject("fin_money", baseDiv).addLabel("输入0.00格式的金额","info");
-			fObject("fin_money", baseDiv).addLabel("整数可以省略小数部分","info");
-			fObject("detail_area", baseDiv).fadeIn(1000);
-			fObject("confrim", baseDiv).prop("disabled", false);
-		}
+				function activc_display_area() {
+					fObject("fin_type", baseDiv).load_Selection({
+						codetype : "fin_type",
+						conditionFunc : function() {
+							return fObject("fin_oi_type", baseDiv).val() + "%";
+						}
+					});
+					fObject("fin_money", baseDiv).delLabel();
+					if (fObject("fin_oi_type", baseDiv).val() === "0") {
+						fObject("fin_money", baseDiv).addLabel("金额大于0", "danger");
+					} else {
+						fObject("fin_money", baseDiv).addLabel("金额小于0", "danger");
+					}
+					fObject("fin_money", baseDiv).addLabel("格式为0.00", "info");
+					fObject("fin_money", baseDiv).addLabel("小数可省略", "info");
 
-		
-		fObject("fin_oi_type", baseDiv).load_Selection({
-			codetype : "fin_oi_type"
-		});
-		dPicker(fObject("fin_date_div", baseDiv));
-	});
+					fObject("detail_area", baseDiv).fadeIn(1000);
+					fObject("confrim", baseDiv).prop("disabled", false);
+				}
+
+				fObject("fin_oi_type", baseDiv).load_Selection({
+					codetype : "fin_oi_type"
+				});
+				dPicker(fObject("fin_date_div", baseDiv));
+			});
 </script>
 <div class="panel panel-primary">
 	<div class="panel-heading">新建收支</div>
@@ -104,7 +123,7 @@
 					<label class="control-label" for="fin_money">收支金额</label>
 					<div class="input-group">
 						<span class="input-group-addon">￥</span> <input class="form-control" name="fin_money" type="text" placeholder="请输入金额"
-							value="${fin_money }" validation="required"><span class="input-group-addon">元</span>
+							value="${fin_money }" validation="required|num"><span class="input-group-addon">元</span>
 					</div>
 				</div>
 				<div class="form-group col-xs-4">

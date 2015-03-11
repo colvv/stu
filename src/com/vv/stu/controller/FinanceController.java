@@ -39,6 +39,11 @@ public class FinanceController extends BaseController {
 	@ResponseBody
 	public String addFinance() {
 		Map tParams = PubFun.parseReuest_all(request);
+		// 2015-3-11 @wangyi : 校验金额
+		String tMoney = request.getParameter("fin_money");
+		if (PubFun.f_Double(tMoney) == 0) {
+			return "1|金额非法,请检查";
+		}
 		SysUser tSysUser = (SysUser) session.getAttribute("sysuser");
 		tParams.put("user_id", tSysUser.getUser_id());
 		tParams.put("fin_id", tCommonServiceImpl.createMaxNo("fin_id", 10));

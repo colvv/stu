@@ -210,10 +210,10 @@ function showForm(paramObj) {
 		}
 		if (paramObj.width) {
 			$("#form_modal .modal-dialog").css("width", paramObj.width);
-		}else{
+		} else {
 			$("#form_modal .modal-dialog").css("width", "");
 		}
-		
+
 		$("#form_modal [name='form_title']").text(paramObj.title);
 		_last_form = paramObj.url;
 		commonAjax(paramObj.url, paramObj.param, function(msg) {
@@ -348,6 +348,35 @@ function delCookie(name) {
 	if (cval != null)
 		document.cookie = name + "=" + cval + ";path=/;expires=" + exp.toGMTString();
 }
-function getSimpleDate(str){
+function getSimpleDate(str) {
 	return str.replace("-", "").replace("-", "").replace("/", "").replace("/", "");
+}
+/**
+ * 获取日期对象
+ * 
+ * @param strDate
+ *            日期字符串
+ * @param splitOp
+ *            分割符
+ * @return 返回日期对象
+ * 
+ */
+function getDate(strDate) {
+	strDate = getSimpleDate(strDate);
+	if (strDate.length != 8) {
+		return null;
+	}
+	// 2015-3-11 @wangyi : 月份减1？
+	return new Date(Number(strDate.substr(0, 4)), Number(strDate.substr(4, 2)) - 1, Number(strDate.substr(6, 2)));
+}
+function calDate(baseDate, interval, unit, compareDate) {
+	var baseD = getDate(baseDate), result = baseD;
+	if (unit === "D") {
+		result.setDate(baseD.getDate() + interval);
+	} else if (unit === "M") {
+		result.setMonth(baseD.getMonth() + interval);
+	} else if (unit === "Y") {
+		result.setFullYear(baseD.getFullYear() + interval);
+	}
+	return result;
 }

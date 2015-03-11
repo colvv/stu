@@ -211,7 +211,7 @@
 									<td>8:00 AM-9:00 AM</td>
 									<td>37名小朋友</td>
 								</tr>
-								<tr >
+								<tr>
 									<td>2</td>
 									<td>珠心算</td>
 									<td>8:00 AM-9:00 AM</td>

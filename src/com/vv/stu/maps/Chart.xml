@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vv.stu.common.dao">
+	<select id="chart_finance_001" resultType="java.util.HashMap" parameterType="java.util.Map">
+	SELECT
+	DATE_FORMAT(fin_date,'%Y年%m月%d日')
+	fin_date,SUM(CASE WHEN fin_money>0 THEN fin_money ELSE 0 END) inmoney,
+	SUM(CASE WHEN
+	fin_money<0 THEN -fin_money ELSE 0
+	END) outmoney FROM vv_finance
+	where fin_date>=#{start_date} and fin_date<=#{end_date)
+	GROUP BY fin_date ORDER BY
+	fin_date
+	</select>
+</mapper>

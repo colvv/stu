@@ -15,7 +15,11 @@ body, form, frame, iframe, blockquote, p, pre, sup, sub, table, caption, ol, dl,
 body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
 	font-family: Microsoft YaHei,'ËÎÌו' , Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif !important;}
 	
-	
+.no-wrap{
+	margin: 0;
+    padding: 0;
+}
+
 .mg-t-150{
 	margin-top: 150px;
 }

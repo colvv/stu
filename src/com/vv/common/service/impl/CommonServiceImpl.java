@@ -68,7 +68,7 @@ public class CommonServiceImpl extends BaseService {
 			// FIXME 2015-3-9 @wangyi : 后期考虑加入统一的防止注入方式
 			tSQL += "and code like '" + tMap.get("condition") + "' ";
 		}
-		tSQL += " ORDER BY code";
+		tSQL += " ORDER BY codeorder,code";
 		return tDefaultQueryDao.commonQuery_SQL(tSQL);
 	}
 }
