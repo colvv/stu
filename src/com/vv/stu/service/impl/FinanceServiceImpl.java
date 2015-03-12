@@ -25,23 +25,19 @@ public class FinanceServiceImpl extends BaseService {
 
 	public String makeChart(Map tParams) {
 		try {
-			List<Map> tResult =  tDefaultQueryDao.commonQuery_SQL(new DaoOperator("chart_finance_001", tParams));
-			StringBuffer tTitle  = new StringBuffer(128);
-			StringBuffer tContent  = new StringBuffer(256);
-			StringBuffer tContent2  = new StringBuffer(256);
-			tTitle.append("[");
-			tContent.append(",[");
+			List<Map> tResult = tDefaultQueryDao.commonQuery_SQL(new DaoOperator("chart_finance_001", tParams));
+			StringBuffer tContent = new StringBuffer(512);
+			StringBuffer tContent2 = new StringBuffer(256);
+			tContent.append("[[");
 			tContent2.append(",[");
 			for (Map tData : tResult) {
-				tTitle.append("'").append(tData.get("fin_date")).append("',");
-				tContent.append("'").append(tData.get("inmoney")).append("',");
-				tContent2.append("'").append(tData.get("outmoney")).append("',");
-				
-				
+				tContent.append("[").append(tData.get("fin_date_stamp")).append(",").append(tData.get("inmoney")).append("],");
+				tContent2.append("[").append(tData.get("fin_date_stamp")).append(",").append(tData.get("outmoney")).append("],");
 			}
-			
-			
-			
+			tContent.append("]");
+			tContent2.append("]]");
+			tContent.append(tContent2);
+			return tContent.toString();
 		} catch (Exception e) {
 			PubFun.throwServiceException(e);
 		}

@@ -1,5 +1,6 @@
 package com.vv.stu.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,16 @@ public class FinanceController extends BaseController {
 		tParams.put("fin_create_type", "0");
 		tParams.put("fin_date", PubFun.getSimpleDate((String) tParams.get("fin_date")));
 		return tFinanceServiceImpl.addFinance(tParams) ? "0" : "1";
+	}
+
+	@RequestMapping("/loadFinanceChart")
+	public ModelAndView loadFinanceChart() {
+		ModelAndView tModelAndView = new ModelAndView();
+		Map tParams = PubFun.parseReuest_all(request);
+		tModelAndView.addObject("charhtml", tFinanceServiceImpl.makeChart(tParams));
+		tModelAndView.addAllObjects(tParams);
+		tModelAndView.setViewName("/fin/content/financeChart");
+		return tModelAndView;
 	}
 
 }

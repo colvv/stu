@@ -69,6 +69,12 @@ body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
 .color-pur {
   color: #852b99;
 }
+.color-g{
+	color:#5cb85c;
+}
+.color-r{
+	color: #EC6148;
+}
 .min-width-500{
 	min-height: 500px;
 }
