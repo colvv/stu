@@ -30,7 +30,6 @@
 			default:
 				return;
 			}
-
 			commonAjax("/fin/loadFinanceChart.do", {
 				start_date : start_date,
 				end_date : end_date
@@ -78,10 +77,10 @@
 				</div>
 			</div>
 			<div class="form-group col-xs-4  ">
-				<label for="">&nbsp;</label>
-				<button class="btn  btn-success btn-block " href="#" name="makechart">
+				<!-- <label for="">&nbsp;</label>  -->
+				<a class="btn  btn-success btn-block "  name="makechart">
 					<i class="fa  fa-line-chart  fa-lg  fa-fw "></i> 生成报表
-				</button>
+				</a>
 			</div>
 		</form>
 		<div class="row">
@@ -90,7 +89,7 @@
 					<!-- /.panel-heading -->
 					<div class="panel-body" style="width: 100%; height: 500px;" name="chart_content">
 						<h3 class="text-center mg-t-150">
-							<i class=" fa fa-arrow-up mg-r-5"></i>Choose First
+							<i class=" fa fa-arrow-up mg-r-5"></i>Make Chart First
 						</h3>
 					</div>
 				</div>

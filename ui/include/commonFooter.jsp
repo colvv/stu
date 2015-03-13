@@ -2,10 +2,13 @@
 <footer class="bs-footer navbar-bottom mg-t-50" role="footer">
 	<div class="container">
 		<div class="row ">
-			<div class="col-xs-6">
+			<div class="col-xs-4">
 				<span class="muted "> &copy; 2015 学生管理</span> <span class="text-primary">当前版本： v1.0</span>
 			</div>
-			<div class="col-xs-6 text-right">
+			<div class="col-xs-6">
+				<span class="text-danger ">请用IE9+、chrome、safari、firefox或opear等现代浏览器</span>
+			</div>
+			<div class="col-xs-2 text-right">
 				<strong> @我:</strong> <a href="mailto:5vwy89@163.com"><i class="fa fa-envelope-o fa-lg"></i> </a>
 			</div>
 		</div>
@@ -115,7 +118,7 @@
 .loading_back {
 	background: #000;
 	opacity: .5;
-	filter: alpha(opacity =                       50);
+	filter: alpha(opacity =                         50);
 	position: fixed;
 	z-index: 1040;
 	top: 0;
@@ -137,6 +140,8 @@
 </style>
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
 <script src="${ctx}/resources/jquery/js/jquery-1.11.2.min.js"></script>
+<script src="${ctx}/resources/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+<script src="${ctx}/resources/jsplumb/js/jquery.jsPlumb-1.7.4-min.js"></script>
 
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="${ctx}/resources/bootstrap/js/bootstrap.min.js"></script>

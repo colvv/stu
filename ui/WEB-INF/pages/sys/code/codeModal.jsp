@@ -14,7 +14,9 @@
 				if (array[0] === '0') {
 					alertMsg_B("保存成功");
 					// 调用外层点击 来刷新
-					fObject("codetypes", "main_area").find(".list-group-item").filter(".cur").click();
+					var $cur = fObject("codetypes", "main_area").find(".list-group-item").filter(".cur");
+					$cur.find("[name='org_badge']").text(parseInt($cur.find("[name='org_badge']").text()) + 1);
+					$cur.click();
 				} else {
 					if (array[1]) {
 						alertMsg_B("保存失败," + array[1]);

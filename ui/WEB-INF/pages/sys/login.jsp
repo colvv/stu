@@ -46,7 +46,7 @@ body {
 	<%@include file="/include/commonFooter.jsp"%>
 	<script>
 		$(document).ready(function() {
-			$("body").keyup(function() {
+			$("body").keyup(function(event) {
 				if (event.keyCode == 13) {
 					fObject("login_button").click();
 				}
