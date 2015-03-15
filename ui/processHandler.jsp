@@ -40,7 +40,11 @@
 						name : "入库环节"
 					} ];
 					var width = $("body").width();
-					var size = parseInt((width - 150) / 300);
+					alert((width + 50) / 300);
+					var size = parseInt((width + 50) / 300);
+					if (size === 0) {
+						size = 1;
+					}
 					var html = "";
 					var start_t = 100;
 					var start_l = 50;
@@ -102,9 +106,11 @@
 							instance.makeSource(windows, {
 								filter : ".ep",
 								anchor : "Continuous",
-								connector : [ "StateMachine", {
-									curviness : 20
-								} ],
+								//此处定义连线的。。。
+								//connector : [ "StateMachine", {
+								//	curviness : 20
+								//} ],
+								//connector :"Straight",
 								connectorStyle : {
 									strokeStyle : "#5c96bc",
 									lineWidth : 2,
@@ -128,10 +134,23 @@
 							});
 							for ( var i = 0; i < array.length; i++) {
 								if (array[i + 1]) {
+									//if ((i + 1) % size === 0) {
+									//	instance.connect({
+									//		source : "node_" + array[i].id,
+									//		target : "node_" + array[i + 1].id,
+									//		connector : [ "StateMachine", {
+									//			curviness : 10
+									//		} ],
+									//		anchors:["Right", "Right"]
+									//	});
+
+									//} else {
 									instance.connect({
 										source : "node_" + array[i].id,
 										target : "node_" + array[i + 1].id,
+										connector : "Straight",
 									});
+									//}
 								}
 							}
 							jsPlumb.fire("jsPlumbDemoLoaded", instance);
