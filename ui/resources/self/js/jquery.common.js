@@ -215,3 +215,183 @@
 		$selectOjb.val(defaultVal);
 	}
 })(jQuery);
+
+(function($) {
+	$.fn.vProcess = function(settings) {
+		var defaults = {
+			top : 100,
+			left : 50,
+			x_step : 300,
+			y_step : 150,
+			direct : 1,
+			move_able : false,
+			simple_datas : null,
+			complex_datas : null,
+			lineFunc : undefined,
+			program : false
+		}, opt = $.extend(defaults, settings), $processOjb = $(this), width = $processOjb.width(), html = "<div class='statemachine-demo'>", random_id = $processOjb
+				.attr("id");
+		var complex_default = {
+			top : 0,
+			left : 0
+		}, complex_opt;
+		if (opt.simple_datas) {
+			// 2015-3-16 @wangyi : 首先计算宽度
+			var size = parseInt((width + 50) / 300);
+			if (size === 0) {
+				// 2015-3-16 @wangyi : 至少为1
+				size = 1;
+			}
+			for ( var i = 0; i < opt.simple_datas.length; i++) {
+				html += "<div class='w' id='node_" + random_id + i + "' style='left:" + opt.left + "px;top:" + opt.top + "px'>"
+						+ opt.simple_datas[i] + "</div>";
+				opt.left += opt.direct * 300;
+				if ((i + 1) % size == 0) {
+					if (opt.direct == -1) {
+						opt.left = 50;
+					} else {
+						// u n y?
+						opt.left = 300 * size - 150 - 150 + 50;
+					}
+					opt.direct = opt.direct * -1;
+					opt.top += 150;
+				}
+			}
+		} else if (opt.complex_datas) {
+			for ( var i = 0; i < opt.complex_datas.length; i++) {
+				if (!opt.complex_datas[i].left) {
+					opt.complex_datas[i].left = 100;
+				}
+				if (!opt.complex_datas[i].top) {
+					opt.complex_datas[i].top = 100;
+				}
+				html += "<div class='w' id='node_" + random_id + opt.complex_datas[i].id + "' style='left:" + opt.complex_datas[i].left
+						+ "px;top:" + opt.complex_datas[i].top + "px'>" + opt.complex_datas[i].name + "</div>";
+			}
+			if (opt.program) {
+				html += "<input type='button' name='export' value='导出信息'><textarea name='export_info' style='width:500px;height:200px;'></textarea>";
+			}
+		}
+		html += "</div>";
+
+		$processOjb.html(html);
+		$processOjb.find("[name='export']").click(function() {
+			$processOjb.find("[name='export_info']").val(exportElements(opt.complex_datas, random_id));
+		});
+
+		var instance = initJsPlumb($processOjb.attr("id"), opt.complex_datas);
+		var windows = jsPlumb.getSelector("#" + $processOjb.attr("id") + " .statemachine-demo .w");
+		// 可以拖动
+		if (opt.move_able) {
+			instance.draggable(windows);
+		}
+		if (opt.lineFunc) {
+			instance.bind("connection", opt.lineFunc);
+			// function(info) {
+			// 更改连线名称
+			// info.connection.getOverlay("label").setLabel("流转");
+			// });
+		}
+		// suspend drawing and initialise.
+		instance.batch(function() {
+			instance.makeSource(windows, {
+				filter : ".ep",
+				anchor : "Continuous",
+				connector : "Straight",
+				connectorStyle : {
+					strokeStyle : "#5c96bc",
+					lineWidth : 2,
+					outlineColor : "transparent",
+					outlineWidth : 4
+				},
+			// maxConnections : 5,
+			// onMaxConnections : function(info, e) {
+			// alert("Maximum connections (" + info.maxConnections + ")
+			// reached");
+			// }
+			});
+
+			// 连线
+			instance.makeTarget(windows, {
+				dropOptions : {
+					hoverClass : "dragHover"
+				},
+				anchor : "Continuous",
+				allowLoopback : true
+			});
+			if (opt.simple_datas) {
+				for ( var i = 0; i < opt.simple_datas.length; i++) {
+					if (opt.simple_datas[i + 1]) {
+						instance.connect({
+							source : "node_" + random_id + i,
+							target : "node_" + random_id + (i + 1)
+						});
+					}
+				}
+			} else if (opt.complex_datas) {
+				for ( var i = 0; i < opt.complex_datas.length; i++) {
+					if (opt.complex_datas[i].renderTo) {
+						for ( var j = 0; j < opt.complex_datas[i].renderTo.length; j++) {
+							_log("source:" + opt.complex_datas[i].id + ",target:" + opt.complex_datas[i].renderTo[j]);
+							if (typeof opt.complex_datas[i].renderTo[j] == "object") {
+								instance.connect({
+									source : "node_" + random_id + opt.complex_datas[i].id,
+									target : "node_" + random_id + opt.complex_datas[i].renderTo[j].target,
+									// 2015-3-16 @wangyi : 增加标签
+									overlays : [ [ "Label", {
+										label : opt.complex_datas[i].renderTo[j].lineName,
+										id : "label",
+										cssClass : "aLabel"
+									} ] ]
+								});
+							} else {
+								instance.connect({
+									source : "node_" + random_id + opt.complex_datas[i].id,
+									target : "node_" + random_id + opt.complex_datas[i].renderTo[j]
+								});
+							}
+						}
+					}
+				}
+			}
+		});
+	};
+	function initJsPlumb(id, obj) {
+		var setting = {};
+		// 2015-3-16 @wangyi : 暂时废弃
+		if (false) {
+			setting = {
+				// 箭头上的文字和选中效果
+				label : "FOO",
+				id : "label",
+				cssClass : "aLabel"
+			}
+		}
+		return jsPlumb.getInstance({
+			Endpoint : [ "Dot", {
+				radius : 2
+			} ],
+			HoverPaintStyle : {
+				strokeStyle : "#1e8151",
+				lineWidth : 2
+			},
+			ConnectionOverlays : [ [ "Arrow", {
+				location : 1,
+				id : "arrow",
+				length : 14,
+				foldback : 0.8
+			} ], [ "Label", setting ] ],
+			Container : id
+		});
+	}
+	function exportElements(complex_datas, random_id) {
+		if (!complex_datas)
+			return;
+		for ( var i = 0; i < complex_datas.length; i++) {
+			complex_datas[i].top = parseInt($("#node_" + random_id + complex_datas[i].id).position().top);
+			complex_datas[i].left = parseInt($("#node_" + random_id + complex_datas[i].id).position().left);
+		}
+		return JSON.stringify(complex_datas);
+	}
+
+})(jQuery);

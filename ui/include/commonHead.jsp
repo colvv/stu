@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="${ctx}/resources/jquery.dataTables/css/dataTables.bootstrap.css">
 <link rel="stylesheet" href="${ctx}/resources/jquery.ztree/css/zTreeStyle/zTreeStyle.css">
 <link rel="stylesheet" href="${ctx}/resources/self/css/base.css" />
+<link rel="stylesheet" href="${ctx}/resources/self/css/process.css">
 
 <!--[if lt IE 9]>
       <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>

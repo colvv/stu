@@ -141,7 +141,7 @@
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
 <script src="${ctx}/resources/jquery/js/jquery-1.11.2.min.js"></script>
 <script src="${ctx}/resources/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
-<script src="${ctx}/resources/jsplumb/js/jquery.jsPlumb-1.7.4-min.js"></script>
+<script src="${ctx}/resources/jsplumb/js/jquery.jsPlumb-1.7.4.js"></script>
 
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="${ctx}/resources/bootstrap/js/bootstrap.min.js"></script>

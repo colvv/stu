@@ -136,6 +136,7 @@
 					<textarea class="form-control" name="fin_desc" placeholder="请输入收支情况说明" validation="required|minlength=10">${fin_desc}</textarea>
 				</div>
 				<div class="form-group col-xs-1"></div>
+				<div class="col-xs-12" name="process_area"></div>
 			</div>
 		</form>
 	</div>
