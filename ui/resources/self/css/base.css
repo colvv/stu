@@ -63,6 +63,9 @@ body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
 .color-bg-w{
 	background-color: white;
 }
+.color-bg-b{
+	background-color: rgb(0, 149, 255);
+}
 .color-b{
 	color:rgb(0, 149, 255);
 }
@@ -81,4 +84,3 @@ body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
 .cursor-p{
 	cursor:pointer;
 }
-

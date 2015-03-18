@@ -216,6 +216,10 @@
 	}
 })(jQuery);
 
+/**
+ * 数据中的参数包括
+ * top，left，id，name，renderTo，css，cssClass,title等
+ */
 (function($) {
 	$.fn.vProcess = function(settings) {
 		var defaults = {
@@ -230,8 +234,7 @@
 			lineFunc : undefined,
 			program : false
 		}, opt = $.extend(defaults, settings), $processOjb = $(this), width = $processOjb.width(), html = "<div class='statemachine-demo'>", random_id = $processOjb
-				.attr("id");
-		var complex_default = {
+				.attr("id"), complex_default = {
 			top : 0,
 			left : 0
 		}, complex_opt;
@@ -243,15 +246,20 @@
 				size = 1;
 			}
 			for ( var i = 0; i < opt.simple_datas.length; i++) {
-				html += "<div class='w' id='node_" + random_id + i + "' style='left:" + opt.left + "px;top:" + opt.top + "px'>"
-						+ opt.simple_datas[i] + "</div>";
-				opt.left += opt.direct * 300;
+				if (typeof opt.simple_datas[i] == "object") {
+					html += getNodeHtml(opt.left, opt.top, random_id, i, opt.simple_datas[i].name, opt.simple_datas[i].cssClass,
+							opt.simple_datas[i].title);
+				} else {
+					html += getNodeHtml(opt.left, opt.top, random_id, i, opt.simple_datas[i], null, null);
+				}
+				opt.left += opt.direct * opt.x_step;
+				// 2015-3-17 @wangyi :  此处的逻辑应当调整
 				if ((i + 1) % size == 0) {
 					if (opt.direct == -1) {
 						opt.left = 50;
 					} else {
 						// u n y?
-						opt.left = 300 * size - 150 - 150 + 50;
+						opt.left = opt.x_step * size - 150 - 150 + 50;
 					}
 					opt.direct = opt.direct * -1;
 					opt.top += 150;
@@ -265,8 +273,8 @@
 				if (!opt.complex_datas[i].top) {
 					opt.complex_datas[i].top = 100;
 				}
-				html += "<div class='w' id='node_" + random_id + opt.complex_datas[i].id + "' style='left:" + opt.complex_datas[i].left
-						+ "px;top:" + opt.complex_datas[i].top + "px'>" + opt.complex_datas[i].name + "</div>";
+				html += getNodeHtml(opt.complex_datas[i].left, opt.complex_datas[i].top, random_id, opt.complex_datas[i].id,
+						opt.complex_datas[i].name, opt.complex_datas[i].cssClass, opt.complex_datas[i].title)
 			}
 			if (opt.program) {
 				html += "<input type='button' name='export' value='导出信息'><textarea name='export_info' style='width:500px;height:200px;'></textarea>";
@@ -275,6 +283,30 @@
 		html += "</div>";
 
 		$processOjb.html(html);
+		if (opt.simple_datas) {
+			for ( var i = 0; i < opt.simple_datas.length; i++) {
+				if (typeof opt.simple_datas[i] == "object") {
+					if (opt.simple_datas[i].css) {
+						for ( var i = 0; i < opt.simple_datas.length; i++) {
+							if (opt.simple_datas[i].css) {
+								$("#node_" + random_id + i).css(opt.simple_datas[i].css);
+							}
+						}
+					}
+				}
+			}
+		} else if (opt.complex_datas) {
+			for ( var i = 0; i < opt.complex_datas.length; i++) {
+				if (opt.complex_datas[i].css) {
+					$("#node_" + random_id + opt.complex_datas[i].id).css(opt.complex_datas[i].css);
+				}
+			}
+		}
+		// 2015-3-17 @wangyi :  提示框
+		$processOjb.find(".w").tooltip({
+			html : true
+		});
+
 		$processOjb.find("[name='export']").click(function() {
 			$processOjb.find("[name='export_info']").val(exportElements(opt.complex_datas, random_id));
 		});
@@ -303,7 +335,7 @@
 					lineWidth : 2,
 					outlineColor : "transparent",
 					outlineWidth : 4
-				},
+				}
 			// maxConnections : 5,
 			// onMaxConnections : function(info, e) {
 			// alert("Maximum connections (" + info.maxConnections + ")
@@ -332,7 +364,7 @@
 				for ( var i = 0; i < opt.complex_datas.length; i++) {
 					if (opt.complex_datas[i].renderTo) {
 						for ( var j = 0; j < opt.complex_datas[i].renderTo.length; j++) {
-							_log("source:" + opt.complex_datas[i].id + ",target:" + opt.complex_datas[i].renderTo[j]);
+							//_log("source:" + opt.complex_datas[i].id + ",target:" + opt.complex_datas[i].renderTo[j]);
 							if (typeof opt.complex_datas[i].renderTo[j] == "object") {
 								instance.connect({
 									source : "node_" + random_id + opt.complex_datas[i].id,
@@ -356,6 +388,18 @@
 			}
 		});
 	};
+	function getNodeHtml(left, top, random_id, id, name, cssClass, title) {
+		var html = "<div class='w label label-default";
+		if (cssClass) {
+			html += " " + cssClass;
+		}
+		html += "' id='node_" + random_id + id + "' style='left:" + left + "px;top:" + top + "px' ";
+		if (title) {
+			html += " title='" + title + "'";
+		}
+		html += ">" + name + "</div>";
+		return html;
+	}
 	function initJsPlumb(id, obj) {
 		var setting = {};
 		// 2015-3-16 @wangyi : 暂时废弃
