@@ -23,10 +23,34 @@ CREATE TABLE `vv_class` (
   `class_id` varchar(10) NOT NULL,
   `class_name` varchar(20) DEFAULT NULL,
   `class_desc` varchar(1000) DEFAULT NULL,
+  `CREATE_TIME` datetime DEFAULT NULL,
   PRIMARY KEY (`class_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `vv_class` */
+
+/*Table structure for table `vv_class_lesson` */
+
+DROP TABLE IF EXISTS `vv_class_lesson`;
+
+CREATE TABLE `vv_class_lesson` (
+  `LES_ID` varchar(6) NOT NULL,
+  `LES_NAME` varchar(40) NOT NULL,
+  `LES_TYPE` varchar(2) NOT NULL,
+  `LES_DES` varchar(2000) DEFAULT NULL,
+  `LES_START_TIME` int(11) DEFAULT NULL,
+  `LES_END_TIME` int(11) DEFAULT NULL,
+  `LES_LESSON_COUNT` int(11) DEFAULT NULL,
+  `LES_LESSON_TIME` int(11) DEFAULT NULL,
+  `LES_WEEK_TYPE` varchar(2) DEFAULT NULL,
+  `LES_STATE` varchar(2) DEFAULT NULL,
+  `CREATE_USER` varchar(20) DEFAULT NULL,
+  `CREATE_TIME` datetime DEFAULT NULL,
+  `LES_FEE` decimal(10,0) DEFAULT NULL,
+  PRIMARY KEY (`LES_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `vv_class_lesson` */
 
 /*Table structure for table `vv_class_rela` */
 
@@ -68,23 +92,21 @@ insert  into `vv_finance`(`fin_id`,`fin_create_type`,`fin_rela_id`,`fin_date`,`f
 DROP TABLE IF EXISTS `vv_lesson`;
 
 CREATE TABLE `vv_lesson` (
-  `LES_ID` varchar(6) NOT NULL,
-  `LES_NAME` varchar(40) NOT NULL,
-  `LES_TYPE` varchar(2) NOT NULL,
-  `LES_DES` varchar(2000) DEFAULT NULL,
-  `LES_START_TIME` int(11) DEFAULT NULL,
-  `LES_END_TIME` int(11) DEFAULT NULL,
-  `LES_LESSON_COUNT` int(11) DEFAULT NULL,
-  `LES_LESSON_TIME` int(11) DEFAULT NULL,
-  `LES_WEEK_TYPE` varchar(2) DEFAULT NULL,
+  `LES_ID` varchar(6) DEFAULT NULL,
+  `LES_NAME` varchar(40) DEFAULT NULL,
+  `LES_TYPE` varchar(2) DEFAULT NULL,
+  `LES_TYPE2` varchar(2) DEFAULT NULL,
+  `LES_TYPE3` varchar(2) DEFAULT NULL,
+  `LES_TYPE4` varchar(2) DEFAULT NULL,
+  `LES_DESC` varchar(2000) DEFAULT NULL,
   `LES_STATE` varchar(2) DEFAULT NULL,
-  `LES_CREATE_USER` varchar(20) DEFAULT NULL,
-  `LES_CREATE_TIME` datetime DEFAULT NULL,
-  `LES_FEE` decimal(10,0) DEFAULT NULL,
-  PRIMARY KEY (`LES_ID`)
+  `LES_STATE2` varchar(2) DEFAULT NULL,
+  `CREATE_TIME` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `vv_lesson` */
+
+insert  into `vv_lesson`(`LES_ID`,`LES_NAME`,`LES_TYPE`,`LES_TYPE2`,`LES_TYPE3`,`LES_TYPE4`,`LES_DESC`,`LES_STATE`,`LES_STATE2`,`CREATE_TIME`) values ('X01','我擦课',NULL,NULL,NULL,NULL,'21踩踩撒',NULL,NULL,NULL),('000001','珠心算','01',NULL,NULL,NULL,'01',NULL,NULL,'2015-03-19 18:11:28'),('000002','擦擦擦','02',NULL,NULL,NULL,'02',NULL,NULL,'2015-03-19 18:16:02'),('000003','擦擦擦','02',NULL,NULL,NULL,'02',NULL,NULL,'2015-03-19 18:16:06'),('000004','真心偏移','01',NULL,NULL,NULL,'01',NULL,NULL,'2015-03-19 18:16:57'),('000005','划擦','01',NULL,NULL,NULL,'达到',NULL,NULL,'2015-03-19 18:18:17');
 
 /*Table structure for table `vv_stu_lesson` */
 
@@ -194,7 +216,7 @@ CREATE TABLE `vv_sys_code` (
 
 /*Data for the table `vv_sys_code` */
 
-insert  into `vv_sys_code`(`codetype`,`code`,`codename`,`codealias`,`codeorder`) values ('date_choicer','hand','手动选择',NULL,3),('date_choicer','month','最近一月',NULL,1),('date_choicer','week','最近一周',NULL,0),('date_choicer','year','最近一年',NULL,2),('fin_oi_type','0','收入类',NULL,NULL),('fin_oi_type','1','支出类',NULL,NULL),('fin_type','001','学费',NULL,NULL),('fin_type','002','教材费用',NULL,NULL),('fin_type','003','餐费',NULL,NULL),('fin_type','004','文具费','',NULL),('fin_type','005',' 增加测试','',NULL),('fin_type','099','其他','',NULL),('fin_type','101','采购器材',NULL,NULL),('fin_type','102','采购教材',NULL,NULL),('fin_type','103','教师工资',NULL,NULL),('fin_type','104','活动费用',NULL,NULL),('fin_type','199','其他','',NULL),('frequency_choicer','day','日',NULL,0),('frequency_choicer','month','月',NULL,2),('frequency_choicer','week','周',NULL,1),('student_state','01','新生','我晕',NULL);
+insert  into `vv_sys_code`(`codetype`,`code`,`codename`,`codealias`,`codeorder`) values ('date_choicer','hand','手动选择',NULL,3),('date_choicer','month','最近一月',NULL,1),('date_choicer','week','最近一周',NULL,0),('date_choicer','year','最近一年',NULL,2),('fin_oi_type','0','收入类',NULL,NULL),('fin_oi_type','1','支出类',NULL,NULL),('fin_type','001','学费',NULL,NULL),('fin_type','002','教材费用',NULL,NULL),('fin_type','003','餐费',NULL,NULL),('fin_type','004','文具费','',NULL),('fin_type','005',' 增加测试','',NULL),('fin_type','099','其他','',NULL),('fin_type','101','采购器材',NULL,NULL),('fin_type','102','采购教材',NULL,NULL),('fin_type','103','教师工资',NULL,NULL),('fin_type','104','活动费用',NULL,NULL),('fin_type','199','其他','',NULL),('frequency_choicer','day','日',NULL,0),('frequency_choicer','month','月',NULL,2),('frequency_choicer','week','周',NULL,1),('lesson_type','01','数学','你懂吧？',NULL),('lesson_type','02','英语','因个历史',NULL),('student_state','01','新生','我晕',NULL);
 
 /*Table structure for table `vv_sys_code_conf` */
 
@@ -204,7 +226,7 @@ CREATE TABLE `vv_sys_code_conf` (
   `codetype` varchar(40) NOT NULL,
   `name` varchar(100) NOT NULL,
   `desc` varchar(400) DEFAULT NULL,
-  `editable` tinyint(1) NOT NULL,
+  `editable` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`codetype`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -224,7 +246,7 @@ CREATE TABLE `vv_sys_maxno` (
 
 /*Data for the table `vv_sys_maxno` */
 
-insert  into `vv_sys_maxno`(`id`,`no`) values ('fin_id',6),('stu_id2015',30),('sysuser',9);
+insert  into `vv_sys_maxno`(`id`,`no`) values ('fin_id',6),('les_id',5),('stu_id2015',30),('sysuser',9);
 
 /*Table structure for table `vv_sys_menu` */
 
@@ -240,7 +262,7 @@ CREATE TABLE `vv_sys_menu` (
 
 /*Data for the table `vv_sys_menu` */
 
-insert  into `vv_sys_menu`(`menu_id`,`menu_name`,`menu_url`,`open_power`) values ('101|1','学生报名','bootstrap.do','1'),('102|1','学生退学',NULL,'1'),('103|1','学生信息','/stu/stuList.do','1'),('1|0','学生管理',NULL,'0'),('2|0','教师管理','/tea/index.do','1'),('301|3','系统用户管理','/sys/userIndex.do','1'),('302|3','菜单管理','/sys/menu/menuIndex.do','1'),('304|3','系统枚举','/sys/code/confIndex.do','1'),('3|0','系统管理',NULL,'1'),('401|4','新建收支','/fin/createFinance.do',NULL),('402|4','收支信息','/fin/recentFinance.do',NULL),('4|0','财务管理',NULL,'0');
+insert  into `vv_sys_menu`(`menu_id`,`menu_name`,`menu_url`,`open_power`) values ('101|1','学生报名','bootstrap.do','1'),('102|1','学生退学',NULL,'1'),('103|1','学生信息','/stu/stuList.do','1'),('1|0','学生管理',NULL,'0'),('2|0','教师管理','/tea/index.do','1'),('301|3','系统用户管理','/sys/userIndex.do','1'),('302|3','菜单管理','/sys/menu/menuIndex.do','1'),('304|3','系统枚举','/sys/code/confIndex.do','1'),('3|0','系统管理',NULL,'1'),('401|4','新建收支','/fin/createFinance.do',NULL),('402|4','收支信息','/fin/recentFinance.do',NULL),('4|0','财务管理',NULL,'0'),('501|5','课程管理','/les/lessonIndex.do',NULL),('502|5','班级管理','/class/classIndex.do',NULL),('5|0','班级课程管理',NULL,NULL);
 
 /*Table structure for table `vv_sys_user` */
 
@@ -259,7 +281,7 @@ CREATE TABLE `vv_sys_user` (
 
 /*Data for the table `vv_sys_user` */
 
-insert  into `vv_sys_user`(`user_id`,`user_name`,`user_phone`,`rela_role_id`,`user_password`,`last_login_time`,`user_state`) values ('000002','我擦','13403517100',NULL,'14e1b600b1fd579f47433b88e8d85291',NULL,NULL),('000003','新用户','13403517100',NULL,'2072d493c4fc8bc11b8d2f6f49d178c9',NULL,NULL),('000006','我擦','13403517100',NULL,'',NULL,NULL),('admin','系统管理员','13403517100',NULL,'0c909a141f1f2c0a1cb602b0b2d7d050',NULL,NULL),('lishuang','李二','15835104556',NULL,'07932f02f3323059544d188be8e847e7','2015-03-13 20:31:36',NULL),('sy000001','haha好','13403517105','100','','2015-02-27 10:33:58','01'),('SY000007','wlgq','',NULL,'b626940cf772654ed931b05be5722121',NULL,NULL),('SY000008','王毅','13403517100',NULL,'03557285e0c7dcf73459ef5cbee4551c',NULL,NULL),('SY000009','王毅','',NULL,'03557285e0c7dcf73459ef5cbee4551c',NULL,NULL),('wangyi','王毅','',NULL,'07932f02f3323059544d188be8e847e7','2015-03-14 11:30:41',NULL),('wangyi2','王毅','',NULL,'03557285e0c7dcf73459ef5cbee4551c',NULL,NULL),('wangyi3','213123','13132321321',NULL,'5b32af2e42cbaa6bdcf216b65cd8287c','2015-02-28 16:11:39',NULL),('wcccccc','eddasdsadasd','',NULL,'044e2952bf40ecc61933d8ad16e0074c',NULL,NULL),('yanshi','演示用户','',NULL,'31bde6a12ed45884f1dd420e50ebcbd4','2015-03-06 11:53:14',NULL);
+insert  into `vv_sys_user`(`user_id`,`user_name`,`user_phone`,`rela_role_id`,`user_password`,`last_login_time`,`user_state`) values ('000002','我擦','13403517100',NULL,'14e1b600b1fd579f47433b88e8d85291',NULL,NULL),('000003','新用户','13403517100',NULL,'2072d493c4fc8bc11b8d2f6f49d178c9',NULL,NULL),('000006','我擦','13403517100',NULL,'',NULL,NULL),('admin','系统管理员','13403517100',NULL,'0c909a141f1f2c0a1cb602b0b2d7d050',NULL,NULL),('lishuang','李二','15835104556',NULL,'07932f02f3323059544d188be8e847e7','2015-03-13 20:31:36',NULL),('sy000001','haha好','13403517105','100','','2015-02-27 10:33:58','01'),('SY000007','wlgq','',NULL,'b626940cf772654ed931b05be5722121',NULL,NULL),('SY000008','王毅','13403517100',NULL,'03557285e0c7dcf73459ef5cbee4551c',NULL,NULL),('SY000009','王毅','',NULL,'03557285e0c7dcf73459ef5cbee4551c',NULL,NULL),('wangyi','王毅','',NULL,'07932f02f3323059544d188be8e847e7','2015-03-19 18:18:01',NULL),('wangyi2','王毅','',NULL,'03557285e0c7dcf73459ef5cbee4551c',NULL,NULL),('wangyi3','213123','13132321321',NULL,'5b32af2e42cbaa6bdcf216b65cd8287c','2015-02-28 16:11:39',NULL),('wcccccc','eddasdsadasd','',NULL,'044e2952bf40ecc61933d8ad16e0074c',NULL,NULL),('yanshi','演示用户','',NULL,'31bde6a12ed45884f1dd420e50ebcbd4','2015-03-06 11:53:14',NULL);
 
 /*Table structure for table `vv_sys_user_menu` */
 
