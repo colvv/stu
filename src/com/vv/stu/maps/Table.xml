@@ -10,4 +10,7 @@
 	<select id="sys_001" resultType="java.util.HashMap"  parameterType="java.util.Map">
 	    select user_id,user_name,user_phone,rela_role_id,user_password,DATE_FORMAT(last_login_time, '%Y-%m-%d %H:%i:%s') last_login_time,user_state  from vv_sys_user
 	</select>
+	<select id="les_001" resultType="java.util.HashMap"  parameterType="java.util.Map">
+	   select les_id,les_name,les_desc,DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%s') create_time from vv_lesson
+	</select>
 </mapper>

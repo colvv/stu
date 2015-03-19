@@ -35,6 +35,7 @@ public class PubFun {
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static Map parseReuest_all(HttpServletRequest request) {
+		// 2015-3-19 @wangyi :  真的太傻？
 		Map tMap = new HashMap();
 		Set<String> key = request.getParameterMap().keySet();
 		for (Iterator it = key.iterator(); it.hasNext();) {

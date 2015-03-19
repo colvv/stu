@@ -82,7 +82,8 @@
 				}
 
 				fObject("fin_oi_type", baseDiv).load_Selection({
-					codetype : "fin_oi_type"
+					codetype : "fin_oi_type",
+					cache : false
 				});
 				dPicker(fObject("fin_date_div", baseDiv));
 			});

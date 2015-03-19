@@ -145,6 +145,7 @@
 
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="${ctx}/resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="${ctx}/resources/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 <script src="${ctx}/resources/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
 <script src="${ctx}/resources/bootstrap/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script src="${ctx}/resources/jquery.dataTables/js/jquery.dataTables.cn.js"></script>

@@ -1,25 +1,33 @@
 (function($) {
 	$.fn.vTable = function(data, title) {
-		var html = "<table class='table table-condensed table-bordered table-hover'>";
+		var html = "<table class='table table-condensed table-bordered table-hover' style='table-layout: fixed;'>";
 		html += "<thead><tr class='success'>"
-		for ( var param in title) {
-			html += "<th>" + title[param] + "</th>";
+		for (j = 0; j < title.length; j++) {
+			html += "<th width='" + title[j].width + "px'>" + title[j].name + "</th>";
 		}
 		html += "</tr></thead><tbody>";
 		for (i = 0; i < data.length; i++) {
 			html += "<tr>";
-			for ( var param in title) {
-				var node = data[i][param];
+			for (j = 0; j < title.length; j++) {
+				var node = data[i][title[j].data];
 				// 替换可能的undifined
 				if (!node) {
 					node = "";
 				}
-				html += "<td>" + node + "</td>";
+				html += "<td ><div class='over-h'   title='" + node + "'>" + node + "</div></td>";
 			}
 			html += "</tr>";
 		}
 		html += "</tbody></table>";
 		$(this).html(html);
+		$(this).find("[title]").tooltip({
+			placement : 'top',
+			trigger : "hover",
+			delay : {
+				"show" : 200,
+				"hide" : 50
+			}
+		});
 	};
 })(jQuery);
 /**
@@ -223,6 +231,8 @@
 (function($) {
 	$.fn.vProcess = function(settings) {
 		var defaults = {
+			label_head : '',
+			width : 150,
 			top : 100,
 			left : 50,
 			x_step : 300,
@@ -232,37 +242,40 @@
 			simple_datas : null,
 			complex_datas : null,
 			lineFunc : undefined,
-			program : false
-		}, opt = $.extend(defaults, settings), $processOjb = $(this), width = $processOjb.width(), html = "<div class='statemachine-demo'>", random_id = $processOjb
+			program : false,
+			title_direct : "auto"
+		}, opt = $.extend(defaults, settings), $processOjb = $(this), width = $processOjb.width(), html = "<div class='flowcontent'>", random_id = $processOjb
 				.attr("id"), complex_default = {
 			top : 0,
 			left : 0
-		}, complex_opt;
+		}, complex_opt, org_left = opt.left;
 		if (opt.simple_datas) {
 			// 2015-3-16 @wangyi : 首先计算宽度
-			var size = parseInt((width + 50) / 300);
-			if (size === 0) {
+			var size = parseInt((width - 2 * org_left - opt.width) / opt.x_step);
+			if (size < 0) {
 				// 2015-3-16 @wangyi : 至少为1
-				size = 1;
+				size = 0
 			}
+			//第一个只需要150宽度即可
+			size += 1;
 			for ( var i = 0; i < opt.simple_datas.length; i++) {
 				if (typeof opt.simple_datas[i] == "object") {
-					html += getNodeHtml(opt.left, opt.top, random_id, i, opt.simple_datas[i].name, opt.simple_datas[i].cssClass,
+					html += getNodeHtml(opt, opt.left, opt.top, random_id, i, opt.simple_datas[i].name, opt.simple_datas[i].cssClass,
 							opt.simple_datas[i].title);
 				} else {
-					html += getNodeHtml(opt.left, opt.top, random_id, i, opt.simple_datas[i], null, null);
+					html += getNodeHtml(opt, opt.left, opt.top, random_id, i, opt.simple_datas[i], null, null);
 				}
 				opt.left += opt.direct * opt.x_step;
 				// 2015-3-17 @wangyi :  此处的逻辑应当调整
 				if ((i + 1) % size == 0) {
 					if (opt.direct == -1) {
-						opt.left = 50;
+						opt.left = org_left;
 					} else {
 						// u n y?
-						opt.left = opt.x_step * size - 150 - 150 + 50;
+						opt.left = org_left + (size - 1) * opt.x_step;
 					}
 					opt.direct = opt.direct * -1;
-					opt.top += 150;
+					opt.top += opt.y_step;
 				}
 			}
 		} else if (opt.complex_datas) {
@@ -273,7 +286,7 @@
 				if (!opt.complex_datas[i].top) {
 					opt.complex_datas[i].top = 100;
 				}
-				html += getNodeHtml(opt.complex_datas[i].left, opt.complex_datas[i].top, random_id, opt.complex_datas[i].id,
+				html += getNodeHtml(opt, opt.complex_datas[i].left, opt.complex_datas[i].top, random_id, opt.complex_datas[i].id,
 						opt.complex_datas[i].name, opt.complex_datas[i].cssClass, opt.complex_datas[i].title)
 			}
 			if (opt.program) {
@@ -303,16 +316,27 @@
 			}
 		}
 		// 2015-3-17 @wangyi :  提示框
-		$processOjb.find(".w").tooltip({
+		$processOjb.find(".w").popover({
+			placement : 'top',
+			trigger : "hover",
+			delay : {
+				"show" : 200,
+				"hide" : 50
+			},
 			html : true
 		});
+		//		$processOjb.find(".w").tooltip({
+		//			html : true,
+		//			placement : opt.title_direct,
+		//			template:'<div class="tooltip" role="tooltip" style="backgroud-color:red;"><div class="tooltip-arrow" style="backgroud-color:red;"></div><div class="tooltip-inner"></div></div>'
+		//		});
 
 		$processOjb.find("[name='export']").click(function() {
 			$processOjb.find("[name='export_info']").val(exportElements(opt.complex_datas, random_id));
 		});
 
 		var instance = initJsPlumb($processOjb.attr("id"), opt.complex_datas);
-		var windows = jsPlumb.getSelector("#" + $processOjb.attr("id") + " .statemachine-demo .w");
+		var windows = jsPlumb.getSelector("#" + $processOjb.attr("id") + " .flowcontent .w");
 		// 可以拖动
 		if (opt.move_able) {
 			instance.draggable(windows);
@@ -331,7 +355,7 @@
 				anchor : "Continuous",
 				connector : "Straight",
 				connectorStyle : {
-					strokeStyle : "#5c96bc",
+					strokeStyle : "#839178",
 					lineWidth : 2,
 					outlineColor : "transparent",
 					outlineWidth : 4
@@ -388,16 +412,16 @@
 			}
 		});
 	};
-	function getNodeHtml(left, top, random_id, id, name, cssClass, title) {
-		var html = "<div class='w label label-default";
+	function getNodeHtml(opts, left, top, random_id, id, name, cssClass, title) {
+		var html = "<div class='label-front'><div class='w label label-default";
 		if (cssClass) {
 			html += " " + cssClass;
 		}
-		html += "' id='node_" + random_id + id + "' style='left:" + left + "px;top:" + top + "px' ";
+		html += "' id='node_" + random_id + id + "' style='left:" + left + "px;top:" + top + "px;width:" + opts.width + "px' ";
 		if (title) {
-			html += " title='" + title + "'";
+			html += " title='" + opts.label_head + "' data-content='" + title + "'";
 		}
-		html += ">" + name + "</div>";
+		html += " >" + name + "</div></div>";
 		return html;
 	}
 	function initJsPlumb(id, obj) {
@@ -416,7 +440,7 @@
 				radius : 2
 			} ],
 			HoverPaintStyle : {
-				strokeStyle : "#1e8151",
+				strokeStyle : "#5bc0de",
 				lineWidth : 2
 			},
 			ConnectionOverlays : [ [ "Arrow", {

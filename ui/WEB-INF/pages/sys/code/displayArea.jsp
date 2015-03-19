@@ -2,11 +2,19 @@
 <script>
 	$(document).ready(function() {
 		var baseDiv = "main_area";
-		fObject("table_area", baseDiv).vTable(eval('${sys_codes}'), {
-			code : "编码",
-			codename : "编码描述",
-			codealias : "备注"
-		});
+		fObject("table_area", baseDiv).vTable(eval('${sys_codes}'), [ {
+			data : 'code',
+			name : "编码",
+			width : '100'
+		}, {
+			data : 'codename',
+			name : "编码描述",
+			width : '200'
+		}, {
+			data : 'codealias',
+			name : "备注",
+			width : '200'
+		} ]);
 
 		fObject("save_button", baseDiv).click(function() {
 			commonAjax("/sys/code/saveSysCodeConf.do", {
@@ -28,7 +36,7 @@
 					name : '${sys_code_conf.name}'
 				},
 				title : "新增编码",
-				refresh:true
+				refresh : true
 			});
 		});
 	});
