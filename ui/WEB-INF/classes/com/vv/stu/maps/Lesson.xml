@@ -2,7 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.vv.stu.model">
 	<insert id="insertLesson" parameterType="java.util.HashMap">
-		INSERT INTO vv_lesson (les_id,les_name,les_type,les_desc,CREATE_TIME) 
+		INSERT INTO vv_lesson (les_id,les_name,les_type,les_desc,CREATE_TIME)
 		VALUE (#{les_id},#{les_name},#{les_type},#{les_desc},now())
 	</insert>
+	<select id="selectLesson" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT les_id,les_name,les_type,les_desc
+		FROM vv_lesson WHERE les_id=#{les_id}
+	</select>
+	<update id="updateLesson" parameterType="java.util.HashMap">
+		update vv_lesson set
+		les_name=#{les_name},les_type=#{les_type},les_desc=#{les_desc} where les_id=#{les_id}
+	</update>
 </mapper>

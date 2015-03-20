@@ -18,6 +18,21 @@ public class LessonServiceImpl extends BaseService {
 			PubFun.throwServiceException(e);
 		}
 		return true;
-
+	}
+	public Map selectLesson(Map tParams) {
+		try {
+			return tDefaultQueryDao.commonQuery_SQL(new DaoOperator("selectLesson", tParams)).get(0);
+		} catch (Exception e) {
+			PubFun.throwServiceException(e);
+		}
+		return null;
+	}
+	public boolean updateLesson(Map tParams) {
+		try {
+			tPubCommitDao.doCommit(new DaoOperator("updateLesson", tParams));
+		} catch (Exception e) {
+			PubFun.throwServiceException(e);
+		}
+		return true;
 	}
 }

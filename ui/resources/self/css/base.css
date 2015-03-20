@@ -88,6 +88,9 @@ body,button,input,select,textarea,h1,h2,h3,h4,h5,h6 {
 .mg-t-20{
 	margin-top: 20px;
 }
+.mg-t-15{
+	margin-top: 15px;
+}
 .mg-t-10{
 	margin-top: 10px;
 }
@@ -95,7 +98,9 @@ body,button,input,select,textarea,h1,h2,h3,h4,h5,h6 {
 	margin-top: 5px;
 }
 
-
+.pd-r-5 {
+	padding-right: 5px;
+}
 .pd-r-50 {
 	padding-right: 50px;
 }
@@ -107,6 +112,15 @@ body,button,input,select,textarea,h1,h2,h3,h4,h5,h6 {
 
 .wd-50 {
 	width: 50%;
+}
+.wd-80{
+	width: 80%;
+}
+.wd-90{
+	width: 90%;
+}
+.font-15{
+	font-size: 15px;
 }
 
 .Absolute-Center {
@@ -146,9 +160,10 @@ body,button,input,select,textarea,h1,h2,h3,h4,h5,h6 {
 	color: #EC6148;
 }
 
-.min-width-500 {
+.min-height-500 {
 	min-height: 500px;
 }
+
 
 .cursor-p {
 	cursor: pointer;

@@ -25,15 +25,22 @@ public class LessonController extends BaseController {
 		tModelAndView.setViewName("les/les_complex");
 		return tModelAndView;
 	}
+
 	@RequestMapping("/addLes")
 	@ResponseBody
-	public String addLes(){
+	public String addLes() {
 		Map tParams = PubFun.parseReuest_all(request);
 		tParams.put("les_id", tCommonServiceImpl.createMaxNo("les_id", 6));
 		return tLessonServiceImpl.insertLesson(tParams) ? "0" : "1";
-		
+
 	}
-	
+
+	@RequestMapping("/modLes")
+	@ResponseBody
+	public String modLes() {
+		return tLessonServiceImpl.updateLesson(PubFun.parseReuest_all(request)) ? "0" : "1";
+	}
+
 	@RequestMapping("/model/addModel")
 	public ModelAndView addModel() {
 		ModelAndView tModelAndView = new ModelAndView("les/model/lesModel");
@@ -43,8 +50,9 @@ public class LessonController extends BaseController {
 
 	@RequestMapping("/model/modModel")
 	public ModelAndView modModel() {
-		ModelAndView tModelAndView = new ModelAndView("les/model/stuModel");
-		tModelAndView.addObject("form_action", "/les/modStu.do");
+		ModelAndView tModelAndView = new ModelAndView("les/model/lesModel");
+		tModelAndView.addAllObjects(tLessonServiceImpl.selectLesson(PubFun.parseReuest_all(request)));
+		tModelAndView.addObject("form_action", "/les/modLes.do");
 		return tModelAndView;
 	}
 }

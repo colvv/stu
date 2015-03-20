@@ -26,16 +26,16 @@
 			$(this).vali_Ele();
 		});
 		$("#les_info_form").displayNec_Form();
-
 		// 修改时带入lesson_type
-		$("les_type", baseDiv).val("${les_type}");
 		fObject("les_type", baseDiv).load_Selection({
 			codetype : "lesson_type",
-			cache : false
+			cache : false,
+			defaultVal : "${les_type}"
 		});
 	});
 </script>
 <form id="les_info_form" class="" role="form">
+	<input type="hidden" name="les_id"  value="${les_id}">
 	<div class="form-group">
 		<label class="control-label" for="les_name">课程名称</label> <input class="form-control" name="les_name" type="text" placeholder="请输入课程名称"
 			validation="required|maxlen=20" value="${les_name }">

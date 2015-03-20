@@ -32,9 +32,8 @@ body {
 							<label for="user_password">密码</label> <input class="form-control" name="user_password" type="password" placeholder="请输入密码"
 								validation="required">
 						</div>
-						<div class="checkbox">
-							<label> <input type="checkbox" name="auto_login"> 一周内自动登录
-							</label>
+						<div class="form-group">
+							<input type="checkbox" name="auto_login"> 一周内自动登录
 						</div>
 						<button class="btn btn-primary btn-block" type="button" name="login_button">登录</button>
 					</form>
@@ -50,6 +49,9 @@ body {
 				if (event.keyCode == 13) {
 					fObject("login_button").click();
 				}
+			});
+			$("[name='auto_login']").bootstrapSwitch({
+				size : 'mini'
 			});
 			//自动登录判断
 			if (checkNecessaryStr(getCookie("user_id")) && checkNecessaryStr(getCookie("user_password"))) {

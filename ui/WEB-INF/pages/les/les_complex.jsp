@@ -14,6 +14,8 @@
                 "defaultContent": '<i class="fa fa-chevron-circle-up fa-lg mg-l-20"/>'
             },{
 				"data" : "les_name"
+			},{
+				"data" : "les_type"
 			}, {
 				"data" : "create_time"
 			} ] , 
@@ -69,7 +71,7 @@
 			showForm({
 				url : "/les/model/modModel.do",
 				param : {
-					stu_id : table.$('tr.selected').find("td:eq(0)").text()
+					les_id : table.row(table.$('tr.selected')).data().les_id
 				},
 				title : "修改课程信息",
 				refresh : true
@@ -97,6 +99,7 @@
 					<tr>
 						<th width="50px;">展开</th>
 						<th>课程名称</th>
+						<th width="100px;">课程类型</th>
 						<th width="150px;">创建时间</th>
 					</tr>
 				</thead>

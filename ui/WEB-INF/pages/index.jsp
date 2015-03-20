@@ -36,7 +36,7 @@ body {
 			</div>
 		</nav>
 	</header>
-	<div class="container min-width-500" id="main_area" role="main"></div>
+	<div class="container min-height-500" id="main_area" role="main"></div>
 	<%@include file="/include/commonFooter.jsp"%>
 	<script>
 		$(document).ready(function() {

@@ -19,7 +19,15 @@ public class ClassController extends BaseController {
 		ModelAndView tModelAndView = new ModelAndView();
 		
 		
+		tModelAndView.setViewName("class/class_complex");
+		return tModelAndView;
+	}
+	@RequestMapping("/createClass")
+	public ModelAndView createClass() {
+		ModelAndView tModelAndView = new ModelAndView();
 		
+		
+		tModelAndView.setViewName("class/content/createClass");
 		return tModelAndView;
 	}
 
