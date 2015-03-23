@@ -40,6 +40,9 @@ body,button,input,select,textarea,h1,h2,h3,h4,h5,h6 {
 .mg-l-5 {
 	margin-left: 5px;
 }
+.mg-l-0 {
+	margin-left: 0px;
+}
 .mg-b-150{
 	margin-bottom: 150px;
 }
@@ -58,6 +61,9 @@ body,button,input,select,textarea,h1,h2,h3,h4,h5,h6 {
 .mg-b-5 {
 	margin-bottom: 5px;
 }
+.mg-b-0 {
+	margin-bottom: 0px;
+}
 .mg-r-150{
 	margin-right: 150px;
 }
@@ -67,6 +73,9 @@ body,button,input,select,textarea,h1,h2,h3,h4,h5,h6 {
 .mg-r-50{
 	margin-right: 50px;
 }
+.mg-r-30{
+	margin-right: 30px;
+}
 .mg-r-20{
 	margin-right: 20px;
 }
@@ -75,6 +84,9 @@ body,button,input,select,textarea,h1,h2,h3,h4,h5,h6 {
 }
 .mg-r-5 {
 	margin-right: 5px;
+}
+.mg-r-0 {
+	margin-right: 0px;
 }
 .mg-t-150{
 	margin-top: 150px;
@@ -96,6 +108,9 @@ body,button,input,select,textarea,h1,h2,h3,h4,h5,h6 {
 }
 .mg-t-5 {
 	margin-top: 5px;
+}
+.mg-t-0 {
+	margin-top: 0px;
 }
 
 .pd-r-5 {
@@ -119,8 +134,14 @@ body,button,input,select,textarea,h1,h2,h3,h4,h5,h6 {
 .wd-90{
 	width: 90%;
 }
+.wd-a-100{
+	width:100px;
+}
 .font-15{
-	font-size: 15px;
+	font-size: 15px!important;
+}
+.font-b{
+	font-weight: bold;
 }
 
 .Absolute-Center {
@@ -174,4 +195,7 @@ body,button,input,select,textarea,h1,h2,h3,h4,h5,h6 {
 .over-h{
 	white-space:nowrap;  
     overflow:hidden; 
+}
+.panel-head-lite{
+	padding : 5px 7.5px;
 }

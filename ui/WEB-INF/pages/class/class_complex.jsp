@@ -20,11 +20,11 @@
 			</div>
 			<div class="col-xs-2">
 				<button class="btn btn-defualt btn-block" name="his_class">
-					<i class="fa fa-twitter fa-lg  mg-t-5 mg-r-5"></i>历史班级查看
+					<i class="fa fa-history  fa-lg  mg-t-5 mg-r-5"></i>历史班级查看
 				</button>
 			</div>
-			<div class="panel panel-default col-xs-12 mg-t-20">
-				<div class="panel-body min-height-500" name="class_content">
+			<div class="panel panel-default col-xs-12 mg-t-20"  name="class_content">
+				<div class="panel-body min-height-500">
 					<h3 class="text-center mg-t-150">
 						<i class=" fa fa-arrow-up mg-r-5"></i>Select First
 					</h3>

@@ -398,7 +398,8 @@ function getDate(strDate) {
 		return null;
 	}
 	// 2015-3-11 @wangyi : 月份减1？
-	return new Date(strDate.substr(0, 4) + "-" + strDate.substr(4, 2) + "-" + strDate.substr(6, 2));
+	// 2015-3-23 @wangyi : 改了又改
+	return new Date(Date.parse(strDate.substr(0, 4) + "/" + strDate.substr(4, 2) + "/" + strDate.substr(6, 2)));
 }
 function calDate(baseDate, interval, unit) {
 	var baseD = getDate(baseDate), result = baseD;
@@ -410,6 +411,22 @@ function calDate(baseDate, interval, unit) {
 		result.setFullYear(baseD.getFullYear() + interval);
 	}
 	return result.Format("yyyy-MM-dd");
+}
+function monthLastDay(tMonth) {
+	var tYM = tMonth.split("-");
+	var tY = tYM[0];
+	var tM = tYM[1];
+	var tD = "31";
+	if ("04"===tM || "06"===tM || "09"===tM || "11"===tM) {
+		tD = "30";
+	} else if ("02"===tM) {
+		if (parseInt(tY) % 4==0 && (parseInt(tY) % 100 != 0 || parseInt(tY) % 400 == 0)) {
+			tD = "29";
+		} else {
+			tD = "28";
+		}
+	}
+	return tMonth + "-" + tD;
 }
 /**
  * 格式化数字
