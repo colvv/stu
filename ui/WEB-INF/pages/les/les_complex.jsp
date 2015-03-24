@@ -94,7 +94,7 @@
 					修改<i class="fa fa-pencil mg-l-5"></i>
 				</button>
 			</div>
-			<table id="example" class="display" cellspacing="0" width="100%">
+			<table id="example" class="hover row-border "" cellspacing="0" width="100%">
 				<thead>
 					<tr>
 						<th width="50px;">展开</th>
