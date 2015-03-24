@@ -27,11 +27,11 @@
 		});
 	});
 </script>
+<div class="container">
 <div class="row">
 	<div class="panel panel-primary">
-		<div class="panel-heading">学生信息</div>
 		<div class="panel-body">
-			<table id="example" class="display" cellspacing="0" width="100%">
+			<table id="example" class="hover row-border compact" cellspacing="0" width="100%">
 				<thead>
 					<tr>
 						<th width="150px;">学号</th>
@@ -43,4 +43,5 @@
 			</table>
 		</div>
 	</div>
+</div>
 </div>

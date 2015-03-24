@@ -76,5 +76,10 @@ public class StudentController extends BaseController {
 		tModelAndView.addObject("form_action", "/stu/modStu.do");
 		return tModelAndView;
 	}
+	@RequestMapping("/choose/chooseStu")
+	public ModelAndView  chooseStu() {
+		ModelAndView tModelAndView = new ModelAndView("stu/choose/stu_choose");
+		return tModelAndView;
+	}
 
 }

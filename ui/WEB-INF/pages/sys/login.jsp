@@ -60,6 +60,7 @@ body {
 					"user_password" : getCookie("user_password")
 				}, function(msg) {
 					if ("0" === msg) {
+						fObject("login_button").prop("disabled",true);
 						alertMsg_B("自动登录成功，稍候跳转...");
 						setTimeout(function() {
 							window.location.href = "/index.do";
@@ -90,6 +91,7 @@ body {
 							addCookie("user_id", fObject("user_id").val(), 7);
 							addCookie("user_password", md5_password, 7);
 						}
+						fObject("login_button").prop("disabled",true);
 						alertMsg_B("登录成功，稍候跳转...");
 						setTimeout(function() {
 							window.location.href = "/index.do";

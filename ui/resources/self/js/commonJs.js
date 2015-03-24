@@ -246,10 +246,35 @@ function showForm(paramObj) {
 			$("#form_modal").modal('show');
 		});
 	}
-
 }
 function hideForm() {
 	$("#form_modal").modal('hide');
+}
+function showChoose(paramObj) {
+	if (_last_form === paramObj.url && !paramObj.refresh) {
+		$("#choose_modal").modal('show');
+	} else {
+		if (!paramObj.title) {
+			paramObj.title = "请选择";
+		}
+		if (paramObj.width) {
+			$("#choose_modal .modal-dialog").css("width", paramObj.width);
+		} else {
+			$("#choose_modal .modal-dialog").css("width", "");
+		}
+
+		$("#choose_modal [name='form_title']").text(paramObj.title);
+		_last_form = paramObj.url;
+		commonAjax(paramObj.url, paramObj.param, function(msg) {
+			// 2015-3-4 @wangyi : 需要去除之前的绑定哦
+			fObject("confrim", "form_modal").unbind("click");
+			$("#choose_modal [name='form_body']").html(msg);
+			$("#choose_modal").modal('show');
+		});
+	}
+}
+function hideChoose() {
+	$("#choose_modal").modal('hide');
 }
 
 function fValue(field, baseD) {
@@ -417,10 +442,10 @@ function monthLastDay(tMonth) {
 	var tY = tYM[0];
 	var tM = tYM[1];
 	var tD = "31";
-	if ("04"===tM || "06"===tM || "09"===tM || "11"===tM) {
+	if ("04" === tM || "06" === tM || "09" === tM || "11" === tM) {
 		tD = "30";
-	} else if ("02"===tM) {
-		if (parseInt(tY) % 4==0 && (parseInt(tY) % 100 != 0 || parseInt(tY) % 400 == 0)) {
+	} else if ("02" === tM) {
+		if (parseInt(tY) % 4 == 0 && (parseInt(tY) % 100 != 0 || parseInt(tY) % 400 == 0)) {
 			tD = "29";
 		} else {
 			tD = "28";

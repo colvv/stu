@@ -104,6 +104,23 @@
 	</div>
 	<!-- /.modal-content -->
 </div>
+<!-- 模态框（Modal）选择框，有可能会和modal一同出现 -->
+<div class="modal fade " id="choose_modal" tabindex="-1" role="dialog" aria-labelledby="信息录入" aria-hidden="true">
+	<div class=" modal-dialog ">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" name="form_title">系统用户信息</h4>
+			</div>
+			<div class="modal-body" name="form_body"></div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" name="confrim">确定</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal" name="cancel">取消</button>
+			</div>
+		</div>
+	</div>
+	<!-- /.modal-content -->
+</div>
 <div class="container navbar-fixed-bottom" id="alert_bottom" style="display: none">
 	<div class="row">
 		<div class="col-xs-3"></div>
@@ -139,22 +156,22 @@
 }
 </style>
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-<script src="${ctx}/resources/jquery/js/jquery-1.11.2.min.js"></script>
-<script src="${ctx}/resources/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
-<script src="${ctx}/resources/jsplumb/js/jquery.jsPlumb-1.7.4.js"></script>
+<script src="./resources/jquery/js/jquery-1.11.2.min.js"></script>
+<script src="./resources/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+<script src="./resources/jsplumb/js/jquery.jsPlumb-1.7.4.js"></script>
 
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<script src="${ctx}/resources/bootstrap/js/bootstrap.min.js"></script>
-<script src="${ctx}/resources/bootstrap-switch/js/bootstrap-switch.min.js"></script>
-<script src="${ctx}/resources/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
-<script src="${ctx}/resources/bootstrap/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
-<script src="${ctx}/resources/jquery.dataTables/js/jquery.dataTables.cn.js"></script>
-<script src="${ctx}/resources/jquery.dataTables/js/dataTables.bootstrap.js"></script>
-<script src="${ctx}/resources/jquery.ztree/js/jquery.ztree.all-3.5.js"></script>
-<script src="${ctx}/resources/highcharts/js/highcharts.js"></script>
-<script src="${ctx}/resources/highcharts/js/highcharts-3d.js"></script>
-<script src="${ctx}/resources/highcharts/js/modules/exporting.js"></script>
-<script src="${ctx}/resources/self/js/commonJs.js"></script>
-<script src="${ctx}/resources/self/js/jquery.common.js"></script>
-<script src="${ctx}/resources/self/js/sha512.js"></script>
-<script src="${ctx}/resources/jquery/js/jquery.md5.js"></script>
+<script src="./resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="./resources/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<script src="./resources/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+<script src="./resources/bootstrap/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="./resources/jquery.dataTables/js/jquery.dataTables.cn.js"></script>
+<script src="./resources/jquery.dataTables/js/dataTables.bootstrap.js"></script>
+<script src="./resources/jquery.ztree/js/jquery.ztree.all-3.5.js"></script>
+<script src="./resources/highcharts/js/highcharts.js"></script>
+<script src="./resources/highcharts/js/highcharts-3d.js"></script>
+<script src="./resources/highcharts/js/modules/exporting.js"></script>
+<script src="./resources/self/js/commonJs.js"></script>
+<script src="./resources/self/js/jquery.common.js"></script>
+<script src="./resources/self/js/sha512.js"></script>
+<script src="./resources/jquery/js/jquery.md5.js"></script>
