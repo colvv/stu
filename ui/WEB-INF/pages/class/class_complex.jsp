@@ -3,7 +3,7 @@
 	$(document).ready(function() {
 		var baseDiv = "main_area";
 		fObject("create_class", baseDiv).click(function() {
-			commonAjax("/class/createClass.do", {}, function(html) {
+			commonAjax("/class/createClassPage.do", {}, function(html) {
 				fObject("class_content", baseDiv).html(html);
 			});
 		});
@@ -24,7 +24,7 @@
 				</button>
 			</div>
 			<div class="panel panel-default col-xs-12 mg-t-20"  name="class_content">
-				<div class="panel-body min-height-500">
+				<div class="panel-body min-h-500 ">
 					<h3 class="text-center mg-t-150">
 						<i class=" fa fa-arrow-up mg-r-5"></i>Select First
 					</h3>

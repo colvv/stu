@@ -4,6 +4,9 @@ var interval_process = 500;
 var process_func;
 var alertB_func;
 var slefAnim_func;
+// 在下方的选择区域用到
+var choose_randomArray = [ "fa-slideshare", "fa-paw", "fa-music", "fa-codepen", "fa-diamond" ];
+var choose_randomColor = [ "success", "info", "default" ];
 
 // 2015-2-28 @wangyi : 防止连点,disabled不能点，不用特殊考虑
 $("body").on("click", "button", function() {
@@ -209,8 +212,7 @@ function stopSimpleLoad() {
 
 function _log(message) {
 	var now = new Date(), y = now.getFullYear(), m = now.getMonth() + 1, // ！JavaScript中月分是从0开始的
-	d = now.getDate(), h = now.getHours(), min = now.getMinutes(), s = now.getSeconds(), time = y + '/' + m + '/' + d + ' ' + h + ':' + min
-			+ ':' + s;
+	d = now.getDate(), h = now.getHours(), min = now.getMinutes(), s = now.getSeconds(), time = y + '/' + m + '/' + d + ' ' + h + ':' + min + ':' + s;
 	try {
 		if (window.console) {
 			console.log(time + ' My App: ' + message);
@@ -250,32 +252,102 @@ function showForm(paramObj) {
 function hideForm() {
 	$("#form_modal").modal('hide');
 }
+// ---- -----------------  通用选择 功能区域  -----------------start
 function showChoose(paramObj) {
-	if (_last_form === paramObj.url && !paramObj.refresh) {
-		$("#choose_modal").modal('show');
-	} else {
-		if (!paramObj.title) {
-			paramObj.title = "请选择";
-		}
-		if (paramObj.width) {
-			$("#choose_modal .modal-dialog").css("width", paramObj.width);
-		} else {
-			$("#choose_modal .modal-dialog").css("width", "");
-		}
-
-		$("#choose_modal [name='form_title']").text(paramObj.title);
-		_last_form = paramObj.url;
-		commonAjax(paramObj.url, paramObj.param, function(msg) {
-			// 2015-3-4 @wangyi : 需要去除之前的绑定哦
-			fObject("confrim", "form_modal").unbind("click");
-			$("#choose_modal [name='form_body']").html(msg);
-			$("#choose_modal").modal('show');
-		});
+	if (!paramObj.title) {
+		paramObj.title = "请选择";
 	}
+	if (paramObj.width) {
+		$("#choose_modal .modal-dialog").css("width", paramObj.width);
+	} else {
+		$("#choose_modal .modal-dialog").css("width", "");
+	}
+
+	$("#choose_modal [name='form_title']").text(paramObj.title);
+	// 2015-3-26 @wangyi : 清楚选择区域
+	removeAllSelected();
+	commonAjax(paramObj.url, paramObj.param, function(msg) {
+		// 2015-3-4 @wangyi : 需要去除之前的绑定哦
+		fObject("confrim", "choose_modal").unbind("click");
+		$("#choose_modal [name='form_body']").html(msg);
+		$("#choose_modal").modal('show');
+		if (paramObj.initEle) {
+			$("#choose_modal").data("selectObj", paramObj.initEle);
+		}
+		$("#choose_modal").data("paramObj", paramObj);
+		fObject("confrim", "choose_modal").click(function() {
+			//_log(displayObj($("#choose_modal").data("selectObj")));
+			paramObj.confrim_func($("#choose_modal").data("selectObj"));
+			hideChoose();
+		});
+	});
+	if (paramObj.initEle) {
+		for ( var _index in paramObj.initEle) {
+			choose_addEle(paramObj.initEle[_index]);
+		}
+	}
+}
+$(document).ready(function() {
+	//双击移除
+	fObject("selected_area", "choose_modal").on('dblclick', ".panel", function() {
+		var _objData = $("#choose_modal").data("selectObj");
+		delete _objData[$(this).find("[name='selelct_id']").val()];
+		$("#choose_modal").data("selectObj", _objData);
+		$(this).popover("hide");
+		$(this).remove();
+	});
+});
+function choose_addEle(_data) {
+	var _objData = $("#choose_modal").data("selectObj");
+	var _paramObj = $("#choose_modal").data("paramObj")
+	if (!_objData) {
+		_objData = new Object();
+	} else {
+		if (_objData[_data[_paramObj.select_id]]) {
+			return;
+		}
+	}
+	if(_paramObj.maxChoose){
+		if(getObj_Attr_Count(_objData)>=_paramObj.maxChoose){
+			alertMsg_B("操作失败，超过最大选择上限（"+_paramObj.maxChoose+"）");
+			return;
+		}
+	}
+	_objData[_data[_paramObj.select_id]] = _data;
+	$("#choose_modal").data("selectObj", _objData);
+	var html = "<div class='panel panel-" + choose_randomColor[parseInt(Math.random() * 3)] + " pull-left mg-r-5 mg-b-5 cursor-p'  name='" + _data[_paramObj.select_id]
+			+ "'  title='' data-content='<span class=base-font><small>";
+	for ( var info_param in _paramObj.show_info) {
+		html += _paramObj.show_info[info_param] + "：" + (_data[info_param] ? _data[info_param] : '') + "<br>";
+	}
+	if (_paramObj.show_info.length != 0) {
+		html = html.substr(0, html.length - 4);
+	}
+	html += "</small><span>'> <div class='panel-heading panel-head-lite pull-left'> <i class=' fa " + choose_randomArray[parseInt(Math.random() * 5)]
+			+ " fa-lg pull-left mg-t-3'></i> <div class='huge pull-left'> " + _data[_paramObj.select_name] + " </div> </div><input type='hidden' name='selelct_id' value='"
+			+ _data[_paramObj.select_id] + "'> </div>";
+	fObject("selected_area", "choose_modal").append(html);
+
+	fObject("selected_area", "choose_modal").find("[name='" + _data[_paramObj.select_id] + "']").popover({
+		placement : 'top',
+		trigger : "click",
+		delay : {
+			show : 200,
+			hide : 100
+		},
+		html : true
+	});
+
+}
+function removeAllSelected() {
+	fObject("selected_area", "choose_modal").html('');
+	$("#choose_modal").data("selectObj", new Object());
 }
 function hideChoose() {
 	$("#choose_modal").modal('hide');
 }
+
+//---- -----------------  通用选择 功能区域  -----------------end
 
 function fValue(field, baseD) {
 	if (baseD) {
@@ -352,6 +424,8 @@ function checkNecessaryStr(str) {
 
 function alertMsg_B(msg, type) {
 	if (!type) {
+		// 2015-3-27 @wangyi : 类型转换
+		msg = msg.toString();
 		if (msg.indexOf("成功") !== -1) {
 			type = "success";
 		} else if (msg.indexOf("失败") !== -1) {
@@ -364,8 +438,7 @@ function alertMsg_B(msg, type) {
 	$("#alert_bottom").finish();
 	clearTimeout(alertB_func);
 	$("#alert_bottom .alert").removeClass().addClass("alert alert-" + type + " alert-dismissable  col-xs-6 ");
-	var html = '<span class="label label-' + type + ' " >' + type
-			+ '</span><i class=" fa fa-info-circle mg-l-5"></i><strong class="mg-l-5 ">' + msg + '</strong>';
+	var html = '<span class="label label-' + type + ' " >' + type + '</span><i class=" fa fa-info-circle mg-l-5"></i><strong class="mg-l-5 ">' + msg + '</strong>';
 	fObject("dispay_area", "alert_bottom").html(html);
 	$("#alert_bottom").fadeIn("normal");
 	alertB_func = setTimeout(function() {
@@ -481,4 +554,13 @@ function formatNum(num) {
 		var array = num.split('.');
 		return formatNum(array[0]) + "." + array[1];
 	}
+}
+function displayObj(obj) {
+	return JSON.stringify(obj);
+}
+function getObj_Attr_Count(obj) {
+	var count = 0;
+	for ( var i in obj)
+		count++;
+	return count;
 }

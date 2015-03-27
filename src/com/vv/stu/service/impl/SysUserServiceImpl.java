@@ -28,41 +28,38 @@ public class SysUserServiceImpl extends BaseService {
 			// tPassword = PubFun.MD5Encode(tPassword, "col_vv");
 			// tParams.put("user_password", tPassword);
 			tPubCommitDao.doCommit(new DaoOperator("insertSysUser", tParams));
-			return true;
 		} catch (DuplicateKeyException e) {
 			throw new BusinessException("用户名重复，请更换");
 		} catch (Exception e) {
-			logger.error("service层处理出现异常：" + e.toString());
-			throw new ServiceException("数据处理失败");
+			PubFun.throwServiceException(e);
 		}
+		return true;
 	}
 
 	public boolean modSysUser(Map tParams) {
 		try {
 			tPubCommitDao.doCommit(new DaoOperator("updateSysUser", tParams));
-			return true;
 		} catch (Exception e) {
-			logger.error("service层处理出现异常：" + e.toString());
-			throw new ServiceException("数据处理失败");
+			PubFun.throwServiceException(e);
 		}
+		return true;
 	}
 
 	public boolean delSysUser(Map tParams) {
 		try {
 			tPubCommitDao.doCommit(new DaoOperator("deleteSysUser", tParams));
-			return true;
 		} catch (Exception e) {
-			logger.error("service层处理出现异常：" + e.toString());
-			throw new ServiceException("数据处理失败");
+			PubFun.throwServiceException(e);
 		}
+		return true;
 	}
 
 	public Map getSysUser(Map tParams) {
 		try {
 			return tDefaultQueryDao.commonQuery_SQL(new DaoOperator("selectSysUser", tParams)).get(0);
 		} catch (Exception e) {
-			logger.error("service层处理出现异常：" + e.toString());
-			throw new ServiceException("数据处理失败");
+			PubFun.throwServiceException(e);
 		}
+		return null;
 	}
 }

@@ -65,7 +65,7 @@
 			</div>
 			<div class="form-group ">
 				<label class="control-label" for="stu_phone">联系方式</label> <input class="form-control" name="stu_phone" type="text" placeholder="请输入联系方式"
-					validation="required|len=11" value="${stu_phone }">
+					validation="required|maxlen=11" value="${stu_phone }">
 			</div>
 		</div>
 		<div class="tab-pane fade " id="dialog_extend">

@@ -98,10 +98,9 @@ public class SysLoginServiceImpl extends BaseService {
 			}
 			return sb.toString();
 		} catch (Exception e) {
-			logger.error("service层处理出现异常：" + e.toString());
-			e.printStackTrace();
-			throw new ServiceException("数据处理失败");
+			PubFun.throwServiceException(e);
 		}
+		return null;
 	}
 
 	public SysUser sysLogin(Map tParams) {
@@ -133,22 +132,25 @@ public class SysLoginServiceImpl extends BaseService {
 			// }
 			return tSysUser;
 		} catch (Exception e) {
-			logger.error("service层处理出现异常：" + e.toString());
-			e.printStackTrace();
-			throw new ServiceException("数据处理失败");
+			PubFun.throwServiceException(e);
 		}
+		return null;
 	}
 
 	public boolean changePwdConfrim(Map tParams) throws BusinessException {
-		if (tDefaultQueryDao.commonQuery_SQL(new DaoOperator("selectSysUser", tParams)).size() == 1) {
-			Map tParam = new HashMap<>();
-			tParam.put("user_password", tParams.get("user_password_new"));
-			tParam.put("user_id", tParams.get("user_id"));
-			tPubCommitDao.doCommit(new DaoOperator("updateSysUser", tParam));
-			return true;
-		} else {
-			throw new BusinessException("原始密码输入不正确，请检查");
+		try {
+			if (tDefaultQueryDao.commonQuery_SQL(new DaoOperator("selectSysUser", tParams)).size() == 1) {
+				Map tParam = new HashMap<>();
+				tParam.put("user_password", tParams.get("user_password_new"));
+				tParam.put("user_id", tParams.get("user_id"));
+				tPubCommitDao.doCommit(new DaoOperator("updateSysUser", tParam));
+			} else {
+				throw new BusinessException("原始密码输入不正确，请检查");
+			}
+		} catch (Exception e) {
+			PubFun.throwServiceException(e);
 		}
+		return true;
 
 	}
 

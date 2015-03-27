@@ -2,10 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.vv.stu.common.dao">
 	<select id="tea_001" resultType="java.util.HashMap"  parameterType="java.util.Map" >
-		select * from vv_teacher
+		select tea_id,tea_name,tea_state,tea_type,tea_sex,tea_birthday,tea_phone,tea_address,tea_desc from vv_teacher
+		where 1=1
+		<if test="tea_id != null"> and tea_id=#{tea_id}</if>
 	</select>
 	<select id="stu_001" resultType="java.util.HashMap"  parameterType="java.util.Map" >
-		SELECT st.stu_id,stu_name,stu_kindergarten,stu_address FROM vv_student st left join vv_student_info sti on st.stu_id=sti.stu_id 
+		SELECT st.stu_id,stu_name,stu_sex,stu_kindergarten,stu_address FROM vv_student st left join vv_student_info sti on st.stu_id=sti.stu_id 
 	</select>
 	<select id="sys_001" resultType="java.util.HashMap"  parameterType="java.util.Map">
 	    select user_id,user_name,user_phone,rela_role_id,user_password,DATE_FORMAT(last_login_time, '%Y-%m-%d %H:%i:%s') last_login_time,user_state  from vv_sys_user

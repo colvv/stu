@@ -2,7 +2,6 @@
 <script>
 	$(document).ready(function() {
 		var baseDiv = "form_modal";
-		fObject("dialog_tabs", baseDiv).find("a:eq(0)").tab("show");
 		fObject("confrim", baseDiv).click(function() {
 			$("#sysuser_info_form").vali_Form();
 			if ($("#sysuser_info_form").hasError()) {
@@ -73,12 +72,12 @@
 			<label class="control-label" for="user_password">密码</label>
 			<div class="input-group" name="password_div">
 				<input class="form-control input-group" name="user_password" type="text" placeholder="请输入密码" validation="${password_check }" value=""><span
-					class="input-group-addon"><i class=" fa fa-eye" name="password_icon"></i></span>
+					class="input-group-addon"><i class=" fa fa-eye cursor-p" name="password_icon"></i></span>
 			</div>
 		</div>
 		<div class="form-group ">
 			<label class="control-label" for="user_phone">联系方式</label> <input class="form-control" name="user_phone" type="text"
-				placeholder="请输入联系方式" validation="len=11" value="${user_phone }">
+				placeholder="请输入联系方式" validation="maxlen=11" value="${user_phone }">
 		</div>
 	</div>
 </form>

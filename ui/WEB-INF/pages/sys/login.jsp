@@ -75,7 +75,9 @@ body {
 			}
 			// 正常的登录
 			fObject("login_button").click(function() {
-				$("form").vali_Form(true);
+				$("form").vali_Form({
+					succ_show_type : 'none'
+				});
 				if ($("form").hasError()) {
 					return;
 				}

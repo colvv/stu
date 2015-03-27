@@ -25,7 +25,7 @@
 </script>
 <div class="row">
 	<div class="col-xs-3">
-		<div class="panel panel-default min-height-500">
+		<div class="panel panel-default min-h-500 ">
 			<!-- /.panel-heading -->
 			<div class="panel-heading">系统菜单列表</div>
 			<div class="panel-body" style="width: 100%;">
@@ -35,7 +35,7 @@
 		</div>
 	</div>
 	<div class="col-xs-9">
-		<div class="panel panel-primary min-height-500">
+		<div class="panel panel-primary min-h-500 ">
 			<!-- /.panel-heading -->
 			<div class="panel-heading">菜单信息</div>
 			<div class="panel-body" style="width: 100%;" name="display_area">

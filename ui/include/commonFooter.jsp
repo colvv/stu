@@ -17,7 +17,7 @@
 
 
 <!-- 模态框（Modal） alert -->
-<div class="modal fade" id="alert_msg" tabindex="-1" role="dialog" aria-labelledby="错误信息" aria-hidden="true">
+<div class="modal fade" id="alert_msg" tabindex="-1" role="dialog" aria-labelledby="错误信息" aria-hidden="true" style="z-index: 1043">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -36,7 +36,7 @@
 	<!-- /.modal -->
 </div>
 <!-- 模态框（Modal）confrim -->
-<div class="modal fade" id="comfrim_modal" tabindex="-1" role="dialog" aria-labelledby="提示信息" aria-hidden="true">
+<div class="modal fade" id="comfrim_modal" tabindex="-1" role="dialog" aria-labelledby="提示信息" aria-hidden="true" style="z-index: 1042">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -105,23 +105,37 @@
 	<!-- /.modal-content -->
 </div>
 <!-- 模态框（Modal）选择框，有可能会和modal一同出现 -->
-<div class="modal fade " id="choose_modal" tabindex="-1" role="dialog" aria-labelledby="信息录入" aria-hidden="true">
+<div class="modal fade " id="choose_modal" tabindex="-1" role="dialog" aria-labelledby="信息录入" aria-hidden="true" style="z-index: 1041">
 	<div class=" modal-dialog ">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title" name="form_title">系统用户信息</h4>
 			</div>
-			<div class="modal-body" name="form_body"></div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" name="confrim">确定</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal" name="cancel">取消</button>
+			<div class="modal-body">
+				<div class="container">
+					<div class="row">
+						<div class="panel panel-default min-h-100">
+							<div class="panel-body">
+								<h5 class="mg-t-0 mg-b-5">
+									<small>已选择<span class="text-danger mg-l-10">（单击可查看详情，双击可以去除已选择目标）</span></small>
+								</h5>
+								<div name="selected_area" class="row pd-l-10 pd-r-5"></div>
+							</div>
+						</div>
+					</div>
+					<div class="row" name="form_body" onselectstart="return false"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" name="confrim">确定</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal" name="cancel">取消</button>
+				</div>
 			</div>
 		</div>
+		<!-- /.modal-content -->
 	</div>
-	<!-- /.modal-content -->
 </div>
-<div class="container navbar-fixed-bottom" id="alert_bottom" style="display: none">
+<div class="container navbar-fixed-bottom" id="alert_bottom" style="display: none;z-index: 1044" >
 	<div class="row">
 		<div class="col-xs-3"></div>
 		<div class="alert alert-success alert-dismissable  col-xs-6 ">
@@ -135,7 +149,7 @@
 .loading_back {
 	background: #000;
 	opacity: .5;
-	filter: alpha(opacity =                         50);
+	filter: alpha(opacity =                                 50);
 	position: fixed;
 	z-index: 1040;
 	top: 0;

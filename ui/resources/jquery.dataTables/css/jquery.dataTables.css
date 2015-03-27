@@ -57,7 +57,7 @@ table.dataTable tbody tr {
   background-color: white;
 }
 table.dataTable tbody tr.selected {
-  background-color: #b0bed9;
+  background-color: #B7F586;
 }
 table.dataTable tbody th,
 table.dataTable tbody td {
@@ -101,7 +101,7 @@ table.dataTable.hover tbody tr.odd:hover.selected,
 table.dataTable.hover tbody tr.even:hover.selected, table.dataTable.display tbody tr:hover.selected,
 table.dataTable.display tbody tr.odd:hover.selected,
 table.dataTable.display tbody tr.even:hover.selected {
-  background-color: #a9b7d1;
+  background-color: #84C84F;
 }
 table.dataTable.order-column tbody tr > .sorting_1,
 table.dataTable.order-column tbody tr > .sorting_2,

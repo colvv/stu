@@ -35,7 +35,7 @@
  * 
  */
 (function($) {
-	$.fn.vali_Ele = function(succ_none) {
+	$.fn.vali_Ele = function(settings) {
 		var validation = $(this).attr("validation");
 		var value = $.trim($(this).val());
 		var $display = $(this).closest(".form-group");
@@ -48,31 +48,48 @@
 		for ( var i = 0; i < valis.length; i++) {
 			var checkResult = validateFunc(value, valis[i]);
 			if (checkResult !== 0) {
-				// 出现错误
-				$display.addClass("has-error");
-				$msg.after("<div class='extendinfo label label-danger pull-right'><i class='fa fa-minus-circle'></i>" + checkResult
-						+ "</div>");
-				// 2015-2-26 @wangyi : 增加一个提示动画效果
-				$msg.nextAll(".extendinfo").animate({
-					marginRight : 70
-				}, 200, null, function() {
+				if (settings.fail_show_type === 'none') {
+					// 2015-3-27 @wangyi : do nothing
+				} else if (settings.fail_show_type === 'alertMsg') {
+					alertMsg("校验失败：（" + $msg.text() +"）"+ checkResult);
+				} else if (settings.fail_show_type === 'alertMsg_B') {
+					alertMsg_B("校验失败：（" + $msg.text() +"）"+ checkResult);
+				} else {
+					// 出现错误
+					$display.addClass("has-error");
+					$msg.after("<div class='extendinfo label label-danger pull-right'><i class='fa fa-minus-circle'></i>" + checkResult + "</div>");
+					// 2015-2-26 @wangyi : 增加一个提示动画效果
 					$msg.nextAll(".extendinfo").animate({
-						marginRight : 0
-					}, 200);
-				});
+						marginRight : 70
+					}, 200, null, function() {
+						$msg.nextAll(".extendinfo").animate({
+							marginRight : 0
+						}, 200);
+					});
+				}
 				return false;
 			}
 		}
-		if (!succ_none) {
+		if (settings.succ_show_type === 'none') {
+			// 2015-3-27 @wangyi :  do nothing but stand for extend
+		} else {
 			$display.addClass("has-success");
 			$msg.after("<div class='extendinfo label label-success pull-right'><i class='fa fa-check-circle'></i></div>");
 		}
 		return true;
 	};
-	$.fn.vali_Form = function(succ_none) {
+	$.fn.vali_Form = function(settings) {
+		var ok = true;
 		$(this).find("[validation]").each(function() {
-			$(this).vali_Ele(succ_none);
-		})
+			if (!$(this).vali_Ele(settings) && ok) {
+				ok = false;
+				// 2015-3-27 @wangyi :  特殊，不能全部校验所有元素
+				if (settings.fail_show_type === "alertMsg" || settings.fail_show_type === "alertMsg_B") {
+					return ok;
+				}
+			}
+		});
+		return ok;
 	};
 	$.fn.hasError = function() {
 		return $(this).find(".label-danger").filter(".extendinfo").length > 0 ? true : false;
@@ -88,8 +105,7 @@
 		if ($(this).attr("for")) {
 			$(this).append("<span class='label label-" + labelType + " mg-l-5 user_label_info'>" + info + "</span>");
 		} else {
-			$(this).closest("form").find("[for='" + $(this).attr("name") + "']").append(
-					"<span class='label label-" + labelType + " mg-l-5 user_label_info'>" + info + "</span>");
+			$(this).closest("form").find("[for='" + $(this).attr("name") + "']").append("<span class='label label-" + labelType + " mg-l-5 user_label_info'>" + info + "</span>");
 		}
 	}
 	$.fn.delLabel = function() {
@@ -244,8 +260,7 @@
 			lineFunc : undefined,
 			program : false,
 			title_direct : "auto"
-		}, opt = $.extend(defaults, settings), $processOjb = $(this), width = $processOjb.width(), html = "<div class='flowcontent'>", random_id = $processOjb
-				.attr("id"), complex_default = {
+		}, opt = $.extend(defaults, settings), $processOjb = $(this), width = $processOjb.width(), html = "<div class='flowcontent'>", random_id = $processOjb.attr("id"), complex_default = {
 			top : 0,
 			left : 0
 		}, complex_opt, org_left = opt.left;
@@ -260,8 +275,7 @@
 			size += 1;
 			for ( var i = 0; i < opt.simple_datas.length; i++) {
 				if (typeof opt.simple_datas[i] == "object") {
-					html += getNodeHtml(opt, opt.left, opt.top, random_id, i, opt.simple_datas[i].name, opt.simple_datas[i].cssClass,
-							opt.simple_datas[i].title);
+					html += getNodeHtml(opt, opt.left, opt.top, random_id, i, opt.simple_datas[i].name, opt.simple_datas[i].cssClass, opt.simple_datas[i].title);
 				} else {
 					html += getNodeHtml(opt, opt.left, opt.top, random_id, i, opt.simple_datas[i], null, null);
 				}
@@ -286,8 +300,8 @@
 				if (!opt.complex_datas[i].top) {
 					opt.complex_datas[i].top = 100;
 				}
-				html += getNodeHtml(opt, opt.complex_datas[i].left, opt.complex_datas[i].top, random_id, opt.complex_datas[i].id,
-						opt.complex_datas[i].name, opt.complex_datas[i].cssClass, opt.complex_datas[i].title)
+				html += getNodeHtml(opt, opt.complex_datas[i].left, opt.complex_datas[i].top, random_id, opt.complex_datas[i].id, opt.complex_datas[i].name,
+						opt.complex_datas[i].cssClass, opt.complex_datas[i].title)
 			}
 			if (opt.program) {
 				html += "<input type='button' name='export' value='导出信息'><textarea name='export_info' style='width:500px;height:200px;'></textarea>";

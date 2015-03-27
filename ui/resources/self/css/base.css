@@ -16,7 +16,13 @@ body,button,input,select,textarea,h1,h2,h3,h4,h5,h6 {
 	font-family: Microsoft YaHei, 'ËÎÌו', Tahoma, Helvetica, Arial,
 		"\5b8b\4f53", sans-serif !important;
 }
-
+.base-font{
+	font-family: Microsoft YaHei, 'ËÎÌו', Tahoma, Helvetica, Arial,
+		"\5b8b\4f53", sans-serif !important;
+}
+.inline-b{
+	display: inline-block;
+}
 .no-wrap {
 	margin: 0;
 	padding: 0;
@@ -109,6 +115,9 @@ body,button,input,select,textarea,h1,h2,h3,h4,h5,h6 {
 .mg-t-5 {
 	margin-top: 5px;
 }
+.mg-t-3 {
+	margin-top: 3px;
+}
 .mg-t-0 {
 	margin-top: 0px;
 }
@@ -116,8 +125,20 @@ body,button,input,select,textarea,h1,h2,h3,h4,h5,h6 {
 .pd-r-5 {
 	padding-right: 5px;
 }
+.pd-l-5 {
+	padding-left: 5px;
+}
+.pd-r-10 {
+	padding-right: 10px;
+}
+.pd-l-10 {
+	padding-left: 10px;
+}
 .pd-r-50 {
 	padding-right: 50px;
+}
+.pd-t-50{
+	padding-top: 50px;
 }
 /** equals to center-block by bootstrap  */
 .line_center {
@@ -181,8 +202,11 @@ body,button,input,select,textarea,h1,h2,h3,h4,h5,h6 {
 	color: #EC6148;
 }
 
-.min-height-500 {
+.min-h-500 {
 	min-height: 500px;
+}
+.min-h-100 {
+	min-height: 100px;
 }
 
 
@@ -193,8 +217,9 @@ body,button,input,select,textarea,h1,h2,h3,h4,h5,h6 {
 	word-break:break-all;
 }
 .over-h{
-	white-space:nowrap;  
-    overflow:hidden; 
+	text-overflow:ellipsis;
+	overflow:hidden;
+	white-space:nowrap;
 }
 .panel-head-lite{
 	padding : 5px 7.5px;

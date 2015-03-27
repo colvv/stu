@@ -2,7 +2,6 @@
 <script>
 	$(document).ready(function() {
 		var baseDiv = "form_modal";
-		fObject("dialog_tabs", baseDiv).find("a:eq(0)").tab("show");
 		fObject("confrim", baseDiv).click(function() {
 			$("#changePwd_form").vali_Form();
 			if ($("#changePwd_form").hasError()) {
@@ -63,7 +62,7 @@
 			<label class="control-label" for="user_password_new">新密码</label>
 			<div class="input-group" name="password_div">
 				<input class="form-control input-group" name="user_password_new" type="text" placeholder="请输入新密码"
-					validation="required|password|maxlen=20|minlen=5" value=""><span class="input-group-addon"><i class=" fa fa-eye"
+					validation="required|password|maxlen=20|minlen=5" value=""><span class="input-group-addon"><i class=" fa fa-eye cursor-p"
 					name="password_icon"></i></span>
 			</div>
 		</div>

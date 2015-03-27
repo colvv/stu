@@ -19,4 +19,10 @@
 		stu_little_name=#{stu_lt_name},stu_sex=#{stu_sex},stu_birthday=#{stu_birthday},stu_kindergarten=#{stu_kindergarten},
 		stu_address=#{stu_address},stu_phone=#{stu_phone},stu_backinfo=#{stu_backinfo} where stu_id=#{stu_id}
 	</insert>
+	<delete id="deletestu" parameterType="java.util.HashMap">
+		DELETE FROM vv_student WHERE stu_id =#{stu_id}
+	</delete>
+	<delete id="deletestuinfo" parameterType="java.util.HashMap">
+		DELETE FROM vv_student_info WHERE stu_id =#{stu_id}
+	</delete>
 </mapper>

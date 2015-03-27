@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vv.stu.model">
+	<insert id="insertTeacher" parameterType="java.util.HashMap">
+		INSERT INTO vv_teacher
+		(TEA_ID,TEA_NAME,TEA_STATE,TEA_TYPE,TEA_SEX,TEA_BIRTHDAY,TEA_PHONE,TEA_ADDRESS,TEA_DESC)
+		VALUES (#{tea_id},#{tea_name},
+		#{tea_state}, #{tea_type}, #{tea_sex}, #{tea_birthday},
+		#{tea_phone},#{tea_address},#{tea_desc})
+	</insert>
+	<update id="updateTeacher" parameterType="java.util.HashMap">
+		update vv_teacher
+		<set>
+			<if test="tea_name != null">TEA_NAME=#{tea_name},</if>
+			<if test="tea_state != null">TEA_STATE=#{tea_state},</if>
+			<if test="tea_type != null">TEA_TYPE=#{tea_type},</if>
+			<if test="tea_sex != null">TEA_SEX=#{tea_sex},</if>
+			<if test="tea_birthday != null">TEA_BIRTHDAY=#{tea_birthday},</if>
+			<if test="tea_phone != null">TEA_PHONE=#{tea_phone},</if>
+			<if test="tea_address != null">TEA_ADDRESS=#{tea_address},</if>
+			<if test="tea_desc != null">TEA_DESC=#{tea_desc},</if>
+		</set>
+		where TEA_ID = #{tea_id}
+	</update>
+	<delete id="deleteTeacher" parameterType="java.util.HashMap">
+		delete from vv_teacher where TEA_ID = #{tea_id}
+	</delete>
+</mapper>
