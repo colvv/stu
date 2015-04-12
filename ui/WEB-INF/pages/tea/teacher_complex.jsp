@@ -96,7 +96,7 @@
 					删除<i class="fa fa-trash mg-l-5"></i>
 				</button>
 			</div>
-			<table id="example" class="hover row-border" cellspacing="0" width="100%">
+			<table id="example" class="table hover row-border" cellspacing="0" width="100%">
 				<thead>
 					<tr>
 						<th>教师姓名</th>

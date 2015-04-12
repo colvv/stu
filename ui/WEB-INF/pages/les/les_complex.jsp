@@ -28,14 +28,14 @@
 	        var row = table.row( tr );
 	        if ( row.child.isShown() ) {
 	            row.child.hide();
-	            $icon.removeClass("fa-chevron-circle-down color-g"); 
+	            $icon.removeClass("fa-chevron-circle-down color-pur"); 
 	            $icon.addClass("fa-chevron-circle-up"); 
 	            tr.removeClass('shown');
 	        }
 	        else {
 	            row.child( detailHtml(row.data()) ).show();
 	            $icon.removeClass("fa-chevron-circle-up"); 
-	            $icon.addClass("fa-chevron-circle-down  color-g"); 
+	            $icon.addClass("fa-chevron-circle-down  color-pur"); 
 	            tr.addClass('shown');
 	        }
 	    } );
@@ -94,7 +94,7 @@
 					修改<i class="fa fa-pencil mg-l-5"></i>
 				</button>
 			</div>
-			<table id="example" class="hover row-border "" cellspacing="0" width="100%">
+			<table id="example" class="table hover row-border "" cellspacing="0" width="100%">
 				<thead>
 					<tr>
 						<th width="50px;">展开</th>

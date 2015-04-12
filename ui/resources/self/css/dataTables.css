@@ -1,0 +1,11 @@
+.table>tbody .selected {
+	background-color: #93D7B3;
+}
+
+.table>tbody .even:hover,.table>tbody .odd:hover {
+	background-color: #D8E7DF;
+}
+
+.table>tbody .selected:hover {
+	background-color: #4CC283;
+}

@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="./resources/jquery.dataTables/css/dataTables.bootstrap.css">
 <link rel="stylesheet" href="./resources/jquery.ztree/css/zTreeStyle/zTreeStyle.css">
 <link rel="stylesheet" href="./resources/self/css/process.css">
+<link rel="stylesheet" href="./resources/self/css/dataTables.css">
 <link rel="stylesheet" href="./resources/self/css/base.css" />
 
 <!--[if lt IE 9]>

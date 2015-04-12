@@ -39,7 +39,7 @@
 </script>
 <div class="panel panel-default">
 	<div class="panel-body">
-		<table id="tea_selected" class="hover row-border compact" cellspacing="0" width="100%">
+		<table id="tea_selected" class="table  hover row-border compact" cellspacing="0" width="100%">
 			<thead>
 				<tr>
 					<th>教师姓名</th>

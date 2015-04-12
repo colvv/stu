@@ -35,7 +35,7 @@
 </script>
 <div class="panel panel-default">
 	<div class="panel-body">
-		<table id="stu_selected" class="hover row-border compact" cellspacing="0" width="100%">
+		<table id="stu_selected" class=" table hover row-border compact" cellspacing="0" width="100%">
 			<thead>
 				<tr>
 					<th width="150px;">学号</th>
