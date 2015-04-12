@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vv.stu.model">
+    <!-- 保证id的正确开头可以使事务正常发挥作用 
+	<insert id="insertXX" parameterType="java.util.HashMap">
+		INSERT INTO XX
+		(A, STU_NAME, STU_MAKE_TIME) VALUES (#{stu_id},
+		#{stu_name}, NOW())
+	</insert>
+	<update id="updateXX" parameterType="java.util.HashMap">
+		update XX set
+		stu_name=#{stu_name} where stu_id=#{stu_id}
+	</update>
+	<delete id="deleteXX" parameterType="java.util.HashMap">
+		DELETE FROM XX WHERE
+		stu_id =#{stu_id}
+	</delete>
+	<select id="selectXX" resultType="java.util.Map" parameterType="java.util.Map" >
+		select XX from XX where XX=#{xx}
+		<if test="menu_id != null"> and menu_id=#{menu_id}</if>
+	</select>
+	-->
+</mapper>

@@ -11,14 +11,14 @@
 		#{stu_id}, #{stu_lt_name}, #{stu_sex}, #{stu_birthday}, #{stu_kindergarten}, #{stu_address}, #{stu_phone}, '1',
 		#{stu_backinfo}, '1')
 	</insert>
-	<insert id="updatestu" parameterType="java.util.HashMap">
+	<update id="updatestu" parameterType="java.util.HashMap">
 		update vv_student set stu_name=#{stu_name} where stu_id=#{stu_id}
-	</insert>
-	<insert id="updatestuinfo" parameterType="java.util.HashMap">
+	</update>
+	<update id="updatestuinfo" parameterType="java.util.HashMap">
 		update vv_student_info set
 		stu_little_name=#{stu_lt_name},stu_sex=#{stu_sex},stu_birthday=#{stu_birthday},stu_kindergarten=#{stu_kindergarten},
 		stu_address=#{stu_address},stu_phone=#{stu_phone},stu_backinfo=#{stu_backinfo} where stu_id=#{stu_id}
-	</insert>
+	</update>
 	<delete id="deletestu" parameterType="java.util.HashMap">
 		DELETE FROM vv_student WHERE stu_id =#{stu_id}
 	</delete>

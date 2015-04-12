@@ -1,6 +1,6 @@
 /*
-SQLyog Ultimate v11.52 (64 bit)
-MySQL - 5.5.25 : Database - stu_new
+SQLyog Trial v12.03 (64 bit)
+MySQL - 5.6.21-log : Database - stu_new
 *********************************************************************
 */
 
@@ -9,6 +9,7 @@ MySQL - 5.5.25 : Database - stu_new
 /*!40101 SET SQL_MODE=''*/;
 
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 CREATE DATABASE /*!32312 IF NOT EXISTS*/`stu_new` /*!40100 DEFAULT CHARACTER SET utf8 */;
@@ -28,6 +29,8 @@ CREATE TABLE `vv_class` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `vv_class` */
+
+insert  into `vv_class`(`class_id`,`class_name`,`class_desc`,`CREATE_TIME`) values ('2015000005','青苹果','青苹果开课咯~~ 速速来报名','2015-03-30 21:47:30');
 
 /*Table structure for table `vv_class_lesson` */
 
@@ -64,6 +67,8 @@ CREATE TABLE `vv_class_rela` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `vv_class_rela` */
+
+insert  into `vv_class_rela`(`class_id`,`rela_id`,`rela_type`) values ('2015000005','1','02'),('2015000005','1','03'),('2015000005','TEST001','01'),('2015000005','TEST002','01'),('2015000005','TEST003','01');
 
 /*Table structure for table `vv_finance` */
 
@@ -214,7 +219,7 @@ CREATE TABLE `vv_sys_code` (
 
 /*Data for the table `vv_sys_code` */
 
-insert  into `vv_sys_code`(`codetype`,`code`,`codename`,`codealias`,`codeorder`) values ('date_choicer','hand','手动选择',NULL,3),('date_choicer','month','最近一月',NULL,1),('date_choicer','week','最近一周',NULL,0),('date_choicer','year','最近一年',NULL,2),('fin_oi_type','0','收入类',NULL,NULL),('fin_oi_type','1','支出类',NULL,NULL),('fin_type','001','学费',NULL,NULL),('fin_type','002','教材费用',NULL,NULL),('fin_type','003','餐费',NULL,NULL),('fin_type','004','文具费','',NULL),('fin_type','005',' 增加测试','',NULL),('fin_type','099','其他','',NULL),('fin_type','101','采购器材',NULL,NULL),('fin_type','102','采购教材',NULL,NULL),('fin_type','103','教师工资',NULL,NULL),('fin_type','104','活动费用',NULL,NULL),('fin_type','199','其他','',NULL),('frequency_choicer','day','日',NULL,0),('frequency_choicer','month','月',NULL,2),('frequency_choicer','week','周',NULL,1),('lesson_type','01','数学','你懂吧？',NULL),('lesson_type','02','英语','因个历史',NULL),('student_state','01','新生','我晕',NULL);
+insert  into `vv_sys_code`(`codetype`,`code`,`codename`,`codealias`,`codeorder`) values ('class_rela_type','01','学生',NULL,NULL),('class_rela_type','02','老师',NULL,NULL),('class_rela_type','03','班主任',NULL,NULL),('class_rela_type','04','课程',NULL,NULL),('date_choicer','hand','手动选择',NULL,3),('date_choicer','month','最近一月',NULL,1),('date_choicer','week','最近一周',NULL,0),('date_choicer','year','最近一年',NULL,2),('fin_oi_type','0','收入类',NULL,NULL),('fin_oi_type','1','支出类',NULL,NULL),('fin_type','001','学费',NULL,NULL),('fin_type','002','教材费用',NULL,NULL),('fin_type','003','餐费',NULL,NULL),('fin_type','004','文具费','',NULL),('fin_type','005',' 增加测试','',NULL),('fin_type','099','其他','',NULL),('fin_type','101','采购器材',NULL,NULL),('fin_type','102','采购教材',NULL,NULL),('fin_type','103','教师工资',NULL,NULL),('fin_type','104','活动费用',NULL,NULL),('fin_type','199','其他','',NULL),('frequency_choicer','day','日',NULL,0),('frequency_choicer','month','月',NULL,2),('frequency_choicer','week','周',NULL,1),('lesson_type','01','数学','你懂吧？',NULL),('lesson_type','02','英语','因个历史',NULL),('student_state','01','新生','我晕',NULL);
 
 /*Table structure for table `vv_sys_code_conf` */
 
@@ -244,7 +249,7 @@ CREATE TABLE `vv_sys_maxno` (
 
 /*Data for the table `vv_sys_maxno` */
 
-insert  into `vv_sys_maxno`(`id`,`no`) values ('fin_id',6),('les_id',5),('stu_id2015',30),('sysuser',9),('tea_id',2);
+insert  into `vv_sys_maxno`(`id`,`no`) values ('fin_id',6),('LES2015',5),('les_id',5),('stu_id2015',30),('sysuser',9),('tea_id',2);
 
 /*Table structure for table `vv_sys_menu` */
 
@@ -279,7 +284,7 @@ CREATE TABLE `vv_sys_user` (
 
 /*Data for the table `vv_sys_user` */
 
-insert  into `vv_sys_user`(`user_id`,`user_name`,`user_phone`,`rela_role_id`,`user_password`,`last_login_time`,`user_state`) values ('000002','我擦','13403517100',NULL,'14e1b600b1fd579f47433b88e8d85291',NULL,NULL),('000003','新用户','13403517100',NULL,'2072d493c4fc8bc11b8d2f6f49d178c9',NULL,NULL),('000006','我擦','13403517100',NULL,'',NULL,NULL),('admin','系统管理员','13403517100',NULL,'0c909a141f1f2c0a1cb602b0b2d7d050',NULL,NULL),('lishuang','李二','15835104556',NULL,'07932f02f3323059544d188be8e847e7','2015-03-13 20:31:36',NULL),('sy000001','haha好','13403517105','100','','2015-02-27 10:33:58','01'),('SY000007','wlgq','',NULL,'b626940cf772654ed931b05be5722121',NULL,NULL),('SY000008','王毅','13403517100',NULL,'03557285e0c7dcf73459ef5cbee4551c',NULL,NULL),('SY000009','王毅','',NULL,'03557285e0c7dcf73459ef5cbee4551c',NULL,NULL),('wangyi','王毅','',NULL,'07932f02f3323059544d188be8e847e7','2015-03-27 17:45:05',NULL),('wangyi2','王毅','',NULL,'03557285e0c7dcf73459ef5cbee4551c',NULL,NULL),('wangyi3','213123','13132321321',NULL,'5b32af2e42cbaa6bdcf216b65cd8287c','2015-02-28 16:11:39',NULL),('wcccccc','eddasdsadasd','',NULL,'044e2952bf40ecc61933d8ad16e0074c',NULL,NULL),('yanshi','演示用户','',NULL,'31bde6a12ed45884f1dd420e50ebcbd4','2015-03-06 11:53:14',NULL);
+insert  into `vv_sys_user`(`user_id`,`user_name`,`user_phone`,`rela_role_id`,`user_password`,`last_login_time`,`user_state`) values ('000002','我擦','13403517100',NULL,'14e1b600b1fd579f47433b88e8d85291',NULL,NULL),('000003','新用户','13403517100',NULL,'2072d493c4fc8bc11b8d2f6f49d178c9',NULL,NULL),('000006','我擦','13403517100',NULL,'',NULL,NULL),('admin','系统管理员','13403517100',NULL,'0c909a141f1f2c0a1cb602b0b2d7d050',NULL,NULL),('lishuang','李二','15835104556',NULL,'07932f02f3323059544d188be8e847e7','2015-03-13 20:31:36',NULL),('sy000001','haha好','13403517105','100','','2015-02-27 10:33:58','01'),('SY000007','wlgq','',NULL,'b626940cf772654ed931b05be5722121',NULL,NULL),('SY000008','王毅','13403517100',NULL,'03557285e0c7dcf73459ef5cbee4551c',NULL,NULL),('SY000009','王毅','',NULL,'03557285e0c7dcf73459ef5cbee4551c',NULL,NULL),('wangyi','王毅','',NULL,'07932f02f3323059544d188be8e847e7','2015-03-30 21:47:13',NULL),('wangyi2','王毅','',NULL,'03557285e0c7dcf73459ef5cbee4551c',NULL,NULL),('wangyi3','213123','13132321321',NULL,'5b32af2e42cbaa6bdcf216b65cd8287c','2015-02-28 16:11:39',NULL),('wcccccc','eddasdsadasd','',NULL,'044e2952bf40ecc61933d8ad16e0074c',NULL,NULL),('yanshi','演示用户','',NULL,'31bde6a12ed45884f1dd420e50ebcbd4','2015-03-06 11:53:14',NULL);
 
 /*Table structure for table `vv_sys_user_menu` */
 
@@ -317,5 +322,6 @@ CREATE TABLE `vv_teacher` (
 insert  into `vv_teacher`(`TEA_ID`,`TEA_NAME`,`TEA_STATE`,`TEA_TYPE`,`TEA_SEX`,`TEA_BIRTHDAY`,`TEA_PHONE`,`TEA_ADDRESS`,`TEA_DESC`) values ('1','wanyi',NULL,'1','s',1,'1340','address','this is describe'),('2','wanyi','st',NULL,'s',1,'1340','address','this is describe'),('3','wanyi才','st','1','1',18991222,'1340','address','this is describe'),('4','我擦','st','1','0',20150318,'1340','address','this is describe'),('TE000001','王毅',NULL,NULL,'0',19891010,'13403517100','都擦','都擦擦'),('TE000002','我擦的',NULL,NULL,'0',20150320,'15835104556','马勒戈壁','有一群好玩的草泥马');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

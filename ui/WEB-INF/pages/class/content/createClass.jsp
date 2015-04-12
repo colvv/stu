@@ -183,8 +183,8 @@
 						"choose_mas" : displayObj(chooseEle_mas),
 						"choose_tea" : displayObj(chooseEle_tea),
 						"choose_stu" : displayObj(chooseEle_stu),
-						"class_name" : fObject("class_name", baseDiv),
-						"class_desc" : fObject("class_desc", baseDiv)
+						"class_name" : fObject("class_name", baseDiv).val(),
+						"class_desc" : fObject("class_desc", baseDiv).val()
 					}, function(msg) {
 						processStop();
 						var array = msg.split("|");
