@@ -105,7 +105,7 @@
 					菜单配置<i class="fa fa-reorder mg-l-5"></i>
 				</button>
 			</div>
-			<table id="sys_001" class="hover row-border "" cellspacing="0" width="100%">
+			<table id="sys_001" class="table hover row-border "" cellspacing="0" width="100%">
 				<thead>
 					<tr>
 						<th>登录名</th>

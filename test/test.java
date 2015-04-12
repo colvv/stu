@@ -3,7 +3,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
+import org.junit.Test;
+
 import sun.misc.BASE64Encoder;
+
 
 public class test {
 	public static String desc(String info) throws NoSuchAlgorithmException, UnsupportedEncodingException {
@@ -48,5 +51,12 @@ public class test {
 		System.out.println(MD5Encode("我去kjhkdesc", "col_vv").length());
 		System.out.println(MD5Encode("我去kjhkdesc", ""));
 		System.out.println(MD5Encode("我去kjhkdesc", "").length());
+	}
+	@Test
+	public void aa(){
+//		String tStr = "&#20876;";
+//			System.out.println(StringEscapeUtils. );
+		
+		
 	}
 }

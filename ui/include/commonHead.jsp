@@ -12,7 +12,6 @@
 <link rel="stylesheet" href="./resources/bootstrap/css/bootstrap-datetimepicker.min.css">
 
 <link rel="stylesheet" href="./resources/awesome/css/font-awesome.min.css">
-<link rel="stylesheet" href="./resources/jquery.dataTables/css/jquery.dataTables.css">
 <link rel="stylesheet" href="./resources/jquery.dataTables/css/dataTables.bootstrap.css">
 <link rel="stylesheet" href="./resources/jquery.ztree/css/zTreeStyle/zTreeStyle.css">
 <link rel="stylesheet" href="./resources/self/css/process.css">

@@ -24,5 +24,6 @@
 	<classpathentry kind="lib" path="ui/WEB-INF/lib/aspectjrt.jar"/>
 	<classpathentry kind="lib" path="ui/WEB-INF/lib/aspectjweaver.jar"/>
 	<classpathentry kind="lib" path="ui/WEB-INF/lib/cglib-2.2.2.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="ui/WEB-INF/classes"/>
 </classpath>

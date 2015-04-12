@@ -36,6 +36,10 @@
  */
 (function($) {
 	$.fn.vali_Ele = function(settings) {
+		// 2015-4-8 @wangyi :  下方报错
+		if (!settings) {
+			settings = {};
+		}
 		var validation = $(this).attr("validation");
 		var value = $.trim($(this).val());
 		var $display = $(this).closest(".form-group");
@@ -51,9 +55,9 @@
 				if (settings.fail_show_type === 'none') {
 					// 2015-3-27 @wangyi : do nothing
 				} else if (settings.fail_show_type === 'alertMsg') {
-					alertMsg("校验失败：（" + $msg.text() +"）"+ checkResult);
+					alertMsg("校验失败：（" + $msg.text() + "）" + checkResult);
 				} else if (settings.fail_show_type === 'alertMsg_B') {
-					alertMsg_B("校验失败：（" + $msg.text() +"）"+ checkResult);
+					alertMsg_B("校验失败：（" + $msg.text() + "）" + checkResult);
 				} else {
 					// 出现错误
 					$display.addClass("has-error");
