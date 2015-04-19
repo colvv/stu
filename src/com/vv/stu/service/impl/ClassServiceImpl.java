@@ -21,15 +21,18 @@ public class ClassServiceImpl extends BaseService {
 			String choose_stu = (String) tParams.get("choose_stu");
 			String choose_tea = (String) tParams.get("choose_tea");
 			String choose_mas = (String) tParams.get("choose_mas");
+			String choose_les = (String) tParams.get("choose_les");
 			Object mas = JSONObject.parseObject(choose_mas);
 			Object tea = JSONObject.parseObject(choose_tea);
 			Object stu = JSONObject.parseObject(choose_stu);
-			if (!(mas instanceof Map) || !(tea instanceof Map) || !(stu instanceof Map)) {
+			Object les = JSONObject.parseObject(choose_les);
+			if (!(mas instanceof Map) || !(tea instanceof Map) || !(stu instanceof Map) || !(les instanceof Map)) {
 				throw new BusinessException("系统处理异常");
 			}
 			Set mas_key = ((Map) mas).keySet();
 			Set tea_key = ((Map) tea).keySet();
 			Set stu_key = ((Map) stu).keySet();
+			Set les_key = ((Map) les).keySet();
 			if (mas_key.size() != 1) {
 				throw new BusinessException("一个班级只能选择一个班主任");
 			}
@@ -52,6 +55,11 @@ public class ClassServiceImpl extends BaseService {
 			for (Object object : mas_key) {
 				_Params.put("rela_type", "03");
 				_Params.put("rela_id", ((Map) ((Map) mas).get(object)).get("tea_id"));
+				tPubCommitDao.doCommit(new DaoOperator("insertClassRela", _Params));
+			}
+			for (Object object : les_key) {
+				_Params.put("rela_type", "04");
+				_Params.put("rela_id", ((Map) ((Map) les).get(object)).get("les_id"));
 				tPubCommitDao.doCommit(new DaoOperator("insertClassRela", _Params));
 			}
 

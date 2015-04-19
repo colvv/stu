@@ -19,6 +19,7 @@
 				var chooseEle_stu = new Object();
 				var chooseEle_mas = new Object();
 				var chooseEle_tea = new Object();
+				var chooseEle_les = new Object();
 				$("#" + baseDiv).on("dblclick", ".create-class-box", function() {
 					$classBox = $(this);
 					confrimMsg("确定要删除（" + $(this).text() + "）么？", function() {
@@ -90,6 +91,33 @@
 						}
 					});
 				});
+				// 选择课程
+				fObject("lesson_add", baseDiv).dblclick(function() {
+					showChoose({
+						url : "/les/choose/chooseLes.do",
+						maxChoose : 99,
+						select_id : 'les_id',
+						select_name : 'les_name',
+						show_info : {
+							"les_name" : "课程名称",
+							"les_type" : "课程类型",
+							"create_time" : "创建时间",
+							"les_desc" : "课程描述"
+						},
+						title : "班级课程选择",
+						width : '90%',
+						initEle : chooseEle_les,
+						confrim_func : function(obj) {
+							chooseEle_les = obj;
+							fObject("les_list_area", baseDiv).html("");
+							var _html = "";
+							for ( var ele in chooseEle_les) {
+								_html += display_les(chooseEle_les[ele]);
+							}
+							fObject("les_list_area", baseDiv).prepend(_html);
+						}
+					});
+				});
 				// 选择学生
 				fObject("student_add", baseDiv).dblclick(function() {
 					showChoose({
@@ -123,7 +151,8 @@
 					} else {
 						_html += "danger";
 					}
-					_html += " pull-left mg-r-5 mg-b-5 create-class-box cursor-p' name='" + ele.stu_id + "'><div class='panel-heading panel-head-lite pull-left'>";
+					_html += " pull-left mg-r-5 mg-b-5 create-class-box cursor-p' name='" + ele.stu_id
+							+ "'><div class='panel-heading panel-head-lite pull-left'>";
 					if ("0" === sex) {
 						_html += "<i class='  fa fa-reddit fa-3x pull-left'></i>";
 					} else {
@@ -144,6 +173,12 @@
 					_html += '<div class="huge pull-left ">' + ele.tea_name + '</div></div></div>';
 					return _html;
 				}
+				function display_les(ele) {
+					var _html = '<div class="panel panel-default pull-left mg-r-5 mg-b-0 create-class-box cursor-p" name="'+ele.les_id+'">'
+							+ '<div class="panel-heading  pull-left"><i class="  fa fa-book fa-3x pull-left"></i>';
+					_html += '<div class="huge pull-left ">' + ele.les_name + '</div></div></div>';
+					return _html;
+				}
 				function mas_display() {
 					if (fObject("mas_list_area", baseDiv).find(".panel").length == 1) {
 						fObject("master_add").hide();
@@ -155,7 +190,8 @@
 				fObject("return", "main_area").click(
 						function() {
 							fObject("class_content", "main_area").html(
-									'<div class="panel-body min-h-500 "><h3 class="text-center mg-t-150"> <i class=" fa fa-arrow-up mg-r-5"></i>Select First </h3></div>');
+									'<div class="panel-body min-h-500 "><h3 class="text-center mg-t-150"> '
+											+ '<i class=" fa fa-arrow-up mg-r-5"></i>Select First </h3></div>');
 						});
 				fObject("confrim", "main_area").click(function() {
 					// 可以没有
@@ -172,6 +208,10 @@
 						alertMsg_B("请至少选择一位任课老师");
 						return;
 					}
+					if (getObj_Attr_Count(chooseEle_les) == 0) {
+						alertMsg_B("请至少选择一门课程");
+						return;
+					}
 					if (getObj_Attr_Count(chooseEle_stu) == 0) {
 						alertMsg_B("请至少选择一名学生");
 						return;
@@ -183,6 +223,7 @@
 						"choose_mas" : displayObj(chooseEle_mas),
 						"choose_tea" : displayObj(chooseEle_tea),
 						"choose_stu" : displayObj(chooseEle_stu),
+						"choose_les" : displayObj(chooseEle_les),
 						"class_name" : fObject("class_name", baseDiv).val(),
 						"class_desc" : fObject("class_desc", baseDiv).val()
 					}, function(msg) {
@@ -266,6 +307,18 @@
 			<div class="col-xs-11">
 				<div name="tea_list_area"></div>
 				<div class="panel panel-primary pull-left mg-r-5 mg-b-0 cursor-p" name="teacher_add">
+					<div class="panel-heading  pull-left">
+						<i class="  fa fa-plus fa-3x "></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<label class="col-xs-1">班级课程</label>
+			<div class="col-xs-11">
+				<div name="les_list_area"></div>
+				<div class="panel panel-primary pull-left mg-r-5 mg-b-0 cursor-p" name="lesson_add">
 					<div class="panel-heading  pull-left">
 						<i class="  fa fa-plus fa-3x "></i>
 					</div>

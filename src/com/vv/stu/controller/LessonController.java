@@ -55,4 +55,9 @@ public class LessonController extends BaseController {
 		tModelAndView.addObject("form_action", "/les/modLes.do");
 		return tModelAndView;
 	}
+	@RequestMapping("/choose/chooseLes")
+	public ModelAndView  chooseStu() {
+		ModelAndView tModelAndView = new ModelAndView("les/choose/les_choose");
+		return tModelAndView;
+	}
 }
