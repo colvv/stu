@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script>
 	$(document).ready(function() {
 		var baseDiv = "main_area";
@@ -102,6 +102,8 @@
 				class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 		</div>
 	</div>
+	
+	
 	<div class="panel-body">
 		<div class="row color-bg-w">
 			<div class="col-xs-3">
